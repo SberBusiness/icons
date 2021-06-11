@@ -1,0 +1,22 @@
+{
+    "name": "@sberbusiness/illustrations",
+    "version": "0.1.0",
+    "description": "Иллюстрации Сбер Бизнес",
+    "author": "Сбер Бизнес",
+    "license": "Sber Public License at-nc-sa v.2",
+    "keywords": [
+        "icons",
+        "sberbusiness-illustrations"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SberBusiness/icons.git"
+    },
+    "bugs": {
+        "url": "https://github.com/SberBusiness/icons/issues"
+    },
+    "homepage": "https://github.com/SberBusiness/icons#readme",
+    "peerDependencies": {
+        "react": ">=15.6.0"
+    }
+}
