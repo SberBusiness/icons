@@ -1,0 +1,36 @@
+name: Fetch
+
+on:
+  schedule:
+    - cron:  '0 6 * * *'
+
+  workflow_dispatch:
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 10.16.3
+
+      - run: npm install
+
+      - run: npm run fetch
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          branch: fetch
+          branch-suffix: timestamp
+          delete-branch: true
+          commit-message: Fetch from Figma
+          title: Fetch from Figma
+
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
