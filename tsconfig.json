@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./generated",
+        "module": "amd",
+        "moduleResolution": "node",
+        "jsx": "react",
+        "target": "es5",
+        "lib": ["es5", "es6", "es2015.promise"],
+        "declaration": true,
+        "preserveConstEnums": true,
+        "skipDefaultLibCheck": true,
+        "skipLibCheck": true,
+        "noEmitHelpers": false,
+        "noEmitOnError": false,
+        "types": [
+            "react"
+        ]
+    },
+    "include": [
+        "./generated"
+    ]
+}
