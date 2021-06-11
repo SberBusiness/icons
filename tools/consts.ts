@@ -1,6 +1,6 @@
 import path from 'path';
 
-const root = path.resolve('.');
+export const root = path.resolve('.');
 
 /** Пути модулей. */
 export const modulesPaths = {
