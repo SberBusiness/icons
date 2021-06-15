@@ -19,7 +19,11 @@ jobs:
 
       - run: npm install
 
-      - run: npm run fetch
+      - name: Fetch from Figma
+        run: npm run fetch
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+          FIGMA_ICONS_FILE_KEY: ${{ secrets.FIGMA_ICONS_FILE_KEY }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
