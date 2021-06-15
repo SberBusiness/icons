@@ -147,7 +147,7 @@ export class FigmaFetcher {
             }
             iconsPackage.version = version;
             json = JSON.stringify(iconsPackage, null, 4);
-            writeFileSync(iconsPackagePath, json);
+            writeFileSync(iconsPackagePath, json + '\n');
         }
     };
 
