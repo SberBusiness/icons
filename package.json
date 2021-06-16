@@ -1,13 +1,7 @@
 {
   "name": "@sberbusiness/icons",
-  "description": "Иконки Сбер Бизнес",
-  "author": "Сбер Бизнес",
+  "author": "СберБизнес",
   "license": "Sber Public License at-nc-sa v.2",
-  "keywords": [
-    "icons",
-    "sberbusiness-icons",
-    "sberbusiness-illustrations"
-  ],
   "private": true,
   "scripts": {
     "fetch": "ts-node ./tools/fetcher/fetch.ts",
@@ -38,13 +32,5 @@
   },
   "peerDependencies": {
     "react": ">=15.6.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/SberBusiness/icons.git"
-  },
-  "bugs": {
-    "url": "https://github.com/SberBusiness/icons/issues"
-  },
-  "homepage": "https://github.com/SberBusiness/icons#readme"
+  }
 }
