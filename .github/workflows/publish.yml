@@ -1,10 +1,10 @@
-name: Build
+name: Publish
 
 on:
   workflow_dispatch:
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,9 +14,12 @@ jobs:
         with:
           node-version: 10.16.3
 
-      - run: |
+      - name: Publish icons
+        run: |
           npm install
-          npm run build:icons
+          npm run publish:icons
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - uses: actions/upload-artifact@v2
         with:

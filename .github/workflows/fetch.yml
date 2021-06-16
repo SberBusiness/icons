@@ -17,10 +17,10 @@ jobs:
         with:
           node-version: 10.16.3
 
-      - run: npm install
-
       - name: Fetch from Figma
-        run: npm run fetch
+        run: |
+          npm install
+          npm run fetch
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
           FIGMA_ICONS_FILE_KEY: ${{ secrets.FIGMA_ICONS_FILE_KEY }}

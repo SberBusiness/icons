@@ -19,7 +19,9 @@
     "copy:icons": "ts-node ./tools/tasks/copy.ts icons",
     "copy:illustrations": "ts-node ./tools/tasks/copy.ts illustrations",
     "build:icons": "npm install && npm run clean && npm run generate:icons && npm run ts-dts && npm run copy:icons",
-    "build:illustrations": "npm install && npm run clean && npm run generate:illustrations && npm run ts-dts && npm run copy:illustrations"
+    "build:illustrations": "npm install && npm run clean && npm run generate:illustrations && npm run ts-dts && npm run copy:illustrations",
+    "publish:icons": "npm run build:icons && npm publish --access public ./public",
+    "publish:illustrations": "npm run build:illustrations && npm publish --access public ./public"
   },
   "devDependencies": {
     "@types/node": "14.14.30",
@@ -32,7 +34,7 @@
     "axios": "0.21.1",
     "axios-retry": "3.1.9",
     "https": "1.0.0",
-    "dotenv": "^9.0.2"
+    "dotenv": "9.0.2"
   },
   "peerDependencies": {
     "react": ">=15.6.0"
