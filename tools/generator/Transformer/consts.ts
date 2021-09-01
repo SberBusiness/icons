@@ -15,9 +15,9 @@ export const selectorsOrder: string[] = [
 ];
 
 export const initialStyles = [
-    '.table-icon .primary-fill { fill: #D0D7DD; }',
-    'tr:hover .table-icon .primary-fill { fill: #B2B8BF; }',
-    'button:hover:not(:disabled) .table-icon .primary-fill { fill: #7D838A; }',
+    '.table-icon .service-fill { fill: #D0D7DD; }',
+    'tr:hover .table-icon .service-fill { fill: #B2B8BF; }',
+    'button:hover:not(:disabled) .table-icon .service-fill { fill: #7D838A; }',
 ].join(' ');
 
 export const SVGOConfig = {

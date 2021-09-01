@@ -174,9 +174,9 @@ export class Transformer implements ITransformer {
     /**
      * Подменяет hex цвета именами классов.
      */
-    private replaceColorsWithClassNames = (src: string, {classMap}: IIconTransformedData): string =>
+    private replaceColorsWithClassNames = (src: string, {classMap, tokenized: {category}}: IIconTransformedData): string =>
         classMap
-            ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}"`)
+            ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}${category === 'srv' ? ' service-fill' : ''}"`)
             : src;
 
     /**
