@@ -156,8 +156,8 @@ export class Transformer implements ITransformer {
      *  Добавляет класс компонента.
      */
     private insertClassName = (src: string, {tokenized: {type}}: IIconTransformedData): string => {
-        const className = `svg-${EIconTypeName[type]} ${type === EIconType.ic ? `\${props.table ? 'table-icon' : ''}` : ''}`;
-        return src.replace('><', ` className={\`${className} \${props.className || ''}\`}><`);
+        const tableIconClassName = type === EIconType.ic ? `\${props.table ? 'table-icon ' : ''}` : '';
+        return src.replace('><', ` className={\`${tableIconClassName}\${props.className || ''}\`}><`);
     };
 
     /**
@@ -174,9 +174,9 @@ export class Transformer implements ITransformer {
     /**
      * Подменяет hex цвета именами классов.
      */
-    private replaceColorsWithClassNames = (src: string, {classMap}: IIconTransformedData): string =>
+    private replaceColorsWithClassNames = (src: string, {classMap, tokenized: {category}}: IIconTransformedData): string =>
         classMap
-            ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}"`)
+            ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}${category === 'srv' ? ' service-fill' : ''}"`)
             : src;
 
     /**
