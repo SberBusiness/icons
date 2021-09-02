@@ -156,8 +156,8 @@ export class Transformer implements ITransformer {
      *  Добавляет класс компонента.
      */
     private insertClassName = (src: string, {tokenized: {type}}: IIconTransformedData): string => {
-        const className = `svg-${EIconTypeName[type]} ${type === EIconType.ic ? `\${props.table ? 'table-icon' : ''}` : ''}`;
-        return src.replace('><', ` className={\`${className} \${props.className || ''}\`}><`);
+        const tableIconClassName = type === EIconType.ic ? `\${props.table ? 'table-icon ' : ''}` : '';
+        return src.replace('><', ` className={\`${tableIconClassName}\${props.className || ''}\`}><`);
     };
 
     /**
