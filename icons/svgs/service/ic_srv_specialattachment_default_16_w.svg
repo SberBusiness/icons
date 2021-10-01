@@ -1,3 +1,773 @@
-<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.6319 2.04785C10.0859 2.04785 9.77028 2.29465 8.67481 3.41032L8.67201 3.41317L3.73943 8.39706C3.26386 8.88263 3.00003 9.52842 3.00003 10.2146C3.00003 10.7032 3.00274 11.1156 3.13208 11.5676C3.25588 12.0002 3.51428 12.5228 4.11146 13.131C4.7132 13.7439 5.221 14.0089 5.63692 14.136C6.06995 14.2682 6.46504 14.2731 6.94045 14.2731C7.59136 14.2731 8.21464 13.9949 8.70844 13.4915L8.71735 13.4824L13.2728 8.95394C13.6683 8.56075 14.3014 8.56908 14.6869 8.97255C15.0724 9.37602 15.0642 10.0218 14.6687 10.415L10.1175 14.9393C9.28624 15.7845 8.16949 16.3133 6.94045 16.3133L6.91155 16.3133C6.4474 16.3134 5.79386 16.3135 5.06326 16.0904C4.30025 15.8573 3.51086 15.4023 2.69838 14.5748C1.88135 13.7427 1.43731 12.9259 1.21221 12.1393C0.99947 11.3959 0.99979 10.7281 1.00001 10.259L1.00003 10.2146C1.00003 8.98255 1.47798 7.81817 2.32706 6.95256L2.33022 6.94934L7.26314 1.96512L7.3868 1.83888C8.28758 0.918324 9.17865 0.00769043 10.6319 0.00769043C11.5357 0.00769043 12.6907 0.377978 13.5886 1.29252C14.485 2.20535 14.8562 3.38612 14.8562 4.31151C14.8562 5.79857 13.8597 6.81027 12.9332 7.75083L12.358 8.32979C12.0113 8.67876 11.5421 9.15103 11.0525 9.64422C10.0717 10.632 9.01258 11.6997 8.68604 12.0323C7.57838 13.1604 6.00634 12.9027 5.14384 12.0243C4.25823 11.1224 4.07498 9.54247 5.16042 8.43702C5.48984 8.10152 5.92558 7.66106 6.35404 7.228L6.37444 7.20738L6.3749 7.20692C6.79717 6.78012 7.21047 6.36238 7.5104 6.05692C7.90124 5.65888 8.5344 5.6594 8.92461 6.05809C9.31482 6.45677 9.31431 7.10265 8.92347 7.5007C8.62077 7.80898 8.20521 8.229 7.78466 8.65406L7.76173 8.67724C7.33237 9.11121 6.89965 9.54862 6.57349 9.88079C6.4406 10.0161 6.40916 10.1441 6.41213 10.2472C6.41551 10.3649 6.46612 10.4881 6.55692 10.5806C6.65114 10.6765 6.78456 10.7367 6.91385 10.7427C7.02608 10.7479 7.14914 10.7146 7.27297 10.5885C7.60452 10.2509 8.66896 9.17783 9.64727 8.19247C10.1371 7.69908 10.6064 7.22664 10.9532 6.87757L11.5223 6.30484C12.6364 5.17007 12.8562 4.87242 12.8562 4.31151C12.8562 3.88556 12.6678 3.2376 12.1756 2.7363C11.685 2.23671 11.0535 2.04785 10.6319 2.04785Z" fill="#B2B8BF"/>
-</svg>
+<!DOCTYPE html>
+<html
+>
+  <head>
+    <meta charset="utf-8">
+
+    <script nonce="">
+      if (function() {
+        try { eval('(async () => { for await (let v of [{ async* [Symbol.asyncIterator]() { yield {x: 1} } }]) { let {a, ...b} = {...v} } })().finally(() => {}); /\\p{Z}/u;') } catch (e) { return true }
+
+        return false
+      }()) {
+        location.href = '/unsupported_browser'
+      }
+    </script>
+
+
+
+    <script nonce="">
+  (function() {
+    if (!window.INITIAL_OPTIONS) {
+      window.INITIAL_OPTIONS = {};
+    }
+
+    window.INITIAL_OPTIONS.feature_flags = {"activerecord_cache":true,"agent_new_installs":true,"antispam_rl_invite_from_new_user":true,"antispam_rl_org":true,"aus_locked_orgs":true,"batch_component_actions":true,"block_auth_for_disposable_emails":true,"branching_and_merging_creation":true,"branching_and_merging_onFrame":true,"branching_and_merging_reviews":true,"branching_and_merging_reviews_lg":true,"browse_ia_settings_modal":true,"capture_only_enabled_events":true,"check_higher_buffer_version":true,"check_replica_lag":true,"cjk_extended_font_fallback":true,"clear_received_join_end":true,"cmd_click_top_level_frames":true,"comment_mentions_permissions":true,"comments_thread_container":true,"community_hub_ga":true,"community_hub_image_inspection":true,"community_pop_score_replica":true,"community_show_related_content":true,"component_actions_rate_limit":true,"copy_paste_new_api":true,"copy_paste_v4":true,"csp_prod":true,"csp_prod_admin":true,"csp_prod_admin_enforce":true,"csp_prod_enforce":true,"cursor_chat":true,"db_request_reconnect":true,"deep_search_indexing":true,"deep_search_live_launch":true,"defer_invisible_children":true,"defer_update_default_style":true,"disable_long_frame_time":true,"edu_onboarding_grace_period":true,"edu_onboarding_verification_form":true,"edu_verification_form_updated":true,"ee_bring_forward_visibly":true,"ee_custom_vertical_list_spacing":true,"ee_knockout_shadow":true,"ee_svg_shape_rendering":true,"enable_exp_branching_filter":true,"exp_branching":true,"exp_edu_onboarding_acc_creation":true,"exp_figjam_templates_on_new_file":true,"exp_guest_management_admin":true,"exp_pro_edit_links":true,"exp_request_to_edit_orgs":true,"exp_request_to_edit_teams":true,"exp_workshop_mode_orgs":true,"exp_workshop_mode_teams":true,"experiment_framework_config":true,"explicitly_schedule_frames":true,"figjam_allow_mixed_text_boxes":true,"figjam_allow_paste_into_design":true,"figjam_bug_button_support":true,"figjam_consolidate_connectors":true,"figjam_copy_paste_offset":true,"figjam_export":true,"figjam_ga":true,"figjam_high_fives":true,"figjam_high_fives_use_os_cursor":true,"figjam_import_parse_html":true,"figjam_launch_announcement":true,"figjam_launch_browser":true,"figjam_launch_growth":true,"figjam_ngima_stickers":true,"figjam_off":true,"figjam_plugins":true,"figjam_plugins_relaunch_buttons":true,"figjam_plugins_rich_if_apis":true,"figjam_plugins_templates":true,"figjam_plugins_validation":true,"figjam_show_bug_button":true,"figjam_templates_new_file_topbar":true,"figjam_zoom_controls":true,"figma_design_cursor_chat":true,"file_browser_tile_ratio":true,"font_skip_inter":true,"font_skip_sf_pro":true,"free_tier_refresh_launch":true,"frontend_sentry_errors":true,"fullscreen_alt_drag_delay":true,"fullscreen_pen_tool_memory":true,"gc_component_actions":true,"generate_checkpoint_thumbnails":true,"gtm_geolocation":true,"hand_cursor_press_state":true,"improved_team_member_loading":true,"livegraph_better_optimistic":true,"livegraph_idle_disconnect":true,"livegraph_user_state":true,"menu_search_metrics_tracker":true,"migrate_checkpoint_version":true,"migrate_community_files":true,"migrate_styles":true,"modal_dropdown_menus":true,"multi_paste":true,"multiplayer_checkpoints_180":true,"multiplayer_checkpoints_75":true,"multiplayer_field_merging":true,"multiplayer_figjam_max_conn_500":true,"multiplayer_hide_cursors":true,"multiplayer_reconnect_seq_num":true,"multiplayer_suppress_broadcast":true,"multiplayer_widgets_subtree":true,"multiplayer_zstd_compression":true,"org_downgrade_multi_transaction":true,"org_file_count_optimization":true,"org_merges_multi_transaction":true,"org_migration_locking":true,"org_migration_multi_transaction":true,"org_migration_multi_tx_ss":true,"org_ops_locked":true,"org_user_import_multi_tx":true,"overwrite_file_thumbnails":true,"parameterized_plugins":true,"paste_here":true,"paste_in_group_like_frame":true,"paste_to_replace":true,"pencil_shift_to_straight":true,"pixie_use_file_proxy_fallback":true,"pre_figjam_launch_promo":true,"prevent_focus_capture":true,"prevent_instance_style_dirty":true,"pro_figjam_file_edit_link":true,"pro_team_dashboard":true,"pro_team_user_checkpoint_upgrade":true,"prototype_lib_fetch_shared_fonts":true,"prototype_lib_missing_fonts_alt":true,"prototype_multiple_entry_points":true,"quick_commands_floating_search":true,"quick_commands_metrics_tracker":true,"quick_commands_popularity_rank":true,"recaptcha_frontend_web":true,"recaptcha_serverside_enforce":true,"remote_work_templates":true,"report_lower_buffer_version":true,"request_to_edit":true,"require_okta_groups_reject":true,"search_analytics_use_replica":true,"security_logging_firehose":true,"selection_paints_deleted_style":true,"show_menu_item_al_symbol_repub":true,"show_state_group_size_errors":true,"solid_second_paint":true,"sso_autodirect":true,"starter_file_edit_link":true,"streamline_figjam_onboarding":true,"survey_org_cart_abandon":true,"survey_pro_cart_abandon":true,"tax_excluded":true,"team_org_moves_multi_transaction":true,"text_wrapping_improvements":true,"use_absolute_bounds_export":true,"user_pref_sync":true,"ux_feedback_survey":true,"viewer_drop_shadow_move_ssg":true,"viewer_enable_auto_layout":true,"viewer_fix_ctg_memory_bloat":true,"viewer_no_dup_data_on_prm":true,"viewer_simple_slides_condition":true,"vitess_async_reads":true,"vitess_async_writes":true,"vitess_connect_without_dbname":true,"voice_audio_in_cursor":true,"voice_enabled":true,"voice_rollout":true,"voice_unmute_on_join":true};
+      window.INITIAL_OPTIONS.experiments = 
+        {"exp_branching":{"experiment_name":"exp_branching","assignment_weights":null,"randomization_method":1,"treatment_names":["disabled","enabled"]},"exp_edu_onboarding_acc_creation":{"experiment_name":"exp_edu_onboarding_acc_creation","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant"]},"exp_figjam_templates_on_new_file":{"experiment_name":"exp_figjam_templates_on_new_file","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant"]},"exp_pro_edit_links":{"experiment_name":"exp_pro_edit_links","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant_only_edit_links","variant_edit_links_and_friction"]},"exp_request_to_edit_teams":{"experiment_name":"exp_request_to_edit_teams","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant"]},"exp_request_to_edit_orgs":{"experiment_name":"exp_request_to_edit_orgs","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant"]},"exp_workshop_mode_orgs":{"experiment_name":"exp_workshop_mode_orgs","assignment_weights":null,"randomization_method":2,"treatment_names":["control","variant"]},"exp_workshop_mode_teams":{"experiment_name":"exp_workshop_mode_teams","assignment_weights":null,"randomization_method":2,"treatment_names":["control","variant"]},"figjam_templates_new_file_topbar":{"experiment_name":"figjam_templates_new_file_topbar","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant_recents_only","variant_all"]},"pro_figjam_file_edit_link":{"experiment_name":"pro_figjam_file_edit_link","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant"]},"voice_rollout":{"experiment_name":"voice_rollout","assignment_weights":null,"randomization_method":0,"treatment_names":["control","variant"]}};
+    window.INITIAL_OPTIONS.tracking_session_id = "ExjWpaEUTD71hpvZ";
+    window.INITIAL_OPTIONS.cluster_name = "prod";
+    window.INITIAL_OPTIONS.error_dashboard_url = "https://errors.figma.com/api";
+    window.INITIAL_OPTIONS.frontend_sentry_dsn = "https://d1b12a8fbe424e4b956eb33cadd5b30d@errors.figma.com/api/sentry/56203";
+    window.INITIAL_OPTIONS.figma_email_suffix = "@figma.com";
+    window.INITIAL_OPTIONS.csp_nonce = "";
+    window.INITIAL_OPTIONS.figma_url = "https://www.figma.com";
+
+    window.INITIAL_OPTIONS.flash = {
+      error: null,
+      warn: null,
+      success: null
+    }
+
+
+      var _initial_options = {"api_url":"https:\/\/api.figma.com"}
+      for (var key in _initial_options) {
+        window.INITIAL_OPTIONS[key] = _initial_options[key]
+      }
+
+    window.EARLY_ARGS = window.EARLY_ARGS || {};
+    window.EARLY_ARGS.omit_core_data = false;
+    window.EARLY_ARGS.file_minimal_user_state = false;
+
+
+
+      const pro_trial_json = {"pro_trials_v2_published_team_library":{"default":{"file_name":"Music App Design Library","file_key":"D3JUit9Sj3zA01jZ2yIeAW","checkpoint_id":905230943858114618,"folder_name":"Pro Trial Checklist"}},"pro_trials_v2_imported_component":{"published_components":{"file_name":"Music App","file_key":"EPsAVfTmWm0rTWWt1xTThr","checkpoint_id":905231385563295691,"folder_name":"Pro Trial Checklist"},"local_components":{"file_name":"Music App","file_key":"aJNeFFEcSww5Fkj8YB882S","checkpoint_id":905231650961895864,"folder_name":"Pro Trial Checklist"},"component_name":"Play Button"}}
+
+      if (!!pro_trial_json.pro_trials_v2_imported_component) {
+        const imported_component_json = pro_trial_json.pro_trials_v2_imported_component
+        if (!!imported_component_json.published_components) {
+          window.INITIAL_OPTIONS.pro_trials_v2_imported_component_file_name = pro_trial_json.pro_trials_v2_imported_component.published_components.file_name
+        }
+        window.INITIAL_OPTIONS.pro_trials_v2_component_name = imported_component_json.component_name
+      }
+
+      if (!!pro_trial_json.pro_trials_v2_published_team_library) {
+        const published_team_library_json = pro_trial_json.pro_trials_v2_published_team_library
+        if (!!published_team_library_json.default) {
+          window.INITIAL_OPTIONS.pro_trials_v2_published_team_library_file_name = published_team_library_json.default.file_name
+        }
+      }
+
+
+      window.INITIAL_OPTIONS.segment_web_key = "6Zhdn0wK1GLYzCsb0LIK0oQplS5TXcB2"
+
+      window.INITIAL_OPTIONS.segment_fullscreen_key = "6uxDivlUmLf95lHRk0R8bZvr8zDxbX5E"
+
+
+      window.INITIAL_OPTIONS.stripe_api_public = "pk_live_LKZ0RKjSZG2D2pwdtwrAhkiJ"
+
+      window.INITIAL_OPTIONS.google_tag_manager_iframe_url = "https://marketing.figma.com"
+
+    window.INITIAL_OPTIONS.recaptcha_v3_ent_site_key = "6Le0W80aAAAAAGU9L7qz4o9tQVqrdJVv2M8XHIcd"
+
+    window.INITIAL_OPTIONS.release_manifest_hash = "4b5eb674bcdc197e17a2a40946fd5202"
+
+      console.log('Running frontend commit', "59eb95a3f175eb37f5ef60cb0a3853fda0d29bad")
+
+      window.INITIAL_OPTIONS.release_manifest_git_commit = "59eb95a3f175eb37f5ef60cb0a3853fda0d29bad"
+      window.INITIAL_OPTIONS.release_server_git_commit = "a65c1b618ee39212c8f367c239ba3be79dc03d6b"
+      window.INITIAL_OPTIONS.release_git_tag = "release-2021-09-30"
+  })();
+</script>
+<script nonce="">
+window.FIGMA_BUNDLE = (function () {
+  const pathsForModules = (() => {
+    const _paths = {
+
+    };
+
+    const _loadedPaths = new Set()
+    return {
+      get: (key) => {
+        return _paths[key];
+      },
+      hasLoaded: (key) => {
+        return _loadedPaths.has(key)
+      },
+      setHasLoaded: (key) => {
+        return _loadedPaths.add(key)
+      },
+    };
+  })();
+
+  const values = {};
+  const promises = {};
+
+  return {
+    export: function (name, value) {
+      if (!pathsForModules.get(name)) {
+        console.warn('please add the "js_path" declaration in "pathsForModules" for "' + name + '".');
+        return;
+      }
+      values[name] = value;
+    },
+
+    import: function (name) {
+      const FAILURE_TEXT = 'failed to load "' + name + '" module!'
+      if (values[name]) return Promise.resolve(values[name])
+
+      const path = pathsForModules.get(name);
+      if (!pathsForModules.get(name)) {
+        return Promise.reject({ error: FAILURE_TEXT + ' "' + name + '" has not been added to "pathsForModules".' })
+      }
+
+      if (promises[path]) {
+        return new Promise((resolve, reject) => {
+          promises[path].then(_ => resolve(values[name])).catch(error => reject({ error }));
+        });
+      }
+
+      const promise = new Promise((resolve, reject) => {
+        if (promises[path]) return;
+
+        const script = document.createElement("script");
+        script.setAttribute("async", true);
+        script.setAttribute("nonce", "")
+
+        script.onload = function () {
+          resolve(values[name])
+        };
+        script.onerror = function (error) {
+          reject(error)
+        };
+
+        script.src = pathsForModules.get(name);
+        pathsForModules.setHasLoaded(name);
+        document.body.appendChild(script)
+      });
+      promises[path] = promise;
+      return promise;
+    },
+  };
+})();
+</script>
+  <script nonce="">
+    (function(t){var e={},r=function(){return this}();return function n(o){var s=e[o];return s?s.exports:(s=e[o]={exports:{},id:o,loaded:!1},t[o].call(r,s,s.exports,n),s.exports instanceof Function&&(s.exports.default=s.exports),s.loaded=!0,s.exports)}(t.length-1)})([
+(function(e,t,s){"use strict";Object.defineProperty(t,"__esModule",{value:!0}),self.global=self;const o=e=>{var t;const s=null===(t=window.INITIAL_OPTIONS.user_data)||void 0===t?void 0:t.id,o=window.INITIAL_OPTIONS.tracking_session_id,i=window.INITIAL_OPTIONS.release_manifest_git_commit;window.mpGlobal={version:56,sock:null,msgs:[],perfMetrics:[],url({fileKey:t,role:n,oauthToken:r,nodeIds:a}){let w=null;e&&t===e.fileKey&&e.targetFileVersion&&(w=e.targetFileVersion);let d="";"editor"!==n&&"viewerWithCpp"!==n||!a||(d=`&scenegraph-queries-initial-nodes=${a}`);const l=window.INITIAL_OPTIONS.feature_flags,p="editor"===n&&l.multiplayer_zstd_compression||"viewerWithCpp"===n&&l.multiplayer_zstd_compression||("prototype"===n||"viewer"===n)&&l.viewer_multiplayer_zstd;return`${location.protocol.replace("http","ws")}//${location.host}/api/multiplayer/${t}?role=${n}`+`&tracking_session_id=${o}&version=${this.version}`+(r?"&oauth_token="+r:"")+d+(p?"&compression=zstd":"")+(s?`&user-id=${s}`:"")+(w?`&target-file-version=${w}`:"")+(i?`&client_release=${i}`:"")},preconnect(e){if(this.sock){if(e===this.sock.url&&this.sock.readyState!==WebSocket.CLOSED)return;try{this.sock.close()}catch(t){}}this.sock=new WebSocket(e),this.sock.binaryType="arraybuffer",this.sock.onopen=(e=>{this.perfMetrics.push({key:"mp-ws-onopen",ts:performance.now(),nBytes:void 0})}),this.sock.onmessage=(e=>{const t=new Uint8Array(e.data);this.msgs.push(t),this.perfMetrics.push({key:"mp-ws-onmessage",ts:performance.now(),nBytes:t.length*t.BYTES_PER_ELEMENT})}),this.msgs=[],this.perfMetrics=[]}},e&&mpGlobal.preconnect(mpGlobal.url(e))};(()=>{const{file_minimal_user_state:e,mock_user_state_for_tests_json:t,multiplayer_preconnect_options:s,omit_core_data:i}=window.EARLY_ARGS||{};window.INITIAL_OPTIONS||(window.INITIAL_OPTIONS={}),((e,t,s)=>{if(e)window.userStateXHR={readyState:4,status:200,responseText:e};else if(window.Fig){if(!window.INITIAL_OPTIONS.user_data)return void(window.startUserStateXHR=(()=>{}));window.startUserStateXHR=function(e){var t,o="/api/user/state",i=[];window.INITIAL_OPTIONS.org_id&&i.push("org_id="+window.INITIAL_OPTIONS.org_id),i.push("omit_user_flags=1"),i.push("omit_file_browser_preferences=1"),s&&i.push("omit_core_data=1"),e&&i.push("file_key="+e),0!==i.length&&(o+="?"+i.join("&")),window.userStateXHR=new XMLHttpRequest,window.userStateXHR.open("GET",o);const n=null===(t=window.INITIAL_OPTIONS.user_data)||void 0===t?void 0:t.id;n&&window.userStateXHR.setRequestHeader("X-Figma-User-ID",n),window.userStateXHR.send();var r=window.performance?window.performance.now():-1;window.userStateXHR.addEventListener("load",function(){window.userStateXHRDuration=window.performance?window.performance.now()-r:-1},!1),window.sessionStateXHR=new XMLHttpRequest,window.sessionStateXHR.open("GET","/api/session/state"),n&&window.sessionStateXHR.setRequestHeader("X-Figma-User-ID",n),window.sessionStateXHR.send()};const e="/preload-editor"===location.pathname||"/file/new"===location.pathname,o=window.INITIAL_OPTIONS.editing_file&&window.INITIAL_OPTIONS.editing_file.key;t?window.startUserStateXHR(o):e||window.startUserStateXHR()}})(t,e,i),o(s)})()})]);
+
+//# sourceMappingURL=https://admin.figma.com/admin/figbuild-artifacts/early.834c2ff85480fa9d9838e6b7a110ac4e.min.js.map
+  </script>
+
+
+    <meta name="google" content="notranslate" />
+    <meta name="slack-app-id" content="A01N2QYSA81">
+
+    <title>Figma</title>
+
+    <style type="text/css">
+  #filebrowser-loading-page {
+    opacity: 1;
+    -webkit-transition: opacity .2s ease-in-out;
+    display: flex;
+    flex-wrap: wrap;
+
+    /* Make sure the loading page is flush with the edges of the page so
+       our layout isnt affected by browser default margins/paddings */
+    position: absolute;
+    top: 48px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  #filebrowser-loading-page.fadeOut {
+    opacity: 0;
+  }
+
+  #filebrowser-loading-page.hidden {
+    display: none;
+    opacity: 0;
+  }
+
+ /*
+  * HAX: The sidebar is cloned and used independently outside of this
+  * page so any styles like `#filebrowser-loading-page .thing` applied
+  * to sidebar sub-elements also need a selector like
+  * `.filebrowser-loading-sidebar .thing` so that they work outside of
+  * this page too.
+  */
+  #filebrowser-loading-page .row,
+  .filebrowser-loading-sidebar .row {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    height: 16px;
+  }
+
+  #filebrowser-loading-page .circle,
+  .filebrowser-loading-sidebar .circle {
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    width: 22px;
+    height: 22px;
+  }
+
+  #filebrowser-loading-page .row .circle,
+  .filebrowser-loading-sidebar .row .circle {
+    position: relative;
+    top: -3px;
+    left: -35px;
+  }
+
+  .filebrowser-loading-sidebar {
+    flex: 0 0 224px;
+    background-color: white;
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #filebrowser-loading-page .navbar {
+    height: 48px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    background-color: #2C2C2C;
+    z-index: 1;
+  }
+
+  .filebrowser-loading-sidebar .row {
+    width: 85px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-left: 48px;
+  }
+
+  .filebrowser-loading-sidebar .row .circle {
+    position: relative;
+    top: -3px;
+    left: -35px;
+  }
+
+  #filebrowser-loading-page .divider,
+  .filebrowser-loading-sidebar .divider {
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .filebrowser-loading-sidebar .row:nth-child(2) { width: 40px; }
+  .filebrowser-loading-sidebar .row:nth-child(3) { width: 58px; }
+  .filebrowser-loading-sidebar .row:nth-child(4) { width: 58px; }
+  .filebrowser-loading-sidebar .row:nth-child(7) { width: 60px; }
+  .filebrowser-loading-sidebar .row:nth-child(8) { margin-left: 16px; margin-right: 16px; }
+  .filebrowser-loading-sidebar .row:nth-child(9) { width: 60px; }
+  .filebrowser-loading-sidebar .row:nth-child(10) { width: 46px; opacity: .8; }
+  .filebrowser-loading-sidebar .row:nth-child(11) { width: 65px; opacity: .4; }
+
+  #filebrowser-loading-page .page {
+    flex: 1 1;
+    box-sizing: border-box;
+    border-left: 1px #e5e5e5 solid;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #filebrowser-loading-page .toolbar {
+    border-bottom: 1px #e5e5e5 solid;
+    height: 48px;
+  }
+
+  #filebrowser-loading-page .toolbar .item {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    width: 85px;
+    height: 16px;
+    margin-left: 32px;
+    margin-top: 16px;
+  }
+
+  #filebrowser-loading-page .columns {
+    flex: 1 1;
+    display: flex;
+    flex-direction: row-reverse;
+    padding-right: 32px;
+  }
+
+  @media (max-width: 849px) {
+    #filebrowser-loading-page .columns {
+      flex-direction: column;
+    }
+
+    #filebrowser-loading-page .right-column {
+      padding-left: 32px;
+    }
+
+    #filebrowser-loading-page .public-header + .columns {
+      flex-direction: column-reverse;
+    }
+  }
+
+  #filebrowser-loading-page .content {
+    flex: 1 1;
+  }
+
+  #filebrowser-loading-page .sort-dropdown {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    width: 72px;
+    height: 16px;
+    margin: 24px 32px;
+  }
+
+  #filebrowser-loading-page .tile {
+    height: 0;
+    padding-top: 75%;
+    box-sizing: border-box;
+    position: relative;
+  }
+
+  #filebrowser-loading-page .tile .inner {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    left: 2px;
+    right: 2px;
+    border: 1px solid #f0f0f0;
+    border-radius: 6px;
+    background-color: #f0f0f0;
+  }
+
+  #filebrowser-loading-page .tile .inner .lower {
+    height: 54px;
+    background-color: white;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    border-radius: 0 0 6px 6px;
+  }
+
+  #filebrowser-loading-page .public-grid {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+    grid-gap: 32px;
+    padding-left: 32px;
+  }
+
+  @media (max-width: 1023px) {
+    #filebrowser-loading-page .public-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  #filebrowser-loading-page .public-grid .tile {
+    height: 0px;
+    padding-top: 75%;
+  }
+
+  #filebrowser-loading-page .public-grid .tile:nth-child(6) { opacity: .8; }
+  #filebrowser-loading-page .public-grid .tile:nth-child(7) { opacity: .4; }
+
+  #filebrowser-loading-page .file-grid {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(256px, 1fr));
+    grid-gap: 32px;
+    padding-left: 32px;
+  }
+
+  #filebrowser-loading-page .file-grid .tile:nth-child(6) { opacity: .8; }
+  #filebrowser-loading-page .file-grid .tile:nth-child(7) { opacity: .4; }
+
+  #filebrowser-loading-page .team-grid {
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(264px, 1fr));
+    grid-gap: 32px 32px;
+    padding: 32px 0 0 32px;
+    align-content: start;
+  }
+
+  #filebrowser-loading-page .team-tile {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 6px;
+    position: relative;
+    padding: 16px;
+  }
+
+  #filebrowser-loading-page .team-grid .team-tile:nth-child(6) { opacity: .8; }
+  #filebrowser-loading-page .team-grid .team-tile:nth-child(7) { opacity: .4; }
+
+  #filebrowser-loading-page .team-tile .row {
+    margin-top: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+  }
+
+  #filebrowser-loading-page .team-tile .row:nth-child(1) {
+    width: 32px;
+    height: 32px;
+  }
+
+  #filebrowser-loading-page .team-tile .row:nth-child(2) {
+    width: 65px;
+    height: 30px;
+    position: absolute;
+    top: 17px;
+    right: 16px;
+    margin-top: 0;
+  }
+
+  #filebrowser-loading-page .team-tile .row:nth-child(3) {
+    width: 120px;
+    margin-top: 20px;
+  }
+  #filebrowser-loading-page .team-tile .row:nth-child(4) {
+    width: 232px;
+    margin-top: 12px;
+  }
+  #filebrowser-loading-page .team-tile .row:nth-child(5) {
+    width: 174px;
+    margin-top: 8px;
+  }
+
+  #filebrowser-loading-page .team-tile .circles {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #filebrowser-loading-page .team-tile .circle {
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    margin-top: 22px;
+  }
+
+  #filebrowser-loading-page .public-header {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 240px;
+    margin-bottom: 80px;
+  }
+
+  #filebrowser-loading-page .profile-header {
+    background-color: #f0f0f0;
+    width: 100%;
+    height: 64px;
+  }
+
+  #filebrowser-loading-page .profile-grid {
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr .75fr;
+    align-items: end;
+  }
+
+  #filebrowser-loading-page .profile-grid .row {
+    margin-top: 24px;
+  }
+
+  #filebrowser-loading-page .profile-grid div:nth-child(4n+1) { width: 148px; }
+  #filebrowser-loading-page .profile-grid div:nth-child(4n+3) { width: 56px; }
+  #filebrowser-loading-page .profile-grid div:nth-child(4n+4) { width: 99px; }
+
+  #filebrowser-loading-page .profile-grid div:nth-child(1) { width: 61px; margin-top: 0; }
+
+  #filebrowser-loading-page .profile-grid div:nth-child(5) { width: 61px; margin-top: 32px; }
+  #filebrowser-loading-page .profile-grid div:nth-child(7) { width: 69px; }
+  #filebrowser-loading-page .profile-grid div:nth-child(8) { width: 51px; }
+
+  #filebrowser-loading-page .profile-grid div:nth-child(9) { margin-top: 36px; }
+  #filebrowser-loading-page .profile-grid div:nth-child(11) { width: 69px; }
+  #filebrowser-loading-page .profile-grid div:nth-child(12) { width: 72px; }
+
+  #filebrowser-loading-page .profile-grid div:nth-child(25),
+  #filebrowser-loading-page .profile-grid div:nth-child(27),
+  #filebrowser-loading-page .profile-grid div:nth-child(28) { opacity: .8; }
+
+  #filebrowser-loading-page .profile-grid div:nth-child(29),
+  #filebrowser-loading-page .profile-grid div:nth-child(31),
+  #filebrowser-loading-page .profile-grid div:nth-child(32) { opacity: .4; }
+
+  @media(max-width: 1000px) {
+    #filebrowser-loading-page .profile-grid {
+      grid-template-columns: 1fr;
+    }
+
+    #filebrowser-loading-page .profile-grid div:nth-child(5),
+    #filebrowser-loading-page .profile-grid div:nth-child(6),
+    #filebrowser-loading-page .profile-grid div:nth-child(7),
+    #filebrowser-loading-page .profile-grid div:nth-child(8),
+    #filebrowser-loading-page .profile-grid div:nth-child(4n+2),
+    #filebrowser-loading-page .profile-grid div:nth-child(4n+3),
+    #filebrowser-loading-page .profile-grid div:nth-child(4n+4) { display: none; }
+  }
+
+  #filebrowser-loading-page .project-grid {
+    padding-left: 32px;
+    display: grid;
+    grid-row-gap: 22px;
+  }
+
+  #filebrowser-loading-page .project-grid .card {
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 178px;
+    display: flex;
+  }
+
+  #filebrowser-loading-page .project-grid .card:nth-child(3) { opacity: .8; }
+  #filebrowser-loading-page .project-grid .card:nth-child(4) { opacity: .4; }
+
+  #filebrowser-loading-page .project-grid .card .left {
+    width: 196px;
+    margin: 16px;
+  }
+
+  #filebrowser-loading-page .project-grid .card .right {
+    flex: 1 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    overflow: hidden;
+    margin: 16px 0;
+  }
+
+  #filebrowser-loading-page .project-grid .card .left .row:nth-child(1) { width: 107px; }
+  #filebrowser-loading-page .project-grid .card .left .row:nth-child(2) { width: 164px; margin-top: 12px; }
+  #filebrowser-loading-page .project-grid .card .left .row:nth-child(3) { width: 145px; margin-top: 8px; }
+  #filebrowser-loading-page .project-grid .card .left .row:nth-child(4) { width: 158px; margin-top: 8px; }
+
+  #filebrowser-loading-page .project-grid .card .right .row {
+    height: 100%;
+    flex: 1 1 196px;
+    margin-right: 16px;
+    border-radius: 6px;
+  }
+
+  #filebrowser-loading-page .right-column {
+    flex: 0 0 304px;
+    margin-right: 16px;
+    margin-top: 16px;
+    box-sizing: border-box;
+    padding-left: 32px;
+  }
+
+  #filebrowser-loading-page .right-column .row:nth-child(1) {
+    margin-top: 16px;
+    width: 120px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(2) {
+    margin-top: 18px;
+    width: 272px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(3) {
+    margin-top: 8px;
+    width: 248px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(4) {
+    margin-top: 8px;
+    width: 272px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(5) {
+    margin-top: 8px;
+    width: 256px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(6) {
+    margin-top: 8px;
+    width: 200px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(7) {
+    margin-top: 35px;
+    width: 88px;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(8) {
+    margin-top: 22px;
+    margin-left: 51px;
+    width: 88px;
+    opacity: .8;
+  }
+  #filebrowser-loading-page .right-column .row:nth-child(9) {
+    margin-top: 18px;
+    margin-left: 51px;
+    width: 88px;
+    opacity: .4;
+  }
+
+  #filebrowser-loading-page .public-left-column {
+    padding: 0 0 32px 32px;
+    width: 320px;
+  }
+
+  #filebrowser-loading-page .public-left-column .row {
+    margin-top: 8px;
+  }
+
+  #filebrowser-loading-page .public-left-column .row:nth-child(1) {
+    width: 120px;
+    margin-top: 0;
+  }
+  #filebrowser-loading-page .public-left-column .row:nth-child(2) {
+    width: 272px;
+    margin-top: 18px;
+  }
+  #filebrowser-loading-page .public-left-column .row:nth-child(3) {
+    width: 248px;
+  }
+  #filebrowser-loading-page .public-left-column .row:nth-child(4) {
+    width: 272px;
+  }
+  #filebrowser-loading-page .public-left-column .row:nth-child(5) {
+    width: 256px;
+    opacity: .8;
+  }
+  #filebrowser-loading-page .public-left-column .row:nth-child(6) {
+    width: 200px;
+    opacity: .4;
+  }
+
+  /*
+  Note: Make sure any changes here are also duplicated in the fullscreen progress bar
+  (.progressBar in progress_bar.css)
+  */
+  #filebrowser-loading-progress-bar {
+    height: 5px;
+      background: #18A0FB;
+    position: absolute;
+    left: 0;
+    animation: filebrowserloadingProgressBar 10s cubic-bezier(.08,.8,.1,1) forwards;
+  }
+
+  @keyframes filebrowserloadingProgressBar {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+
+  @media (max-width: 645px) {
+    .filebrowser-loading-sidebar {
+      display: none;
+    }
+
+    #filebrowser-loading-page .page {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    #filebrowser-loading-page .public-header {
+      height: 120px;
+    }
+
+    #filebrowser-loading-page .file-grid {
+      grid-template-columns: 1fr;
+      max-width: 400px;
+      margin: 0 auto;
+      align-self: center;
+    }
+  }
+
+</style>
+
+
+      <meta name="mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    
+    <meta property="og:title" content="Figma" />
+    <meta property="og:site_name" content="Figma" />
+
+    
+
+
+<link rel="icon" sizes="192x192" href="https://static.figma.com/app/icon/1/icon-192.png">
+<link rel="icon" sizes="128x128" href="https://static.figma.com/app/icon/1/icon-128.png">
+
+<link rel="icon" type="image/png" href="https://static.figma.com/app/icon/1/favicon.png" />
+<!--[if IE]><link rel="shortcut icon" href="https://static.figma.com/app/icon/1/favicon.ico" type="image/vnd.microsoft.icon" /><![endif]-->
+<link rel="icon" sizes="any" type="image/svg+xml" href="https://static.figma.com/app/icon/1/favicon.svg">
+
+<link rel="apple-touch-icon" sizes="76x76"   href="https://static.figma.com/app/icon/1/touch-76.png">
+<link rel="apple-touch-icon" sizes="120x120" href="https://static.figma.com/app/icon/1/touch-120.png">
+<link rel="apple-touch-icon" sizes="152x152" href="https://static.figma.com/app/icon/1/touch-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="https://static.figma.com/app/icon/1/touch-167.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://static.figma.com/app/icon/1/touch-180.png">
+
+
+      <link href="https:&#47;&#47;www.figma.com&#47;figbuild-artifacts&#47;developers.d0be942c7b2b27806add175802503136.min.css" rel="stylesheet">
+
+
+  </head>
+  <body class="">
+
+    <div id="react-page"></div>
+
+    <div id="filebrowser-loading-page"
+    class="hidden fadeOut"
+>
+  <div class="navbar"></div>
+
+  <!-- HAX: this sidebar is cloned and used outside of this page -->
+  <div id="filebrowser-loading-sidebar" class="filebrowser-loading-sidebar">
+    <div class="row">
+      <div class="circle"></div>
+    </div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="divider"></div>
+    <div class="row">
+      <div class="circle"></div>
+    </div>
+    <div class="row"></div>
+    <div class="divider"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+    <div class="row"></div>
+  </div>
+
+  <div class="page">
+
+
+    <div class="columns">
+
+
+      <div class="content">
+
+
+      </div>
+
+    </div>
+  </div>
+
+  <div id="filebrowser-loading-progress-bar"></div>
+</div>
+
+
+    
+
+      <script nonce="">
+    window['sentryConfig'] = {
+    }
+  </script>
+
+      <script nonce="" src="https:&#47;&#47;www.figma.com&#47;figbuild-artifacts&#47;developers.65e7aa95b228d9e12e235a6ec422234d.min.js"></script>
+
+  </body>
+</html>
