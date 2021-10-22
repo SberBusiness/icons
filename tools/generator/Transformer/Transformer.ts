@@ -2,8 +2,8 @@ import SVGO from 'svgo';
 import {initialStyles, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
 import {IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
 import {hash} from '../utils/hash';
-import {EIconState, EIconType, EIconTypeName} from '../../enums';
-import {ucFirst} from '../../utils/stringUtils';
+import {EIconState, EIconType} from '../../enums';
+import {camelize} from '../../utils/stringUtils';
 
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
@@ -96,6 +96,7 @@ export class Transformer implements ITransformer {
         const optimizedSrc = await this.optimizeSVG(iconData.src);
         return [
             this.reactifyAttrs,
+            this.reactifyInlineStyles,
             this.makeUniqueIds,
             this.insertDimensions,
             this.insertClassName,
@@ -117,13 +118,19 @@ export class Transformer implements ITransformer {
     /**
      * Преобразует атрибуты к react-нотации.
      */
-    private reactifyAttrs = (src: string): string => src.replace(
-        /([a-zA-Z\-]+=)/gim,
-        (attr) => attr
-            .split('-')
-            .map((item, i) => i !== 0 ? ucFirst(item) : item)
-            .join('')
-    );
+    private reactifyAttrs = (src: string): string => src.replace(/([a-zA-Z\-]+=)/gim, camelize);
+
+    /**
+     * Преобразует инлайн стили к объекту.
+     */
+    private reactifyInlineStyles = (src: string): string => src.replace(
+        /style="(.*?)"/g,
+        (match, styles) => `style={{${
+            styles
+                .split(';')
+                .map(style => style.replace(/(.*?):\s*(.*)/, (m, prop, value) => `${camelize(prop)}: '${value}'`))
+                .join(',')
+        }}}`);
 
     /**
      * Приводит id к уникальным значениям.
