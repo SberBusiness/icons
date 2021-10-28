@@ -1,10 +1,10 @@
-name: Publish
+name: Build Illustrations
 
 on:
   workflow_dispatch:
 
 jobs:
-  publish:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,13 +14,9 @@ jobs:
         with:
           node-version: 10.16.3
 
-      - name: Publish icons
-        run: |
+      - run: |
           npm install
-          npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm run publish:icons
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm run build:illustrations
 
       - uses: actions/upload-artifact@v2
         with:

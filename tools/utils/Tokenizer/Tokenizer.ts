@@ -1,6 +1,6 @@
 import {possibleTokens} from './consts';
 import {EIconAttributes} from './enums';
-import {ucFirst} from '../stringUtils';
+import {capitalize} from '../stringUtils';
 import {EIconState, EIconType, EIconTypeName} from '../../enums';
 import {ITokenizedIcon, ITokenizedIconName} from '../../types';
 
@@ -35,7 +35,7 @@ export class Tokenizer {
         }
 
         const iconType = EIconTypeName[tokenizedIconName.type];
-        const componentName = `${ucFirst(tokenizedIconName.name)}${ucFirst(tokenizedIconName.category)}${ucFirst(iconType)}${tokenizedIconName.size}`;
+        const componentName = `${capitalize(tokenizedIconName.name)}${capitalize(tokenizedIconName.category)}${capitalize(iconType)}${tokenizedIconName.size}`;
         const srcName = iconSrcName;
 
         return {

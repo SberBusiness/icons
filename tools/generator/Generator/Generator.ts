@@ -12,10 +12,16 @@ import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
 export class Generator {
     constructor(private readonly transformer: ITransformer) {}
 
-    generate = async () => {
+    generateIcons = async () => {
         await this.transformer.transform();
         await this.generateComponents(this.transformer.getIconsData());
         await this.generateStyles(this.transformer.getStyles());
+        await this.generateModel();
+    };
+
+    generateIllustrations = async () => {
+        await this.transformer.transform();
+        await this.generateComponents(this.transformer.getIconsData());
         await this.generateModel();
     };
 

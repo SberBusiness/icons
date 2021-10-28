@@ -1,10 +1,13 @@
-name: Build
+name: Generate Illustrations
 
 on:
+  pull_request:
+    branches: [ main ]
+
   workflow_dispatch:
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,9 +19,4 @@ jobs:
 
       - run: |
           npm install
-          npm run build:icons
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: public
-          path: public/
+          npm run generate:illustrations

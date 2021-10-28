@@ -11,13 +11,12 @@ const createCallback = (message) => (err) => {
     console.log(message);
 };
 
-const targetPath = modulesPaths[getTarget(process.argv)];
+const target = getTarget(process.argv);
+const targetPath = modulesPaths[target];
 
 createFolderIfNotExists(publicationPath);
 
 copy(path.join(root, './LICENSE.txt'), publicationPath, {}, createCallback('Успешно скопирован файл лицензии'));
-
-copy(path.join(root, './README.md'), publicationPath, {}, createCallback('Успешно скопирован файл README'));
 
 copy(path.join(targetPath, './package.json'), publicationPath, { flatten: true }, createCallback('Успешно скопирован package.json'));
 
@@ -25,4 +24,9 @@ copy(path.join(generationPath, './*.js'), publicationPath, {}, createCallback('�
 
 copy(path.join(generationPath, './*.d.ts'), publicationPath, {}, createCallback('Успешно скопирован файл моделей'));
 
-copy(path.join(generationPath, './css/icons.css'), path.join(publicationPath, './css'), { flatten: true }, createCallback('Успешно скопирован файл стилей'));
+if (target === 'icons') {
+    copy(path.join(generationPath, './css/icons.css'), path.join(publicationPath, './css'), { flatten: true }, createCallback('Успешно скопирован файл стилей'));
+    copy(path.join(root, './README.md'), publicationPath, {}, createCallback('Успешно скопирован файл README'));
+} else {
+    copy(path.join(targetPath, './README.md'), publicationPath, { flatten: true }, createCallback('Успешно скопирован README'));
+}

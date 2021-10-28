@@ -5,14 +5,18 @@ import {srcPaths} from '../consts';
 import {getDirectories} from '../utils/fsUtils';
 import {getTarget} from '../utils/processUtils';
 
-const folders = getDirectories(srcPaths[getTarget(process.argv)]);
+const target = getTarget(process.argv);
+const folders = getDirectories(srcPaths[target]);
 
 const parser = new Parser(folders);
 const transformer = new Transformer(parser);
 const generator = new Generator(transformer);
 
-generator
-    .generate()
+(
+    target === 'icons'
+        ? generator.generateIcons()
+        : generator.generateIllustrations()
+)
     .catch(error => {
         console.log(error);
         process.exit(1);
