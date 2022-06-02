@@ -2,14 +2,17 @@ import SVGO from 'svgo';
 import {initialStyles, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
 import {IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
 import {hash} from '../utils/hash';
+import {deprecationMap} from '../../deprecationMap';
 import {EIconState, EIconType} from '../../enums';
 import {camelize} from '../../utils/stringUtils';
+import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
 
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
  * сырую коллекцию иконок, трансформирует её в react компоненты, попутно собирая коллекцию стилей.
  */
 export class ReactTransformer implements ITransformer {
+    private readonly tokenizer = new Tokenizer();
     private iconsTransformedData: IIconTransformedData[];
     private classNames: IClassNames = {};
 
@@ -189,10 +192,19 @@ export class ReactTransformer implements ITransformer {
     /**
      * Обворачивает svg в React компонент.
      */
-    private generateSvgComponentCode = (src: string, {tokenized: {componentName}}: IIconTransformedData): string => {
+    private generateSvgComponentCode = (src: string, {tokenized: {componentName, srcName}}: IIconTransformedData): string => {
+        let comment = '';
+        if (srcName in deprecationMap) {
+            const replacementComponent = deprecationMap[srcName] && this.tokenizer.tokenize(deprecationMap[srcName]).componentName;
+            comment = `
+/**
+ * @deprecated${replacementComponent ? ` use ${replacementComponent}` : ''}
+ */`;
+        }
+
         return `import * as React from 'react';
 import {IIconProps} from './models';
-
+${comment}
 export function ${componentName}(props: IIconProps) {
     return (
         ${src}
