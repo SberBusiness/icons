@@ -3,7 +3,7 @@ import {EIconState} from '../../enums';
 export const mapSelectors = {
     [EIconState.default]: (className) => `.${className}`,
     [EIconState.hover]: (className) => `.hoverable:hover .${className}`,
-    [EIconState.active]: (className) => `.hoverable:active .${className}, .hoverable.active .${className}`,
+    [EIconState.active]: (className) => `.hoverable:enabled:active .${className}, .hoverable.active .${className}`,
     [EIconState.disabled]: (className) => `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
 

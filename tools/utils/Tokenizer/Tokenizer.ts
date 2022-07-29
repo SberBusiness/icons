@@ -14,7 +14,7 @@ const generateTokensRegex = () => {
     const g4 = possibleTokens[EIconAttributes.size].join('|');
     const g5 = possibleTokens[EIconAttributes.channel].join('|');
 
-    return new RegExp(`^(${g1})_(${g2})_([0-9a-z]+)_(?:(?<=${EIconType.ic}.*)(${g3})_|(?<=${EIconType.il}.*))(${g4})_(${g5})$`);
+    return new RegExp(`^(${g1})_(${g2})_([0-9a-zA-Z]+)_(?:(?<=${EIconType.ic}.*)(${g3})_|(?<=${EIconType.il}.*))(${g4})_(${g5})$`);
 };
 
 export class Tokenizer {
