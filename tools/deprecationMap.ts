@@ -18,4 +18,8 @@ export const deprecationMap = {
     ic_srvx_notificationnew_default_24_w: 'ic_nav_notificationnew_default_24_w',
     ic_srvx_exit_default_24_w: 'ic_nav_exit_default_24_w',
     ic_srvx_settingsberraiting_default_24_w: 'ic_nav_settingsberraiting_default_24_w',
+    ic_prdx_currencyaccountgold_default_32_w: 'ic_prdx_metallaccountgold_default_32_w',
+    ic_prdx_currencyaccountpalladium_default_32_w: 'ic_prdx_metallaccountpalladium_default_32_w',
+    ic_prdx_currencyaccountplatinum_default_32_w: 'ic_prdx_metallaccountplatinum_default_32_w',
+    ic_prdx_currencyaccountsilver_default_32_w: 'ic_prdx_metallaccountsilver_default_32_w',
 };
