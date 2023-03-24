@@ -22,4 +22,6 @@ export const deprecationMap = {
     ic_prdx_currencyaccountpalladium_default_32_w: 'ic_prdx_metallaccountpalladium_default_32_w',
     ic_prdx_currencyaccountplatinum_default_32_w: 'ic_prdx_metallaccountplatinum_default_32_w',
     ic_prdx_currencyaccountsilver_default_32_w: 'ic_prdx_metallaccountsilver_default_32_w',
+    ic_prd_buy_default_20_w: '',
+    ic_prd_buy_default_32_w: '',
 };
