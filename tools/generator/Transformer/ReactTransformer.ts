@@ -18,7 +18,7 @@ export class ReactTransformer implements ITransformer {
 
     constructor(private readonly parser: IParser) {}
 
-    transform = async (): Promise<void>  => {
+    transform = async (): Promise<void> => {
         const iconsRawData = await this.parser.getIconsRawData();
         this.iconsTransformedData = this.collectClassNames(iconsRawData);
         this.iconsTransformedData = await Promise.all(this.iconsTransformedData.map(this.transformIcon));
@@ -28,16 +28,32 @@ export class ReactTransformer implements ITransformer {
 
     /** Возвращает css стили. */
     getStyles = (): string => {
-        return Object.keys(this.classNames).reduce(
-            (styles, className) =>
-                styles + this.classNames[className]
-                    .sort(({state: stateA}, {state: stateB}) =>
-                        selectorsOrder.indexOf(stateA) - selectorsOrder.indexOf(stateB))
-                    .map(({state, color}) => `${mapSelectors[state](className)} { fill: ${color}; } `)
-                    .join(''),
-            initialStyles
+        const mappedStyles = Object.keys(this.classNames).map(
+            (className) =>
+                this.classNames[className].map(({state, color}) => ({
+                    state: state as EIconState,
+                    style: `${mapSelectors[state](className)} { fill: ${color}; }`
+                }))
         );
+
+        // Преобразует массив с массивами в плоский массив
+        const flatMappedStyles = mappedStyles.reduce((acc, arr) => acc.concat(arr), []);
+
+        const flatMappedStylesWithInitial = initialStyles.concat(flatMappedStyles);
+
+        return selectorsOrder.map(state => {
+            const styles = flatMappedStylesWithInitial.filter(mappedStyle => mappedStyle.state === state).map(mappedStyle => mappedStyle.style).join(' ');
+
+            if (state === EIconState.hover) {
+                return this.wrapHoverStyles(styles);
+            }
+
+            return styles;
+        }).join(' ');
     };
+
+    private wrapHoverStyles = (styles) =>
+        `@media (hover: hover) and (pointer: fine), only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) { ${styles} }`;
 
     /**
      * Перебирает данные иконок, добавляет мапу соответсвия цветов к css классу.
@@ -148,7 +164,7 @@ export class ReactTransformer implements ITransformer {
                     (src, id) =>
                         src
                             .replace(new RegExp(`id="${id}"`, 'gim'), `id="${id}_${name}"`)
-                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`,'g'), `(#${id}_${name})`)
+                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name})`)
                     , src);
         } else {
             return src;
@@ -184,7 +200,10 @@ export class ReactTransformer implements ITransformer {
     /**
      * Подменяет hex цвета именами классов.
      */
-    protected replaceColorsWithClassNames = (src: string, {classMap, tokenized: {category}}: IIconTransformedData): string =>
+    protected replaceColorsWithClassNames = (src: string, {
+        classMap,
+        tokenized: {category}
+    }: IIconTransformedData): string =>
         classMap
             ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}${category === 'srv' ? ' service-fill' : ''}"`)
             : src;
@@ -192,7 +211,12 @@ export class ReactTransformer implements ITransformer {
     /**
      * Обворачивает svg в React компонент.
      */
-    private generateSvgComponentCode = (src: string, {tokenized: {componentName, srcName}}: IIconTransformedData): string => {
+    private generateSvgComponentCode = (src: string, {
+        tokenized: {
+            componentName,
+            srcName
+        }
+    }: IIconTransformedData): string => {
         let comment = '';
         if (srcName in deprecationMap) {
             const replacementComponent = deprecationMap[srcName] && this.tokenizer.tokenize(deprecationMap[srcName]).componentName;

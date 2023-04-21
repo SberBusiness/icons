@@ -15,11 +15,11 @@ export const selectorsOrder: string[] = [
 ];
 
 export const initialStyles = [
-    '.table-icon .service-fill { fill: #D0D7DD; }',
-    'tr:hover button:enabled .table-icon .service-fill { fill: #B2B8BF; }',
-    'tr.selected button:enabled .table-icon .service-fill { fill: #B2B8BF; }',
-    'tr:hover button:enabled:hover .table-icon .service-fill { fill: #7D838A; }',
-].join(' ');
+    {state: EIconState.default, style: '.table-icon .service-fill { fill: #D0D7DD; }'},
+    {state: EIconState.hover, style: 'tr:hover button:enabled .table-icon .service-fill { fill: #B2B8BF; }'},
+    {state: EIconState.hover, style: 'tr:hover button:enabled:hover .table-icon .service-fill { fill: #7D838A; }'},
+    {state: EIconState.active, style: 'tr.selected button:enabled .table-icon .service-fill { fill: #B2B8BF; }'},
+];
 
 export const SVGOConfig = {
     plugins: [
