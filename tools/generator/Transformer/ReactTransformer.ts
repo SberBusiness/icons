@@ -1,5 +1,6 @@
 import SVGO from 'svgo';
 import {initialStyles, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
+import {getPackageVersion} from './utils/getPackageVersion';
 import {IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
 import {hash} from '../utils/hash';
 import {deprecationMap} from '../../deprecationMap';
@@ -74,7 +75,10 @@ export class ReactTransformer implements ITransformer {
                         (str, state) => str + state + states[state][i],
                         ''
                     );
-                    const className = hash(strForHash);
+
+                    const version = getPackageVersion();
+
+                    const className = hash(version + strForHash);
                     if (!this.classNames[className]) {
                         this.classNames[className] = iconStates.map(state => ({
                             state,

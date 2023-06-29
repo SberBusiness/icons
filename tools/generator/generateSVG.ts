@@ -3,9 +3,9 @@ import {SVGTransformer} from './Transformer/SVGTransformer';
 import {SVGGenerator} from './Generator/SVGGenerator';
 import {srcPaths} from '../consts';
 import {getDirectories} from '../utils/fsUtils';
-import {getTarget} from '../utils/processUtils';
+import {ETarget, getTarget} from '../utils/envUtils';
 
-const target = getTarget(process.argv);
+const target = getTarget();
 const folders = getDirectories(srcPaths[target]);
 
 const parser = new Parser(folders);
@@ -13,7 +13,7 @@ const svgTransformer = new SVGTransformer(parser);
 const svgGenerator = new SVGGenerator(svgTransformer);
 
 (
-    target === 'icons'
+    target === ETarget.icons
         ? svgGenerator.generateIcons()
         : svgGenerator.generateIllustrations()
 )
