@@ -32,5 +32,7 @@ export const deprecationMap = {
     ic_nav_viewlist_default_20_w: '',
     ic_nav_viewlist_default_32_w: '',
     ic_nav_viewplate_default_20_w: '',
-    ic_nav_viewplate_default_32_w: ''
+    ic_nav_viewplate_default_32_w: '',
+    ic_prd_beautyservice_default_20_w: '',
+    ic_prd_beautyservice_default_32_w: '',
 };
