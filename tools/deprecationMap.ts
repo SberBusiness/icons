@@ -26,4 +26,11 @@ export const deprecationMap = {
     ic_prd_buy_default_32_w: '',
     ic_prd_spasibobusineess_default_20_w: 'ic_prd_spasibobusiness_default_20_w',
     ic_prd_spasibobusineess_default_32_w: 'ic_prd_spasibobusiness_default_32_w',
+    ic_nav_barchart_default_20_w: '',
+    ic_nav_donutchart_default_20_w: '',
+    ic_nav_linechart_default_20_w: '',
+    ic_nav_viewlist_default_20_w: '',
+    ic_nav_viewlist_default_32_w: '',
+    ic_nav_viewplate_default_20_w: '',
+    ic_nav_viewplate_default_32_w: ''
 };
