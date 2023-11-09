@@ -35,4 +35,7 @@ export const deprecationMap = {
     ic_nav_viewplate_default_32_w: '',
     ic_prd_beautyservice_default_20_w: '',
     ic_prd_beautyservice_default_32_w: '',
+    ic_sts_oninfoerror_default_16_w: 'ic_sts_noinfoerror_default_16_w',
+    ic_sts_oninfowait_default_16_w: 'ic_sts_noinfowait_default_16_w',
+    ic_sts_oninfowarning_default_16_w: 'ic_sts_noinfowarning_default_16_w',
 };
