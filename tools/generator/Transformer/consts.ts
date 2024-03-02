@@ -1,3 +1,4 @@
+import {Config} from 'svgo';
 import {EIconState} from '../../enums';
 
 export const mapSelectors = {
@@ -22,41 +23,47 @@ export const initialStyles = [
     {state: EIconState.active, style: 'tr.selected button:enabled .table-icon .service-fill { fill: #B2B8BF; }'},
 ];
 
-export const SVGOConfig = {
+export const SVGOConfig: Config = {
     plugins: [
-        {cleanupAttrs: true},
-        {removeDoctype: true},
-        {removeXMLProcInst: true},
-        {removeComments: true},
-        {removeMetadata: true},
-        {removeTitle: true},
-        {removeDesc: true},
-        {removeUselessDefs: true},
-        {removeEditorsNSData: true},
-        {removeEmptyAttrs: true},
-        {removeHiddenElems: true},
-        {removeEmptyText: true},
-        {removeEmptyContainers: true},
-        {removeViewBox: false},
-        {cleanupEnableBackground: true},
-        {convertStyleToAttrs: true},
-        {convertColors: true},
-        {convertPathData: true},
-        {convertTransform: true},
-        {removeUnknownsAndDefaults: true},
-        {removeNonInheritableGroupAttrs: true},
-        {removeUselessStrokeAndFill: true},
-        {removeUnusedNS: true},
-        {cleanupIDs: true},
-        {cleanupNumericValues: true},
-        {moveElemsAttrsToGroup: true},
-        {moveGroupAttrsToElems: true},
-        {collapseGroups: true},
-        {removeRasterImages: false},
-        {mergePaths: true},
-        {convertShapeToPath: true},
-        {sortAttrs: true},
-        {removeDimensions: true},
-        {removeAttrs: {attrs: '(xmlns)'}},
-    ]
+        "cleanupAttrs",
+        "cleanupEnableBackground",
+        "cleanupIds",
+        "cleanupNumericValues",
+        "collapseGroups",
+        "convertPathData",
+        "convertShapeToPath",
+        "convertStyleToAttrs",
+        "convertTransform",
+        "mergePaths",
+        "moveElemsAttrsToGroup",
+        "moveGroupAttrsToElems",
+        "removeComments",
+        "removeDesc",
+        "removeDoctype",
+        "removeEditorsNSData",
+        "removeEmptyAttrs",
+        "removeEmptyContainers",
+        "removeEmptyText",
+        "removeHiddenElems",
+        "removeMetadata",
+        "removeNonInheritableGroupAttrs",
+        "removeTitle",
+        "removeUnknownsAndDefaults",
+        "removeUnusedNS",
+        "removeUselessStrokeAndFill",
+        "removeUselessDefs",
+        "removeXMLNS",
+        "removeXMLProcInst",
+        "sortAttrs",
+        {
+            name: "convertColors",
+            params: {
+                currentColor: false,
+                names2hex: true,
+                rgb2hex: true,
+                shorthex: false,
+                shortname: false,
+            }
+        }
+    ],
 };

@@ -1,4 +1,4 @@
-import SVGO from 'svgo';
+import {optimize} from 'svgo';
 import {initialStyles, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
 import {getPackageVersion} from './utils/getPackageVersion';
 import {IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
@@ -121,7 +121,6 @@ export class ReactTransformer implements ITransformer {
             this.reactifyAttrs,
             this.reactifyInlineStyles,
             this.makeUniqueIds,
-            this.insertDimensions,
             this.insertClassName,
             this.insertExtra,
             this.replaceColorsWithClassNames,
@@ -134,8 +133,7 @@ export class ReactTransformer implements ITransformer {
      * Оптимизирует и минифицирует svg библиотекой SVGO.
      */
     protected optimizeSVG = async (src: string): Promise<string> => {
-        const svgo = new SVGO(SVGOConfig);
-        return (await svgo.optimize(src)).data;
+        return optimize(src, SVGOConfig).data;
     };
 
     /**
@@ -174,13 +172,6 @@ export class ReactTransformer implements ITransformer {
             return src;
         }
     };
-
-    /**
-     *  Добавляет атрибуты высоты и ширины.
-     */
-    protected insertDimensions = (src: string, {tokenized: {size}}: IIconTransformedData): string =>
-        src.replace('<svg', `<svg width="${size}" height="${size}"`);
-
 
     /**
      *  Добавляет класс компонента.
