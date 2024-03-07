@@ -4,6 +4,7 @@ export interface ITokenizedIconName {
     name: string,
     state: string,
     size: string,
+    theme: string,
     channel: string,
 }
 

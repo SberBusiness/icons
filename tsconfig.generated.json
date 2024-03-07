@@ -3,6 +3,7 @@
         "baseUrl": "./generated",
         "module": "amd",
         "moduleResolution": "node",
+        "esModuleInterop": true,
         "jsx": "react",
         "target": "es5",
         "lib": ["es5", "es6", "es2015.promise"],

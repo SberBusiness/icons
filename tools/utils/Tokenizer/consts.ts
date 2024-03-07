@@ -33,6 +33,10 @@ export const possibleTokens = {
         '96',
         '128',
     ],
+    [EIconAttributes.theme]: [
+        'lm',
+        'dm',
+    ],
     [EIconAttributes.channel]: [
         'w',
     ],

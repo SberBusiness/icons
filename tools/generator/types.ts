@@ -1,4 +1,4 @@
-import {EIconState} from '../enums';
+import {EIconState, EIconTheme} from '../enums';
 import {ITokenizedIcon} from '../types';
 
 export interface IParser {
@@ -23,9 +23,13 @@ export type TIconState = {
  * Интерфейс сырых данных иконки, получаемый от парсера и передаваемый в трансформер.
  */
 export interface IIconRawData {
-    src: string;
-    states: TIconState;
     tokenized: ITokenizedIcon;
+    themes: {
+        [theme in EIconTheme]: {
+            src: string;
+            states: TIconState;
+        }
+    }
 }
 
 /**
@@ -37,13 +41,12 @@ export interface IClassMap {
 }
 
 /**
- * Интерфейс иконки для промежуточных трансформаций и
- * возвращаемый в качестве готового к генерации объекта иконки.
+ * Интерфейс иконки готовой к генерации.
  */
 export interface IIconTransformedData {
-    classMap: IClassMap;
-    src: string;
     tokenized: ITokenizedIcon;
+    /** Содержимое готового React компонента иконки */
+    src: string;
 }
 
 /**

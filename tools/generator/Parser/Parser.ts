@@ -71,17 +71,21 @@ export class Parser implements IParser {
             const iconSrc = await readFile(path.resolve(folder, iconFileName));
             const iconName = path.basename(iconFileName, '.svg');
             const tokenizedIcon = this.tokenizer.tokenize(iconName);
-            const {componentName, state} = tokenizedIcon;
+            const {componentName, state, theme} = tokenizedIcon;
 
-            const icon = iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || { states: {} };
+            const icon = iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || { themes: {} };
 
-            if (icon.states[state]) {
+            if (!icon.themes[theme]) {
+                icon.themes[theme] = { states: {} };
+            }
+
+            if (icon.themes[theme].states[state]) {
                 throw new Error(`Дублирующееся состояние ${state} у иконки ${iconName}.`);
             }
-            icon.states[state] = this.getColors(iconSrc);
+            icon.themes[theme].states[state] = this.getColors(iconSrc);
 
-            if (!icon.src || state === EIconState.default) {
-                icon.src = iconSrc;
+            if (!icon.themes[theme].src || state === EIconState.default) {
+                icon.themes[theme].src = iconSrc;
                 icon.tokenized = tokenizedIcon;
             }
         }
@@ -105,7 +109,7 @@ export class Parser implements IParser {
      */
     private checkDefaultState = (iconsData: IIconRawData[]): void => {
         const iconsWithoutDefault = iconsData
-            .filter(iconData => !(EIconState.default in iconData.states))
+            .filter(iconData => !Object.values(iconData.themes).every(theme => (EIconState.default in theme.states)))
             .map(iconData => iconData.tokenized.srcName);
 
         if (iconsWithoutDefault.length) {
@@ -121,8 +125,8 @@ export class Parser implements IParser {
      */
     private checkColorCount = (iconsData: IIconRawData[]): void => {
         const iconsWithDifferentColorCount = iconsData
-            .filter(({states}) =>
-                !Object.values(states).every(colors => colors.length === states[EIconState.default].length))
+            .filter(({themes}) =>
+                !Object.values(themes).every(({states}) => Object.values(states).every(colors => colors.length === states[EIconState.default].length)))
             .map(iconData => iconData.tokenized.srcName);
 
         if (iconsWithDifferentColorCount.length) {

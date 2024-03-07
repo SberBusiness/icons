@@ -1,5 +1,10 @@
 import {Config} from 'svgo';
-import {EIconState} from '../../enums';
+import {EIconState, EIconTheme} from '../../enums';
+
+export const iconThemeToEnumMap = {
+    [EIconTheme.lm]: 'LIGHT',
+    [EIconTheme.dm]: 'DARK',
+};
 
 export const mapSelectors = {
     [EIconState.default]: (className) => `.${className}`,

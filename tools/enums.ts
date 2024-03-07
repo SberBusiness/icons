@@ -27,6 +27,11 @@ export enum EIconType {
     il = 'il',
 }
 
+export enum EIconTheme {
+    lm = 'lm',
+    dm = 'dm',
+}
+
 export enum EIconTypeName {
     ic = 'icon',
     il = 'illustration',

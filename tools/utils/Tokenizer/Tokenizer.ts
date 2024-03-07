@@ -1,7 +1,7 @@
 import {possibleTokens} from './consts';
 import {EIconAttributes} from './enums';
 import {capitalize} from '../stringUtils';
-import {EIconState, EIconType, EIconTypeName} from '../../enums';
+import {EIconState, EIconType, EIconTypeName, EIconTheme} from '../../enums';
 import {ITokenizedIcon, ITokenizedIconName} from '../../types';
 
 /**
@@ -12,9 +12,10 @@ const generateTokensRegex = () => {
     const g2 = possibleTokens[EIconAttributes.category].join('|');
     const g3 = possibleTokens[EIconAttributes.state].join('|');
     const g4 = possibleTokens[EIconAttributes.size].join('|');
-    const g5 = possibleTokens[EIconAttributes.channel].join('|');
+    const g5 = possibleTokens[EIconAttributes.theme].join('|');
+    const g6 = possibleTokens[EIconAttributes.channel].join('|');
 
-    return new RegExp(`^(${g1})_(${g2})_([0-9a-zA-Z]+)_(?:(?<=${EIconType.ic}.*)(${g3})_|(?<=${EIconType.il}.*))(${g4})_(${g5})$`);
+    return new RegExp(`^(${g1})_(${g2})_([0-9a-zA-Z]+)_(?:(?<=${EIconType.ic}.*)(${g3})_|(?<=${EIconType.il}.*))(${g4})(?:_(${g5}))?_(${g6})$`);
 };
 
 export class Tokenizer {
@@ -32,6 +33,10 @@ export class Tokenizer {
         // У иллюстраций в имени не указывается состояние, добавляем.
         if (tokenizedIconName.type === EIconType.il) {
             tokenizedIconName.state = EIconState.default;
+        }
+        
+        if (!tokenizedIconName.theme) {
+            tokenizedIconName.theme = EIconTheme.lm;
         }
 
         const iconType = EIconTypeName[tokenizedIconName.type];
@@ -65,6 +70,7 @@ export class Tokenizer {
         [EIconAttributes.name]: match[3],
         [EIconAttributes.state]: match[4],
         [EIconAttributes.size]: match[5],
-        [EIconAttributes.channel]: match[6]
+        [EIconAttributes.theme]: match[6],
+        [EIconAttributes.channel]: match[7]
     });
 }
