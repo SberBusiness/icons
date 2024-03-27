@@ -17,6 +17,6 @@
     },
     "homepage": "https://github.com/SberBusiness/icons#readme",
     "peerDependencies": {
-        "react": ">=15.6.0"
+        "react": ">=16.9.56"
     }
 }
