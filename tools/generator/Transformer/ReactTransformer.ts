@@ -1,4 +1,5 @@
 import {optimize} from 'svgo';
+import { ITokenizedIcon } from 'types';
 import {iconThemeToEnumMap, initialStyles, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
 import {getPackageVersion} from './utils/getPackageVersion';
 import {IClassMap, IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
@@ -7,7 +8,7 @@ import {deprecationMap} from '../../deprecationMap';
 import {EIconState, EIconType, EIconTheme} from '../../enums';
 import {camelize} from '../../utils/stringUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
-import { IIconTransitionData } from './types';
+import { IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme } from './types';
 
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
@@ -136,7 +137,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Трансформирует svg к React компоненту.
      */
-    protected transformSVG = async ({classMap, src, themeName}: IIconTransitionData["themes"][number], tokenized: IIconTransitionData["tokenized"]): Promise<{themeName: EIconTheme, src: string}> => {
+    protected transformSVG = async ({classMap, src, themeName}: IIconTransitionDataTheme, tokenized: ITokenizedIcon): Promise<IIconTransformedSVG> => {
         const optimizedSrc = await this.optimizeSVG(src);
         const transformedSrc = [
             this.reactifyAttrs,
@@ -181,7 +182,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Приводит id к уникальным значениям.
      */
-    protected makeUniqueIds = (src: string, {name}: IIconTransitionData["tokenized"]): string => {
+    protected makeUniqueIds = (src: string, {name}: ITokenizedIcon): string => {
         const matches = src.match(/id="(.*?)"/g);
 
         if (Array.isArray(matches)) {
@@ -201,7 +202,7 @@ export class ReactTransformer implements ITransformer {
     /**
      *  Добавляет класс компонента.
      */
-    private insertClassName = (src: string, {type}: IIconTransitionData["tokenized"]): string => {
+    private insertClassName = (src: string, {type}: ITokenizedIcon): string => {
         const tableIconClassName = type === EIconType.ic ? `\${props.table ? 'table-icon ' : ''}` : '';
         return src.replace('><', ` className={\`${tableIconClassName}\${props.className || ''}\`}><`);
     };
@@ -211,7 +212,7 @@ export class ReactTransformer implements ITransformer {
      *  Также добавляет focusable="false" для фикса фокуса по svg в ie.
      *  Добавляет aria-hidden="true".
      */
-    private insertExtra = (src: string, {componentName}: IIconTransitionData["tokenized"]): string =>
+    private insertExtra = (src: string, {componentName}: ITokenizedIcon): string =>
         src.replace(
             '><',
             ` data-test-id={props['data-test-id']} name="${componentName}" focusable="false" aria-hidden="true"><`
@@ -220,7 +221,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Подменяет hex цвета именами классов.
      */
-    protected replaceColorsWithClassNames = (src: string, {category}: IIconTransitionData["tokenized"], classMap: IClassMap): string =>
+    protected replaceColorsWithClassNames = (src: string, {category}: ITokenizedIcon, classMap: IClassMap): string =>
         classMap
             ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}${category === 'srv' ? ' service-fill' : ''}"`)
             : src;
@@ -231,7 +232,7 @@ export class ReactTransformer implements ITransformer {
     private generateSvgComponentCode = (src: string, {
         componentName,
         srcName
-    }: IIconTransitionData["tokenized"]): string => {
+    }: ITokenizedIcon): string => {
         let comment = '';
         if (srcName in deprecationMap) {
             const replacementComponent = deprecationMap[srcName] && this.tokenizer.tokenize(deprecationMap[srcName]).componentName;

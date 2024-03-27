@@ -15,7 +15,7 @@ const generateTokensRegex = () => {
     const g5 = possibleTokens[EIconAttributes.theme].join('|');
     const g6 = possibleTokens[EIconAttributes.channel].join('|');
 
-    return new RegExp(`^(${g1})_(${g2})_([0-9a-zA-Z]+)_(?:(?<=${EIconType.ic}.*)(${g3})_|(?<=${EIconType.il}.*))(${g4})(?:_(${g5}))?_(${g6})$`);
+    return new RegExp(`^(${g1})_(${g2})_([0-9a-zA-Z]+)_(?:(?<=${EIconType.ic}.*)(${g3})_|(?<=${EIconType.il}.*))(${g4})_(${g5})_(${g6})$`);
 };
 
 export class Tokenizer {
@@ -33,10 +33,6 @@ export class Tokenizer {
         // У иллюстраций в имени не указывается состояние, добавляем.
         if (tokenizedIconName.type === EIconType.il) {
             tokenizedIconName.state = EIconState.default;
-        }
-        
-        if (!tokenizedIconName.theme) {
-            tokenizedIconName.theme = EIconTheme.lm;
         }
 
         const iconType = EIconTypeName[tokenizedIconName.type];
