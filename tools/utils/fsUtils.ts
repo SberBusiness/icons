@@ -5,7 +5,10 @@ import {promisify} from 'util';
 const isDirectory = (source: string): boolean => fs.lstatSync(source).isDirectory();
 
 export const getDirectories = (source: string): string[] =>
-    fs.readdirSync(source).map(name => path.join(source, name)).filter(isDirectory);
+    fs
+        .readdirSync(source)
+        .map((name) => path.join(source, name))
+        .filter(isDirectory);
 
 export const isPathExists = (source: string): boolean => fs.existsSync(source);
 
@@ -43,8 +46,7 @@ export const writeFile = (path: string, data: string): Promise<void> =>
  * @param [filterPredicate] Фильтрующая функция.
  */
 export const getDirectoryListing = (path: string, filterPredicate?: (filePath: string) => boolean): Promise<string[]> =>
-    promisify(fs.readdir)(path, 'utf-8')
-        .then(files => filterPredicate ? files.filter(filterPredicate) : files);
+    promisify(fs.readdir)(path, 'utf-8').then((files) => (filterPredicate ? files.filter(filterPredicate) : files));
 
 /**
  * Получает список svg файлов директории.
@@ -52,4 +54,4 @@ export const getDirectoryListing = (path: string, filterPredicate?: (filePath: s
  * @param path Путь до папки.
  */
 export const getSvgDirectoryListing = (path: string): Promise<string[]> =>
-    getDirectoryListing(path, filePath => filePath.endsWith('.svg'));
+    getDirectoryListing(path, (filePath) => filePath.endsWith('.svg'));

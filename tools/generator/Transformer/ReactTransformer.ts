@@ -1,5 +1,5 @@
 import {optimize} from 'svgo';
-import { ITokenizedIcon } from 'types';
+import {ITokenizedIcon} from 'types';
 import {iconThemeToEnumMap, initialStyles, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
 import {getPackageVersion} from './utils/getPackageVersion';
 import {IClassMap, IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
@@ -8,7 +8,7 @@ import {deprecationMap} from '../../deprecationMap';
 import {EIconState, EIconType, EIconTheme} from '../../enums';
 import {camelize} from '../../utils/stringUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
-import { IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme } from './types';
+import {IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme} from './types';
 
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
@@ -31,12 +31,11 @@ export class ReactTransformer implements ITransformer {
 
     /** Возвращает css стили. */
     getStyles = (): string => {
-        const mappedStyles = Object.keys(this.classNames).map(
-            (className) =>
-                this.classNames[className].map(({state, color}) => ({
-                    state: state as EIconState,
-                    style: `${mapSelectors[state](className)} { fill: ${color}; }`
-                }))
+        const mappedStyles = Object.keys(this.classNames).map((className) =>
+            this.classNames[className].map(({state, color}) => ({
+                state: state as EIconState,
+                style: `${mapSelectors[state](className)} { fill: ${color}; }`,
+            }))
         );
 
         // Преобразует массив с массивами в плоский массив
@@ -44,15 +43,20 @@ export class ReactTransformer implements ITransformer {
 
         const flatMappedStylesWithInitial = initialStyles.concat(flatMappedStyles);
 
-        return selectorsOrder.map(state => {
-            const styles = flatMappedStylesWithInitial.filter(mappedStyle => mappedStyle.state === state).map(mappedStyle => mappedStyle.style).join(' ');
+        return selectorsOrder
+            .map((state) => {
+                const styles = flatMappedStylesWithInitial
+                    .filter((mappedStyle) => mappedStyle.state === state)
+                    .map((mappedStyle) => mappedStyle.style)
+                    .join(' ');
 
-            if (state === EIconState.hover) {
-                return this.wrapHoverStyles(styles);
-            }
+                if (state === EIconState.hover) {
+                    return this.wrapHoverStyles(styles);
+                }
 
-            return styles;
-        }).join(' ');
+                return styles;
+            })
+            .join(' ');
     };
 
     private wrapHoverStyles = (styles) =>
@@ -66,7 +70,7 @@ export class ReactTransformer implements ITransformer {
      */
     private collectClassNames = (iconsRawData: IIconRawData[]): IIconTransitionData[] => {
         return iconsRawData.map(({themes, tokenized}) => {
-            const newThemes = Object.keys(themes).map(theme => {
+            const newThemes = Object.keys(themes).map((theme) => {
                 const {src, states} = themes[theme];
 
                 const iconStates = Object.keys(states).sort();
@@ -76,21 +80,18 @@ export class ReactTransformer implements ITransformer {
                     classMap = {};
                     const paths = states[EIconState.default].length;
                     for (let i = 0; i < paths; ++i) {
-                        const strForHash = iconStates.reduce(
-                            (str, state) => str + state + states[state][i],
-                            ''
-                        );
-    
+                        const strForHash = iconStates.reduce((str, state) => str + state + states[state][i], '');
+
                         const version = getPackageVersion();
-    
+
                         const className = hash(version + strForHash);
                         if (!this.classNames[className]) {
-                            this.classNames[className] = iconStates.map(state => ({
+                            this.classNames[className] = iconStates.map((state) => ({
                                 state,
-                                color: states[state][i]
+                                color: states[state][i],
                             }));
                         }
-    
+
                         const hex = states[EIconState.default][i];
                         classMap[hex] = className;
                     }
@@ -99,9 +100,9 @@ export class ReactTransformer implements ITransformer {
                 return {
                     themeName: theme as EIconTheme,
                     src,
-                    classMap
+                    classMap,
                 };
-            })
+            });
 
             return {
                 themes: newThemes,
@@ -123,7 +124,12 @@ export class ReactTransformer implements ITransformer {
         if (transformedThemes.length === 1) {
             src = transformedThemes[0].src;
         } else {
-            src = transformedThemes.map(({themeName, src}) => '{theme === EIconsTheme.' + iconThemeToEnumMap[themeName] + ' && (' + src + ')}').join('\n\t\t');
+            src = transformedThemes
+                .map(
+                    ({themeName, src}) =>
+                        '{theme === EIconsTheme.' + iconThemeToEnumMap[themeName] + ' && (' + src + ')}'
+                )
+                .join('\n\t\t');
         }
 
         const reactSrc = this.generateSvgComponentCode(src, tokenized);
@@ -131,13 +137,16 @@ export class ReactTransformer implements ITransformer {
         return {
             tokenized,
             src: reactSrc,
-        }
+        };
     };
 
     /**
      * Трансформирует svg к React компоненту.
      */
-    protected transformSVG = async ({classMap, src, themeName}: IIconTransitionDataTheme, tokenized: ITokenizedIcon): Promise<IIconTransformedSVG> => {
+    protected transformSVG = async (
+        {classMap, src, themeName}: IIconTransitionDataTheme,
+        tokenized: ITokenizedIcon
+    ): Promise<IIconTransformedSVG> => {
         const optimizedSrc = await this.optimizeSVG(src);
         const transformedSrc = [
             this.reactifyAttrs,
@@ -146,13 +155,12 @@ export class ReactTransformer implements ITransformer {
             this.insertClassName,
             this.insertExtra,
             this.replaceColorsWithClassNames,
-        ].reduce((acc, transformer) =>
-            transformer(acc, tokenized, classMap), optimizedSrc);
+        ].reduce((acc, transformer) => transformer(acc, tokenized, classMap), optimizedSrc);
 
         return {
             themeName,
             src: transformedSrc,
-        }
+        };
     };
 
     /**
@@ -170,14 +178,15 @@ export class ReactTransformer implements ITransformer {
     /**
      * Преобразует инлайн стили к объекту.
      */
-    private reactifyInlineStyles = (src: string): string => src.replace(
-        /style="(.*?)"/g,
-        (match, styles) => `style={{${
-            styles
-                .split(';')
-                .map(style => style.replace(/(.*?):\s*(.*)/, (m, prop, value) => `${camelize(prop)}: '${value}'`))
-                .join(',')
-        }}}`);
+    private reactifyInlineStyles = (src: string): string =>
+        src.replace(
+            /style="(.*?)"/g,
+            (match, styles) =>
+                `style={{${styles
+                    .split(';')
+                    .map((style) => style.replace(/(.*?):\s*(.*)/, (m, prop, value) => `${camelize(prop)}: '${value}'`))
+                    .join(',')}}}`
+        );
 
     /**
      * Приводит id к уникальным значениям.
@@ -192,8 +201,9 @@ export class ReactTransformer implements ITransformer {
                     (src, id) =>
                         src
                             .replace(new RegExp(`id="${id}"`, 'gim'), `id="${id}_${name}"`)
-                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name})`)
-                    , src);
+                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name})`),
+                    src
+                );
         } else {
             return src;
         }
@@ -223,19 +233,20 @@ export class ReactTransformer implements ITransformer {
      */
     protected replaceColorsWithClassNames = (src: string, {category}: ITokenizedIcon, classMap: IClassMap): string =>
         classMap
-            ? src.replace(/fill="(#[A-F0-9]{6})"/g, (match, hex) => `className="${classMap[hex]}${category === 'srv' ? ' service-fill' : ''}"`)
+            ? src.replace(
+                  /fill="(#[A-F0-9]{6})"/g,
+                  (match, hex) => `className="${classMap[hex]}${category === 'srv' ? ' service-fill' : ''}"`
+              )
             : src;
 
     /**
      * Обворачивает svg в React компонент.
      */
-    private generateSvgComponentCode = (src: string, {
-        componentName,
-        srcName
-    }: ITokenizedIcon): string => {
+    private generateSvgComponentCode = (src: string, {componentName, srcName}: ITokenizedIcon): string => {
         let comment = '';
         if (srcName in deprecationMap) {
-            const replacementComponent = deprecationMap[srcName] && this.tokenizer.tokenize(deprecationMap[srcName]).componentName;
+            const replacementComponent =
+                deprecationMap[srcName] && this.tokenizer.tokenize(deprecationMap[srcName]).componentName;
             comment = `
 /**
  * @deprecated${replacementComponent ? ` use ${replacementComponent}` : ''}

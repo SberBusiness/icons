@@ -11,7 +11,7 @@ export interface IFigmaComponentsResponse {
     status: number;
     meta: {
         components: IFigmaComponent[];
-    }
+    };
 }
 
 /** Интерфейс ответа от api figma получения иконок компонентов. */

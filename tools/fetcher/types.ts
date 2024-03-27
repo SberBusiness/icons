@@ -9,20 +9,20 @@ export interface IFigmaService {
  * Интерфейс figma компонента.
  */
 export interface IFigmaComponent {
-    node_id: string,
-    name: string,
-    description: string,
-    created_at: string,
-    updated_at: string,
+    node_id: string;
+    name: string;
+    description: string;
+    created_at: string;
+    updated_at: string;
 }
 
 /**
  * Интерфейс данных иконки.
  */
 export interface IIconData {
-    category: string,
-    fileName: string,
-    src: string,
+    category: string;
+    fileName: string;
+    src: string;
 }
 
 /**

@@ -1,6 +1,6 @@
-import { EIconTheme } from "enums";
-import { IClassMap } from "generator/types";
-import { ITokenizedIcon } from "types";
+import {EIconTheme} from 'enums';
+import {IClassMap} from 'generator/types';
+import {ITokenizedIcon} from 'types';
 
 /**
  * Интерфейс отдельной темы иконки для промежуточных трансформаций.

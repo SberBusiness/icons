@@ -50,8 +50,8 @@ export class Parser implements IParser {
 
         const invalidIconsNames = folders
             .reduce((iconsPaths, folderPaths) => [...iconsPaths, ...folderPaths])
-            .map(iconFileName => path.basename(iconFileName, '.svg'))
-            .filter(iconName => !this.tokenizer.isValid(iconName));
+            .map((iconFileName) => path.basename(iconFileName, '.svg'))
+            .filter((iconName) => !this.tokenizer.isValid(iconName));
 
         if (invalidIconsNames.length) {
             throw new Error(`Не удалось токенизировать имена файлов:\n${invalidIconsNames.join('\n')}`);
@@ -73,10 +73,10 @@ export class Parser implements IParser {
             const tokenizedIcon = this.tokenizer.tokenize(iconName);
             const {componentName, state, theme} = tokenizedIcon;
 
-            const icon = iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || { themes: {} };
+            const icon = (iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || {themes: {}});
 
             if (!icon.themes[theme]) {
-                icon.themes[theme] = { states: {} };
+                icon.themes[theme] = {states: {}};
             }
 
             if (icon.themes[theme].states[state]) {
@@ -99,7 +99,7 @@ export class Parser implements IParser {
      * @param iconSrc исходный svg иконки.
      */
     private getColors = (iconSrc: string): string[] =>
-        matchAll(iconSrc, /fill="(?!none)([#0-9A-z]+)"/g).map(m => normalizeColor(m[1]));
+        matchAll(iconSrc, /fill="(?!none)([#0-9A-z]+)"/g).map((m) => normalizeColor(m[1]));
 
     /**
      * Проверяет, что у каждой иконки есть default состояние, т.к.
@@ -109,8 +109,8 @@ export class Parser implements IParser {
      */
     private checkDefaultState = (iconsData: IIconRawData[]): void => {
         const iconsWithoutDefault = iconsData
-            .filter(iconData => !Object.values(iconData.themes).every(theme => (EIconState.default in theme.states)))
-            .map(iconData => iconData.tokenized.srcName);
+            .filter((iconData) => !Object.values(iconData.themes).every((theme) => EIconState.default in theme.states))
+            .map((iconData) => iconData.tokenized.srcName);
 
         if (iconsWithoutDefault.length) {
             throw new Error(`У некоторых иконок нет дефолтного состояния.\n${iconsWithoutDefault.join('\n')}`);
@@ -125,9 +125,13 @@ export class Parser implements IParser {
      */
     private checkColorCount = (iconsData: IIconRawData[]): void => {
         const iconsWithDifferentColorCount = iconsData
-            .filter(({themes}) =>
-                !Object.values(themes).every(({states}) => Object.values(states).every(colors => colors.length === states[EIconState.default].length)))
-            .map(iconData => iconData.tokenized.srcName);
+            .filter(
+                ({themes}) =>
+                    !Object.values(themes).every(({states}) =>
+                        Object.values(states).every((colors) => colors.length === states[EIconState.default].length)
+                    )
+            )
+            .map((iconData) => iconData.tokenized.srcName);
 
         if (iconsWithDifferentColorCount.length) {
             throw new Error(`У некоторых иконок не хватает путей.\n${iconsWithDifferentColorCount.join('\n')}`);

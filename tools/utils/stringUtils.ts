@@ -9,5 +9,5 @@ export const capitalize = (str) => str.slice(0, 1).toUpperCase() + str.slice(1);
 export const camelize = (src: string): string =>
     src
         .split('-')
-        .map((item, i) => i !== 0 ? capitalize(item) : item)
+        .map((item, i) => (i !== 0 ? capitalize(item) : item))
         .join('');

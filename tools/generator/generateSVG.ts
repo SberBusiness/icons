@@ -12,12 +12,7 @@ const parser = new Parser(folders);
 const svgTransformer = new SVGTransformer(parser);
 const svgGenerator = new SVGGenerator(svgTransformer);
 
-(
-    target === ETarget.icons
-        ? svgGenerator.generateIcons()
-        : svgGenerator.generateIllustrations()
-)
-    .catch(error => {
-        console.log(error);
-        process.exit(1);
-    });
+(target === ETarget.icons ? svgGenerator.generateIcons() : svgGenerator.generateIllustrations()).catch((error) => {
+    console.log(error);
+    process.exit(1);
+});

@@ -1,18 +1,18 @@
 export enum EIconCategory {
     // Icons
-    acc = 'accent',     // Accent
-    ani = 'animated',   // Animated
-    brd = 'brand',      // Brand
-    mrk = 'marketing',  // Marketing
+    acc = 'accent', // Accent
+    ani = 'animated', // Animated
+    brd = 'brand', // Brand
+    mrk = 'marketing', // Marketing
     nav = 'navigation', // Navigation
-    prd = 'product',    // Product
-    prdx = 'product',   // Product exclusions
-    srv = 'service',    // Service
-    srvx = 'service',   // Service exclusions
-    sts = 'status',     // Status
+    prd = 'product', // Product
+    prdx = 'product', // Product exclusions
+    srv = 'service', // Service
+    srvx = 'service', // Service exclusions
+    sts = 'status', // Status
     // Illustrations
-    scrmrkt = 'screenmarket',     // Screen Market
-    scrsyst = 'screensystem',     // Screen System
+    scrmrkt = 'screenmarket', // Screen Market
+    scrsyst = 'screensystem', // Screen System
 }
 
 export enum EIconState {

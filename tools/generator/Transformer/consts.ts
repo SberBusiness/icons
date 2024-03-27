@@ -10,16 +10,12 @@ export const mapSelectors = {
     [EIconState.default]: (className) => `.${className}`,
     [EIconState.hover]: (className) => `.hoverable:hover .${className}`,
     // :enabled не работает с ссылками, поэтому используем :not(:disabled)
-    [EIconState.active]: (className) => `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
+    [EIconState.active]: (className) =>
+        `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
     [EIconState.disabled]: (className) => `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
 
-export const selectorsOrder: string[] = [
-    EIconState.default,
-    EIconState.hover,
-    EIconState.active,
-    EIconState.disabled,
-];
+export const selectorsOrder: string[] = [EIconState.default, EIconState.hover, EIconState.active, EIconState.disabled];
 
 export const initialStyles = [
     {state: EIconState.default, style: '.table-icon .service-fill { fill: #D0D7DD; }'},
@@ -30,45 +26,45 @@ export const initialStyles = [
 
 export const SVGOConfig: Config = {
     plugins: [
-        "cleanupAttrs",
-        "cleanupEnableBackground",
-        "cleanupIds",
-        "cleanupNumericValues",
-        "collapseGroups",
-        "convertPathData",
-        "convertShapeToPath",
-        "convertStyleToAttrs",
-        "convertTransform",
-        "mergePaths",
-        "moveElemsAttrsToGroup",
-        "moveGroupAttrsToElems",
-        "removeComments",
-        "removeDesc",
-        "removeDoctype",
-        "removeEditorsNSData",
-        "removeEmptyAttrs",
-        "removeEmptyContainers",
-        "removeEmptyText",
-        "removeHiddenElems",
-        "removeMetadata",
-        "removeNonInheritableGroupAttrs",
-        "removeTitle",
-        "removeUnknownsAndDefaults",
-        "removeUnusedNS",
-        "removeUselessStrokeAndFill",
-        "removeUselessDefs",
-        "removeXMLNS",
-        "removeXMLProcInst",
-        "sortAttrs",
+        'cleanupAttrs',
+        'cleanupEnableBackground',
+        'cleanupIds',
+        'cleanupNumericValues',
+        'collapseGroups',
+        'convertPathData',
+        'convertShapeToPath',
+        'convertStyleToAttrs',
+        'convertTransform',
+        'mergePaths',
+        'moveElemsAttrsToGroup',
+        'moveGroupAttrsToElems',
+        'removeComments',
+        'removeDesc',
+        'removeDoctype',
+        'removeEditorsNSData',
+        'removeEmptyAttrs',
+        'removeEmptyContainers',
+        'removeEmptyText',
+        'removeHiddenElems',
+        'removeMetadata',
+        'removeNonInheritableGroupAttrs',
+        'removeTitle',
+        'removeUnknownsAndDefaults',
+        'removeUnusedNS',
+        'removeUselessStrokeAndFill',
+        'removeUselessDefs',
+        'removeXMLNS',
+        'removeXMLProcInst',
+        'sortAttrs',
         {
-            name: "convertColors",
+            name: 'convertColors',
             params: {
                 currentColor: false,
                 names2hex: true,
                 rgb2hex: true,
                 shorthex: false,
                 shortname: false,
-            }
-        }
+            },
+        },
     ],
 };

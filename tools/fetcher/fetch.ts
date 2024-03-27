@@ -4,9 +4,7 @@ import {FigmaService} from './FigmaService/FigmaService';
 const figmaService = new FigmaService();
 const figmaFetcher = new FigmaFetcher(figmaService);
 
-figmaFetcher
-    .fetch()
-    .catch(error => {
-        console.log(error);
-        process.exit(1);
-    });
+figmaFetcher.fetch().catch((error) => {
+    console.log(error);
+    process.exit(1);
+});

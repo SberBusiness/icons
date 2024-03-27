@@ -1,10 +1,10 @@
-import { hash } from '../utils/hash';
+import {hash} from '../utils/hash';
 
 /**
  * Содержимое будущего файла model.ts.
  */
 export const getModelSrc = () =>
-`/**
+    `/**
  * @prop {string} [className]
  * @prop {string} [data-test-id]
  * @prop {never} [style] Инлайн-стили запрещены.
@@ -19,7 +19,7 @@ export interface IIconProps {
 `;
 
 export const getThemeProviderSrc = () =>
-`import React, { RefObject, createContext, useContext, useEffect, useState } from 'react';
+    `import React, { RefObject, createContext, useContext, useEffect, useState } from 'react';
 
 export enum EIconsTheme {
     LIGHT = 'light',

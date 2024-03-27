@@ -17,7 +17,7 @@ export interface ITransformer {
  */
 export type TIconState = {
     [key in EIconState]?: string[];
-}
+};
 
 /**
  * Интерфейс сырых данных иконки, получаемый от парсера и передаваемый в трансформер.
@@ -28,8 +28,8 @@ export interface IIconRawData {
         [theme in EIconTheme]: {
             src: string;
             states: TIconState;
-        }
-    }
+        };
+    };
 }
 
 /**
@@ -54,7 +54,7 @@ export interface IIconTransformedData {
  */
 export interface IClassNames {
     [key: string]: Array<{
-        state: string,
-        color: string
+        state: string;
+        color: string;
     }>;
 }
