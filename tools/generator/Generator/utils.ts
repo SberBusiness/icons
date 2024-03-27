@@ -22,8 +22,8 @@ export const getThemeProviderSrc = () =>
     `import React, { RefObject, createContext, useContext, useEffect, useState } from 'react';
 
 export enum EIconsTheme {
-    LIGHT = 'light',
-    DARK = 'dark',
+    LIGHT = 'LIGHT',
+    DARK = 'DARK',
 }
 
 interface IThemeContext {

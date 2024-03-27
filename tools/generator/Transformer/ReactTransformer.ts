@@ -191,7 +191,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Приводит id к уникальным значениям.
      */
-    protected makeUniqueIds = (src: string, {name}: ITokenizedIcon): string => {
+    protected makeUniqueIds = (src: string, {name, size}: ITokenizedIcon): string => {
         const matches = src.match(/id="(.*?)"/g);
 
         if (Array.isArray(matches)) {
@@ -200,8 +200,8 @@ export class ReactTransformer implements ITransformer {
                 .reduce(
                     (src, id) =>
                         src
-                            .replace(new RegExp(`id="${id}"`, 'gim'), `id="${id}_${name}"`)
-                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name})`),
+                            .replace(new RegExp(`id="${id}"`, 'gim'), `id="${id}_${name}${size}"`)
+                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name}${size})`),
                     src
                 );
         } else {
