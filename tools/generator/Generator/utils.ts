@@ -57,8 +57,7 @@ export const ThemeProvider: React.FC<IProps> = ({ children, theme, scopeRef = { 
 
     useEffect(() => {
         if (!(theme in EIconsTheme)) {
-            // TODO выбрасывать ошибку или задавать светлую?
-            throw new Error('Icons ThemeProvider: Передана недопустимая тема ' + theme);
+            theme = EIconsTheme.LIGHT;
         }
 
         setValue({ theme });

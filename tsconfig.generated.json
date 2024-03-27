@@ -6,7 +6,7 @@
         "esModuleInterop": true,
         "jsx": "react",
         "target": "es5",
-        "lib": ["es5", "es6", "es2015.promise"],
+        "lib": ["es5", "es6", "es2015.promise", "dom"],
         "declaration": true,
         "preserveConstEnums": true,
         "skipDefaultLibCheck": true,
