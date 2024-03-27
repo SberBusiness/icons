@@ -7,7 +7,7 @@ import {figmaToken, figmaIconsFileKey} from '../../consts';
 
 axiosRetry(axios, {
     retries: 3,
-    retryDelay: axiosRetry.exponentialDelay
+    retryDelay: axiosRetry.exponentialDelay,
 });
 
 const apiUrl = 'https://api.figma.com/';
@@ -21,8 +21,8 @@ export class FigmaService implements IFigmaService {
             timeout: 15 * 1000,
             headers: {'X-FIGMA-TOKEN': figmaToken},
             httpsAgent: new https.Agent({
-                rejectUnauthorized: false
-            })
+                rejectUnauthorized: false,
+            }),
         });
     }
 
@@ -67,9 +67,10 @@ export class FigmaService implements IFigmaService {
     getIconSrc = async (url: string): Promise<string> => this.get(url);
 
     private get = <T>(url: string): Promise<T> =>
-        this.api.get(url)
-            .then(res => res.data)
-            .catch(e => {
-                throw new Error(`Ошибка запроса: ${e.message}`)
+        this.api
+            .get(url)
+            .then((res) => res.data)
+            .catch((e) => {
+                throw new Error(`Ошибка запроса: ${e.message}`);
             });
 }

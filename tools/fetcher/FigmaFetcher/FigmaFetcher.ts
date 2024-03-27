@@ -52,9 +52,9 @@ export class FigmaFetcher {
      */
     private getFigmaComponents = async (): Promise<IFigmaComponent[]> =>
         (await this.figmaService.getFigmaComponents())
-            .map(component => ({
+            .map((component) => ({
                 ...component,
-                name: component.name.split('/').pop()
+                name: component.name.split('/').pop(),
             }))
             // TODO пока что отбираю только валидные, но это неправильно
             .filter(({name}) => this.tokenizer.isValid(name))
@@ -68,7 +68,7 @@ export class FigmaFetcher {
     private getIconsData = async (figmaComponents: IFigmaComponent[]): Promise<IIconData[]> => {
         const chunks = this.splitIntoGroups(figmaComponents);
         const chunksPromises = chunks.map(async (chunk) => {
-            const ids = chunk.map(component => component.node_id).join(',');
+            const ids = chunk.map((component) => component.node_id).join(',');
             const figmaImagesUrlsMap = await this.figmaService.getFigmaImagesUrls(ids);
             const chunkPromises = chunk.map(async ({name, node_id}) => {
                 const url = figmaImagesUrlsMap[node_id];
@@ -76,8 +76,8 @@ export class FigmaFetcher {
                 return {
                     category: this.tokenizer.tokenize(name).category,
                     fileName: `${name}.svg`,
-                    src
-                }
+                    src,
+                };
             });
             return Promise.all(chunkPromises);
         });
@@ -114,9 +114,9 @@ export class FigmaFetcher {
 
         const statuses = await Promise.all(iconsDataPromises);
 
-        const added = statuses.filter(status => status === 'added')?.length;
-        const patched = statuses.filter(status => status === 'patched')?.length;
-        const notChanged = statuses.filter(status => status === 'not_changed')?.length;
+        const added = statuses.filter((status) => status === 'added')?.length;
+        const patched = statuses.filter((status) => status === 'patched')?.length;
+        const notChanged = statuses.filter((status) => status === 'not_changed')?.length;
 
         added && console.log(`Добавлено ${added} иконок.`);
         patched && console.log(`Изменено ${patched} иконок.`);
@@ -133,7 +133,7 @@ export class FigmaFetcher {
             const iconsPackage = JSON.parse(json);
             let version = iconsPackage.version;
             if (/alpha|beta/.test(version)) {
-                version = version.replace(/\d+$/, ver => `${++ver}`);
+                version = version.replace(/\d+$/, (ver) => `${++ver}`);
             } else {
                 version = version.replace(/(\d+)\.(\d+)$/, (m, minor, patch) => {
                     if (this.isMinorChange) {

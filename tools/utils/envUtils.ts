@@ -1,6 +1,6 @@
 export enum ETarget {
     icons = 'icons',
-    illustrations = 'illustrations'
+    illustrations = 'illustrations',
 }
 
 /** Получает из process.env параметр целевого модуля. */

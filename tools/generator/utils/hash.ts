@@ -22,25 +22,16 @@ const ba2b64 = (ba: number[]): string => {
         a = ba[i++];
         b = ba[i++];
         c = ba[i++];
-        result +=
-            b64a[a >> 2] +
-            b64a[((a << 4) & 63) | (b >> 4)] +
-            b64a[((b << 2) & 63) | (c >> 6)] +
-            b64a[c & 63];
+        result += b64a[a >> 2] + b64a[((a << 4) & 63) | (b >> 4)] + b64a[((b << 2) & 63) | (c >> 6)] + b64a[c & 63];
     }
 
     if (m === 1) {
         a = ba[i];
-        result +=
-            b64a[a >> 2] +
-            b64a[(a << 4) & 63]
+        result += b64a[a >> 2] + b64a[(a << 4) & 63];
     } else if (m === 2) {
         a = ba[i++];
         b = ba[i];
-        result +=
-            b64a[a >> 2] +
-            b64a[((a << 4) & 63) | (b >> 4)] +
-            b64a[(b << 2) & 63]
+        result += b64a[a >> 2] + b64a[((a << 4) & 63) | (b >> 4)] + b64a[(b << 2) & 63];
     }
     return result;
 };
@@ -62,7 +53,7 @@ const adler32 = (array: number[]): number[] => {
         s2 = (s2 + s1) % 65521;
     }
 
-    return [s2 >> 16 & 0xFF, s2 & 0xFF, s1 >> 16 & 0xFF, s1 & 0xFF]
+    return [(s2 >> 16) & 0xff, s2 & 0xff, (s1 >> 16) & 0xff, s1 & 0xff];
 };
 
 /**

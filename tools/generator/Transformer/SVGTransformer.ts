@@ -12,11 +12,9 @@ export class SVGTransformer extends ReactTransformer implements ITransformer {
      */
     protected transformSVG = async (iconData: IIconTransformedData): Promise<string> => {
         const optimizedSrc = await this.optimizeSVG(iconData.src);
-        return [
-            this.makeUniqueIds,
-            this.insertDimensions,
-            this.replaceColorsWithClassNames,
-        ].reduce((memo, transformer) =>
-            transformer(memo, iconData), optimizedSrc);
+        return [this.makeUniqueIds, this.insertDimensions, this.replaceColorsWithClassNames].reduce(
+            (memo, transformer) => transformer(memo, iconData),
+            optimizedSrc
+        );
     };
 }
