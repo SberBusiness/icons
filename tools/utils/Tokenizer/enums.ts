@@ -4,5 +4,6 @@ export enum EIconAttributes {
     name = 'name',
     state = 'state',
     size = 'size',
+    theme = 'theme',
     channel = 'channel',
 }

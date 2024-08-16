@@ -1,19 +1,21 @@
-import {EIconState} from '../../enums';
+import {Config} from 'svgo';
+import {EIconState, EIconTheme} from '../../enums';
+
+export const iconThemeToEnumMap = {
+    [EIconTheme.lm]: 'LIGHT',
+    [EIconTheme.dm]: 'DARK',
+};
 
 export const mapSelectors = {
     [EIconState.default]: (className) => `.${className}`,
     [EIconState.hover]: (className) => `.hoverable:hover .${className}`,
     // :enabled не работает с ссылками, поэтому используем :not(:disabled)
-    [EIconState.active]: (className) => `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
+    [EIconState.active]: (className) =>
+        `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
     [EIconState.disabled]: (className) => `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
 
-export const selectorsOrder: string[] = [
-    EIconState.default,
-    EIconState.hover,
-    EIconState.active,
-    EIconState.disabled,
-];
+export const selectorsOrder: string[] = [EIconState.default, EIconState.hover, EIconState.active, EIconState.disabled];
 
 export const initialStyles = [
     {state: EIconState.default, style: '.table-icon .service-fill { fill: #D0D7DD; }'},
@@ -22,41 +24,47 @@ export const initialStyles = [
     {state: EIconState.active, style: 'tr.selected button:enabled .table-icon .service-fill { fill: #B2B8BF; }'},
 ];
 
-export const SVGOConfig = {
+export const SVGOConfig: Config = {
     plugins: [
-        {cleanupAttrs: true},
-        {removeDoctype: true},
-        {removeXMLProcInst: true},
-        {removeComments: true},
-        {removeMetadata: true},
-        {removeTitle: true},
-        {removeDesc: true},
-        {removeUselessDefs: true},
-        {removeEditorsNSData: true},
-        {removeEmptyAttrs: true},
-        {removeHiddenElems: true},
-        {removeEmptyText: true},
-        {removeEmptyContainers: true},
-        {removeViewBox: false},
-        {cleanupEnableBackground: true},
-        {convertStyleToAttrs: true},
-        {convertColors: true},
-        {convertPathData: true},
-        {convertTransform: true},
-        {removeUnknownsAndDefaults: true},
-        {removeNonInheritableGroupAttrs: true},
-        {removeUselessStrokeAndFill: true},
-        {removeUnusedNS: true},
-        {cleanupIDs: true},
-        {cleanupNumericValues: true},
-        {moveElemsAttrsToGroup: true},
-        {moveGroupAttrsToElems: true},
-        {collapseGroups: true},
-        {removeRasterImages: false},
-        {mergePaths: true},
-        {convertShapeToPath: true},
-        {sortAttrs: true},
-        {removeDimensions: true},
-        {removeAttrs: {attrs: '(xmlns)'}},
-    ]
+        'cleanupAttrs',
+        'cleanupEnableBackground',
+        'cleanupIds',
+        'cleanupNumericValues',
+        'collapseGroups',
+        'convertPathData',
+        'convertShapeToPath',
+        'convertStyleToAttrs',
+        'convertTransform',
+        'mergePaths',
+        'moveElemsAttrsToGroup',
+        'moveGroupAttrsToElems',
+        'removeComments',
+        'removeDesc',
+        'removeDoctype',
+        'removeEditorsNSData',
+        'removeEmptyAttrs',
+        'removeEmptyContainers',
+        'removeEmptyText',
+        'removeHiddenElems',
+        'removeMetadata',
+        'removeNonInheritableGroupAttrs',
+        'removeTitle',
+        'removeUnknownsAndDefaults',
+        'removeUnusedNS',
+        'removeUselessStrokeAndFill',
+        'removeUselessDefs',
+        'removeXMLNS',
+        'removeXMLProcInst',
+        'sortAttrs',
+        {
+            name: 'convertColors',
+            params: {
+                currentColor: false,
+                names2hex: true,
+                rgb2hex: true,
+                shorthex: false,
+                shortname: false,
+            },
+        },
+    ],
 };

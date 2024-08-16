@@ -1,5 +1,5 @@
 import path from 'path';
-import {modelSrc} from './consts';
+import {getModelSrc, getThemeProviderSrc} from './utils';
 import {generationPath} from '../../consts';
 import {IIconTransformedData, ITransformer} from '../types';
 import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
@@ -17,12 +17,14 @@ export class ReactGenerator {
         await this.generateComponents(this.transformer.getIconsData());
         await this.generateStyles(this.transformer.getStyles());
         await this.generateModel();
+        await this.generateThemeProvider();
     };
 
     generateIllustrations = async () => {
         await this.transformer.transform();
         await this.generateComponents(this.transformer.getIconsData());
         await this.generateModel();
+        await this.generateThemeProvider();
     };
 
     /**
@@ -34,7 +36,7 @@ export class ReactGenerator {
         try {
             createFolderIfNotExists(generationPath);
             const promises = await Promise.all(
-                iconsData.map(async iconData => {
+                iconsData.map(async (iconData) => {
                     const filePath = path.resolve(generationPath, iconData.tokenized.componentName + '.tsx');
                     return writeFile(filePath, iconData.src);
                 })
@@ -71,10 +73,24 @@ export class ReactGenerator {
     private generateModel = async (): Promise<void> => {
         try {
             const filePath = path.resolve(generationPath, 'models.d.ts');
-            await writeFile(filePath, modelSrc);
+            await writeFile(filePath, getModelSrc());
             console.log('Успешно сформирован файл моделей');
         } catch (e) {
             console.error('Произошла ошибка при формировании файла модели.', e.message);
+            process.exit(1);
+        }
+    };
+
+    /**
+     * Генерирует контекст и ThemeProvider.
+     */
+    private generateThemeProvider = async (): Promise<void> => {
+        try {
+            const filePath = path.resolve(generationPath, 'ThemeProvider.tsx');
+            await writeFile(filePath, getThemeProviderSrc());
+            console.log('Успешно сформирован файл ThemeProvider');
+        } catch (e) {
+            console.error('Произошла ошибка при формировании файла провайдера.', e.message);
             process.exit(1);
         }
     };

@@ -25,7 +25,7 @@ export class SVGGenerator extends ReactGenerator {
         try {
             createFolderIfNotExists(generationPath);
             const promises = await Promise.all(
-                iconsData.map(async iconData => {
+                iconsData.map(async (iconData) => {
                     const filePath = path.resolve(generationPath, iconData.tokenized.srcName + '.svg');
                     return writeFile(filePath, iconData.src);
                 })
