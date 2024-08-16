@@ -38,7 +38,7 @@ const ThemeContext = createContext<IThemeContext>(initialContext);
 
 interface IProps {
     theme: EIconsTheme;
-    scopeRef: RefObject<HTMLElement>;
+    scopeRef?: RefObject<HTMLElement>;
 }
 
 export const useTheme = () => {
