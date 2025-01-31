@@ -13,8 +13,8 @@
     "ts-dts": "tsc -p ./tsconfig.generated.json",
     "copy:icons": "cross-env TARGET=icons ts-node ./tools/tasks/copy.ts",
     "copy:illustrations": "cross-env TARGET=illustrations ts-node ./tools/tasks/copy.ts",
-    "build:icons": "npm ci && npm run clean && npm run generate:icons && npm run ts-dts && npm run copy:icons",
-    "build:illustrations": "npm ci && npm run clean && npm run generate:illustrations && npm run ts-dts && npm run copy:illustrations",
+    "build:icons": "npm run clean && npm run generate:icons && npm run ts-dts && npm run copy:icons",
+    "build:illustrations": "npm run clean && npm run generate:illustrations && npm run ts-dts && npm run copy:illustrations",
     "publish:icons": "npm run build:icons && npm publish --access public ./public",
     "publish:illustrations": "npm run build:illustrations && npm publish --access public ./public",
     "prettier": "prettier --write tools/**/*.ts"
