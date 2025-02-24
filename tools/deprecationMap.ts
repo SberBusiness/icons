@@ -8,5 +8,7 @@ export const deprecationMap = {
     ic_prd_sbermarketactual_default_20_lm_w: 'ic_prd_kuper_default_20_lm_w',
     ic_prd_sbermarketactual_default_32_lm_w: 'ic_prd_kuper_default_32_lm_w',
     ic_brd_tinkoff_default_24_lm_w: 'ic_brd_tbank_default_24_lm_w',
-    ic_brd_homecreditbank_default_24_lm_w: 'ic_brd_homebank_default_24_lm_w'
+    ic_brd_homecreditbank_default_24_lm_w: 'ic_brd_homebank_default_24_lm_w',
+    ic_srv_like_default_20_lm_w: 'ic_srv_likeempty_default_20_lm_w',
+    ic_srv_dislike_default_20_lm_w: 'ic_srv_dislikeempty_default_20_lm_w',
 };
