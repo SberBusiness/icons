@@ -84,7 +84,7 @@ export class ReactTransformer implements ITransformer {
 
                         const version = getPackageVersion();
 
-                        const className = hash(version + strForHash);
+                        const className = hash(strForHash + '|' + version);
                         if (!this.classNames[className]) {
                             this.classNames[className] = iconStates.map((state) => ({
                                 state,

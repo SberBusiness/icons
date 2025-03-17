@@ -16,10 +16,10 @@ export enum EIconCategory {
 }
 
 export enum EIconState {
-    active = 'active',
     default = 'default',
-    disabled = 'disabled',
     hover = 'hover',
+    active = 'active',
+    disabled = 'disabled',
 }
 
 export enum EIconType {
