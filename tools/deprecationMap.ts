@@ -11,4 +11,7 @@ export const deprecationMap = {
     ic_brd_homecreditbank_default_24_lm_w: 'ic_brd_homebank_default_24_lm_w',
     ic_srv_like_default_20_lm_w: 'ic_srv_likeempty_default_20_lm_w',
     ic_srv_dislike_default_20_lm_w: 'ic_srv_dislikeempty_default_20_lm_w',
+    ic_prd_gigaassistaint_default_32_lm_w: 'ic_prd_gigaassistaint_default_20_lm_w',
+    ic_nav_aiagents_default_20_lm_w: 'ic_nav_promtslist_default_20_lm_w',
+    ic_nav_aiagents_default_32_lm_w: 'ic_nav_promtslist_default_32_lm_w',
 };
