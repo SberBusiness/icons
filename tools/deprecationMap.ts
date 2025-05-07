@@ -14,4 +14,5 @@ export const deprecationMap = {
     ic_prd_gigaassistaint_default_32_lm_w: 'ic_prd_gigaassistaint_default_20_lm_w',
     ic_nav_aiagents_default_20_lm_w: 'ic_nav_promtslist_default_20_lm_w',
     ic_nav_aiagents_default_32_lm_w: 'ic_nav_promtslist_default_32_lm_w',
+    ic_srv_repeatpayment_default_20_lm_w: 'ic_srv_repeatpayment_default_24_lm_w',
 };
