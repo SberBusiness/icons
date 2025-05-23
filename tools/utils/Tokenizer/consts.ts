@@ -6,6 +6,7 @@ export const possibleTokens = {
         'acc', // Accent
         'ani', // Animated
         'brd', // Brand
+        'ill', // Illustrative
         'mrk', // Marketing
         'nav', // Navigation
         'prd', // Product
