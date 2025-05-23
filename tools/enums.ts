@@ -3,6 +3,7 @@ export enum EIconCategory {
     acc = 'accent', // Accent
     ani = 'animated', // Animated
     brd = 'brand', // Brand
+    ill = 'illustrative', // Illustrative
     mrk = 'marketing', // Marketing
     nav = 'navigation', // Navigation
     prd = 'product', // Product
