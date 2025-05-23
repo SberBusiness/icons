@@ -7,6 +7,19 @@ import {EIconState} from '../../enums';
 import {getSvgDirectoryListing, readFile} from '../../utils/fsUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
 
+const INVALID_SIZE_NAMES_WHITELIST = {
+    "ic_prd_gigaassistaint_default_32_dm_w": undefined,
+    "ic_prd_gigaassistaint_default_32_lm_w": undefined,
+    "ic_srv_repeatpayment_active_20_dm_w": undefined,
+    "ic_srv_repeatpayment_active_20_lm_w": undefined,
+    "ic_srv_repeatpayment_default_20_dm_w": undefined,
+    "ic_srv_repeatpayment_default_20_lm_w": undefined,
+    "ic_srv_repeatpayment_disabled_20_dm_w": undefined,
+    "ic_srv_repeatpayment_disabled_20_lm_w": undefined,
+    "ic_srv_repeatpayment_hover_20_dm_w": undefined,
+    "ic_srv_repeatpayment_hover_20_lm_w": undefined,
+};
+
 /**
  * Парсер получает в себя путь до директории, которую следует распарсить.
  * Проверяет содержимое директории, правильность написания имён иконок,
@@ -70,8 +83,10 @@ export class Parser implements IParser {
         for (const iconFileName of iconsFileNames) {
             const iconSrc = await readFile(path.resolve(folder, iconFileName));
             const iconName = path.basename(iconFileName, '.svg');
-            const tokenizedIcon = this.tokenizer.tokenize(iconName);
-            const {componentName, state, theme} = tokenizedIcon;
+            const tokenizedIconName = this.tokenizer.tokenize(iconName);
+            const {componentName, state, size, theme} = tokenizedIconName;
+
+            this.validateIconSize(iconName, size, iconSrc);
 
             const icon = (iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || {themes: {}});
 
@@ -82,11 +97,12 @@ export class Parser implements IParser {
             if (icon.themes[theme].states[state]) {
                 throw new Error(`Дублирующееся состояние ${state} у иконки ${iconName}.`);
             }
+
             icon.themes[theme].states[state] = this.getColors(iconSrc);
 
             if (!icon.themes[theme].src || state === EIconState.default) {
                 icon.themes[theme].src = iconSrc;
-                icon.tokenized = tokenizedIcon;
+                icon.tokenized = tokenizedIconName;
             }
         }
 
@@ -100,6 +116,28 @@ export class Parser implements IParser {
      */
     private getColors = (iconSrc: string): string[] =>
         matchAll(iconSrc, /fill="(?!none)([#0-9A-z]+)"/g).map((m) => normalizeColor(m[1]));
+
+    /**
+     * [описание]
+     *
+     * @param iconSrc исходный svg иконки.
+     */
+    private validateIconSize = (name: string, size: string, iconSrc: string): void => {
+        const result = /width="(\d+)" height="(\d+)"/.exec(iconSrc);
+
+        if (result === null) {
+            throw new Error(`Не удалось распарсить размер иконки ${name}.`);
+        } else if (name in INVALID_SIZE_NAMES_WHITELIST) {
+            return;
+        }
+
+        const [_, width, height] = result;
+
+        if (size !== width || size !== height) {
+            console.log(`${width}x${height} ${name}`);
+            // throw new Error(`Размер иконки ${name} (${width}x${height}) отличается от заявленного (${size}x${size}).`);
+        }
+    };
 
     /**
      * Проверяет, что у каждой иконки есть default состояние, т.к.
