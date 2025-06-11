@@ -19,23 +19,6 @@ const INVALID_SIZE_NAMES_WHITELIST = {
     "ic_srv_repeatpayment_disabled_20_lm_w": undefined,
     "ic_srv_repeatpayment_hover_20_dm_w": undefined,
     "ic_srv_repeatpayment_hover_20_lm_w": undefined,
-    // Temporary
-    "ic_srvx_carouselleft_active_32_dm_w": undefined,
-    "ic_srvx_carouselleft_active_32_lm_w": undefined,
-    "ic_srvx_carouselleft_default_32_dm_w": undefined,
-    "ic_srvx_carouselleft_default_32_lm_w": undefined,
-    "ic_srvx_carouselleft_disabled_32_dm_w": undefined,
-    "ic_srvx_carouselleft_disabled_32_lm_w": undefined,
-    "ic_srvx_carouselleft_hover_32_dm_w": undefined,
-    "ic_srvx_carouselleft_hover_32_lm_w": undefined,
-    "ic_srvx_carouselright_active_32_dm_w": undefined,
-    "ic_srvx_carouselright_active_32_lm_w": undefined,
-    "ic_srvx_carouselright_default_32_dm_w": undefined,
-    "ic_srvx_carouselright_default_32_lm_w": undefined,
-    "ic_srvx_carouselright_disabled_32_dm_w": undefined,
-    "ic_srvx_carouselright_disabled_32_lm_w": undefined,
-    "ic_srvx_carouselright_hover_32_dm_w": undefined,
-    "ic_srvx_carouselright_hover_32_lm_w": undefined,
 };
 
 /**
