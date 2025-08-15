@@ -1,5 +1,4 @@
 export enum EIconCategory {
-    // Icons
     acc = 'accent', // Accent
     ani = 'animated', // Animated
     brd = 'brand', // Brand
@@ -11,9 +10,6 @@ export enum EIconCategory {
     srv = 'service', // Service
     srvx = 'service', // Service exclusions
     sts = 'status', // Status
-    // Illustrations
-    scrmrkt = 'screenmarket', // Screen Market
-    scrsyst = 'screensystem', // Screen System
 }
 
 export enum EIconState {
@@ -23,17 +19,7 @@ export enum EIconState {
     disabled = 'disabled',
 }
 
-export enum EIconType {
-    ic = 'ic',
-    il = 'il',
-}
-
 export enum EIconTheme {
-    lm = 'lm',
-    dm = 'dm',
-}
-
-export enum EIconTypeName {
-    ic = 'icon',
-    il = 'illustration',
+    lm,
+    dm,
 }
