@@ -4,14 +4,12 @@ export const root = path.resolve('.');
 
 /** Пути модулей. */
 export const modulesPaths = {
-    icons: path.resolve(root, './icons'),
-    illustrations: path.resolve(root, './illustrations'),
+    icons: path.resolve(root, './icons-next'),
 };
 
 /** Пути до svg иконок модулей. */
 export const srcPaths = {
-    icons: path.resolve(root, './icons/svgs'),
-    illustrations: path.resolve(root, './illustrations/svgs'),
+    icons: path.resolve(root, './icons-next/svgs'),
 };
 
 export const generationPath = path.resolve(root, './generated');

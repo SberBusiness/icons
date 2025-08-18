@@ -12,17 +12,10 @@ import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
 export class ReactGenerator {
     constructor(protected readonly transformer: ITransformer) {}
 
-    generateIcons = async () => {
+    generate = async () => {
         await this.transformer.transform();
         await this.generateComponents(this.transformer.getIconsData());
         await this.generateStyles(this.transformer.getStyles());
-        await this.generateModel();
-        await this.generateThemeProvider();
-    };
-
-    generateIllustrations = async () => {
-        await this.transformer.transform();
-        await this.generateComponents(this.transformer.getIconsData());
         await this.generateModel();
         await this.generateThemeProvider();
     };
@@ -55,10 +48,9 @@ export class ReactGenerator {
      */
     protected generateStyles = async (styles: string): Promise<void> => {
         try {
-            const cssFolder = path.resolve(generationPath, 'css');
-            const filePath = path.resolve(cssFolder, 'icons.css');
-            createFolderIfNotExists(generationPath);
-            createFolderIfNotExists(cssFolder);
+            const folderPath = path.resolve(generationPath, 'styles');
+            createFolderIfNotExists(folderPath);
+            const filePath = path.resolve(folderPath, 'icons.css');
             await writeFile(filePath, styles);
             console.log('Успешно сформирован файл стилей');
         } catch (e) {
