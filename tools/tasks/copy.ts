@@ -2,7 +2,6 @@ import copy from 'copy';
 import path from 'path';
 import {generationPath, modulesPaths, publicationPath, root} from '../consts';
 import {createFolderIfNotExists} from '../utils/fsUtils';
-import {ETarget, getTarget} from '../utils/envUtils';
 
 const createCallback = (message) => (err) => {
     if (err) {
@@ -11,8 +10,7 @@ const createCallback = (message) => (err) => {
     console.log(message);
 };
 
-const target = getTarget();
-const targetPath = modulesPaths[target];
+const targetPath = modulesPaths['icons'];
 
 createFolderIfNotExists(publicationPath);
 
@@ -29,19 +27,11 @@ copy(path.join(generationPath, './*.js'), publicationPath, {}, createCallback('�
 
 copy(path.join(generationPath, './*.d.ts'), publicationPath, {}, createCallback('Успешно скопирован файл моделей'));
 
-if (target === ETarget.icons) {
-    copy(
-        path.join(generationPath, './css/icons.css'),
-        path.join(publicationPath, './css'),
-        {flatten: true},
-        createCallback('Успешно скопирован файл стилей')
-    );
-    copy(path.join(root, './README.md'), publicationPath, {}, createCallback('Успешно скопирован файл README'));
-} else {
-    copy(
-        path.join(targetPath, './README.md'),
-        publicationPath,
-        {flatten: true},
-        createCallback('Успешно скопирован README')
-    );
-}
+copy(
+    path.join(generationPath, './styles/icons.css'),
+    path.join(publicationPath, './styles'),
+    {flatten: true},
+    createCallback('Успешно скопирован файл стилей')
+);
+
+copy(path.join(root, './README.md'), publicationPath, {}, createCallback('Успешно скопирован файл README'));
