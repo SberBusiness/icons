@@ -12,11 +12,20 @@ export interface ITransformer {
 }
 
 /**
+ * Свойства заливки.
+ * Включает в себя цвет и прозрачность.
+ */
+export interface IFillProps {
+    color: string;
+    opacity?: string;
+}
+
+/**
  * Мапа состояний иконки.
- * Значение хранит в себе массив цветов.
+ * Значение хранит в себе массив свойств заливки.
  */
 export type TIconState = {
-    [key in EIconState]?: string[];
+    [key in EIconState]?: IFillProps[];
 };
 
 /**
@@ -56,5 +65,6 @@ export interface IClassNames {
     [key: string]: Array<{
         state: string;
         color: string;
+        opacity?: string;
     }>;
 }

@@ -10,7 +10,7 @@ import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
  * данные в соответствующие файлы и проконтроллировать ошибки.
  */
 export class SVGGenerator extends ReactGenerator {
-    generateIcons = async () => {
+    generate = async () => {
         await this.transformer.transform();
         await this.generateSVG(this.transformer.getIconsData());
         await this.generateStyles(this.transformer.getStyles());
