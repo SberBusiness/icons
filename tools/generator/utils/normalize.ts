@@ -1,5 +1,12 @@
 import {colorsNames} from 'svgo/plugins/_collections';
 
+export const normalizeFillOpacity = (opacity: string) => {
+    if (opacity[0] === "1") {
+        return undefined;
+    }
+    return opacity.replace(/^0\./, '.').replace(/0+$/, '');
+}
+
 /**
  * Преобразует цвета в именованной записи к hex значению.
  *
@@ -20,4 +27,4 @@ const convertShortHex = (color: string): string =>
  *
  * @param color Цвет в именованной или hex записи.
  */
-export const normalizeColor = (color: string): string => convertShortHex(convertNameToHex(color)).toUpperCase();
+export const normalizeFillColor = (color: string): string => convertShortHex(convertNameToHex(color)).toUpperCase();

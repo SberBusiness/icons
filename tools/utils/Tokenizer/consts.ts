@@ -14,12 +14,8 @@ export const possibleTokens = {
         'srv', // Service
         'srvx', // Service exclusions
         'sts', // Status
-        // Illustrations
-        'scrmrkt', // Screen Market
-        'scrsyst', // Screen System
     ],
     [EIconAttributes.state]: ['active', 'default', 'disabled', 'hover'],
     [EIconAttributes.size]: ['16', '20', '24', '32', '48', '64', '96', '128'],
     [EIconAttributes.theme]: ['lm', 'dm'],
-    [EIconAttributes.channel]: ['w'],
 };

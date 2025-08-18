@@ -7,22 +7,15 @@ export const iconThemeToEnumMap = {
 };
 
 export const mapSelectors = {
-    [EIconState.default]: (className) => `.${className}`,
-    [EIconState.hover]: (className) => `.hoverable:hover .${className}`,
+    [EIconState.default]: (className: string) => `.${className}`,
+    [EIconState.hover]: (className: string) => `.hoverable:hover .${className}`,
     // :enabled не работает с ссылками, поэтому используем :not(:disabled)
-    [EIconState.active]: (className) =>
+    [EIconState.active]: (className: string) =>
         `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
-    [EIconState.disabled]: (className) => `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
+    [EIconState.disabled]: (className: string) => `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
 
 export const selectorsOrder: string[] = [EIconState.default, EIconState.hover, EIconState.active, EIconState.disabled];
-
-export const initialStyles = [
-    {state: EIconState.default, style: '.table-icon .service-fill { fill: #D0D7DD; }'},
-    {state: EIconState.hover, style: 'tr:hover button:enabled .table-icon .service-fill { fill: #B2B8BF; }'},
-    {state: EIconState.hover, style: 'tr:hover button:enabled:hover .table-icon .service-fill { fill: #7D838A; }'},
-    {state: EIconState.active, style: 'tr.selected button:enabled .table-icon .service-fill { fill: #B2B8BF; }'},
-];
 
 export const SVGOConfig: Config = {
     plugins: [

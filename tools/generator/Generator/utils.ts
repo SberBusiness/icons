@@ -4,26 +4,14 @@ import {hash} from '../utils/hash';
  * Содержимое будущего файла model.ts.
  */
 export const getModelSrc = () =>
-    `/**
- * @prop {string} [className]
- * @prop {string} [data-test-id]
- * @prop {never} [style] Инлайн-стили запрещены.
- * @prop {boolean} [table] Включение табличного поведения иконки с двойным ховером.
- */
-export interface IIconProps {
-    className?: string;
-    'data-test-id'?: string;
-    style?: never;
-    table?: boolean;
-}
-`;
+    "export interface IIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {}";
 
 export const getThemeProviderSrc = () =>
-    `import React, { RefObject, createContext, useContext, useEffect, useState } from 'react';
+    `import React, { RefObject, createContext, useContext, useEffect, useState } from "react";
 
 export enum EIconsTheme {
-    LIGHT = 'LIGHT',
-    DARK = 'DARK',
+    LIGHT = "LIGHT",
+    DARK = "DARK",
 }
 
 interface IThemeContext {
@@ -48,8 +36,8 @@ export const useTheme = () => {
 };
 
 const themeClassnames = {
-    [EIconsTheme.LIGHT]: 'icons-light${hash('light')}',
-    [EIconsTheme.DARK]: 'icons-dark${hash('dark')}',
+    [EIconsTheme.LIGHT]: "icons-light${hash("light")}",
+    [EIconsTheme.DARK]: "icons-dark${hash("dark")}",
 }
 
 export const ThemeProvider: React.FC<IProps> = ({ children, theme, scopeRef = { current: document.documentElement } }) => {
@@ -68,8 +56,5 @@ export const ThemeProvider: React.FC<IProps> = ({ children, theme, scopeRef = { 
         };
     }, [theme]);
 
-    return <ThemeContext.Provider value={value}>
-        {children}
-    </ThemeContext.Provider>;
-};
-`;
+    return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+};`;

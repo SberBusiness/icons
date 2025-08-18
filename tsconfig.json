@@ -1,17 +1,21 @@
 {
     "compilerOptions": {
+        // Modules
         "baseUrl": "./tools",
         "module": "commonjs",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "target": "es5",
-        "lib": ["es5", "es6", "es2015.promise"],
+        // Emit
         "declaration": true,
+        "noEmitHelpers": false,
+        "noEmitOnError": false,
         "preserveConstEnums": true,
+        // Interop Constraints
+        "esModuleInterop": true,
+        // Language and Enviroment
+        "jsx": "react",
+        "target": "esnext",
+        // Completeness
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
-        "noEmitHelpers": false,
-        "noEmitOnError": false
     },
     "include": [
         "./tools"

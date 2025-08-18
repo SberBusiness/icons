@@ -1,9 +1,9 @@
 import path from 'path';
 import {IIconsRawDataMap} from './types';
 import {IIconRawData, IParser} from '../types';
-import {normalizeColor} from '../utils/normalizeColors';
+import {normalizeFillColor, normalizeFillOpacity} from '../utils/normalize';
 import {matchAll} from '../utils/regexUtils';
-import {EIconState} from '../../enums';
+import {EIconState, EIconTheme} from '../../enums';
 import {getSvgDirectoryListing, readFile} from '../../utils/fsUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
 
@@ -91,18 +91,24 @@ export class Parser implements IParser {
 
             const icon = (iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || {themes: {}});
 
-            if (!icon.themes[theme]) {
-                icon.themes[theme] = {states: {}};
+            if (!(theme in EIconTheme)) {
+                throw new Error(`Обнаружен неизвестный ключ темы ${theme} у иконки ${iconName}.`);
             }
 
-            if (icon.themes[theme].states[state]) {
+            const themeIdx = EIconTheme[theme];
+
+            if (!icon.themes[themeIdx]) {
+                icon.themes[themeIdx] = {states: {}};
+            }
+
+            if (icon.themes[themeIdx].states[state]) {
                 throw new Error(`Дублирующееся состояние ${state} у иконки ${iconName}.`);
             }
 
-            icon.themes[theme].states[state] = this.getColors(iconSrc);
+            icon.themes[themeIdx].states[state] = this.getFillProps(iconSrc);
 
-            if (!icon.themes[theme].src || state === EIconState.default) {
-                icon.themes[theme].src = iconSrc;
+            if (!icon.themes[themeIdx].src || state === EIconState.default) {
+                icon.themes[themeIdx].src = iconSrc;
                 icon.tokenized = tokenizedIconName;
             }
         }
@@ -111,12 +117,14 @@ export class Parser implements IParser {
     };
 
     /**
-     * Возвращает массив нормализованных цветов иконки.
+     * Возвращает массив нормализованных свойств заливки.
      *
      * @param iconSrc исходный svg иконки.
      */
-    private getColors = (iconSrc: string): string[] =>
-        matchAll(iconSrc, /fill="(?!none)([#0-9A-z]+)"/g).map((m) => normalizeColor(m[1]));
+    private getFillProps = (iconSrc: string): {color: string; opacity?: string}[] =>
+        matchAll(iconSrc, /fill="(?!none)(#[0-9A-F]+)" fill-opacity="([01]\.[0-9]+)"/g).map((match) =>
+            ({color: normalizeFillColor(match[1]), opacity: normalizeFillOpacity(match[2])})
+        );
 
     /**
      * Валидация размера иконки.
@@ -126,7 +134,7 @@ export class Parser implements IParser {
      * @param size Заявленный размер иконки.
      */
     private validateIconSize = (iconSrc: string, iconName: string, size: string): void => {
-        const results = /width="(\d+)" height="(\d+)"/.exec(iconSrc);
+        const results = /width="(\d+)\.\d+" height="(\d+)\.\d+"/.exec(iconSrc);
 
         if (results === null) {
             throw new Error(`Не удалось распарсить размер иконки ${iconName}.`);
@@ -136,7 +144,7 @@ export class Parser implements IParser {
 
         const [_, width, height] = results;
 
-        if (size !== width || size !== height) {
+        if (Number(size) !== Number(width) || Number(size) !== Number(height)) {
             throw new Error(`Размер иконки ${iconName} (${width}x${height}) отличается от заявленного (${size}x${size}).`);
         }
     };
@@ -168,7 +176,7 @@ export class Parser implements IParser {
             .filter(
                 ({themes}) =>
                     !Object.values(themes).every(({states}) =>
-                        Object.values(states).every((colors) => colors.length === states[EIconState.default].length)
+                        Object.values(states).every((styles) => styles.length === states[EIconState.default].length)
                     )
             )
             .map((iconData) => iconData.tokenized.srcName);

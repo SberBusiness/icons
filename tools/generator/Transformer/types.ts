@@ -6,7 +6,7 @@ import {ITokenizedIcon} from 'types';
  * Интерфейс отдельной темы иконки для промежуточных трансформаций.
  */
 export interface IIconTransitionDataTheme {
-    themeName: EIconTheme;
+    theme: EIconTheme;
     src: string;
     classMap: IClassMap;
 }
@@ -23,6 +23,6 @@ export interface IIconTransitionData {
  * Интерфейс иконки с трансформированным SVG.
  */
 export interface IIconTransformedSVG {
-    themeName: EIconTheme;
+    theme: EIconTheme;
     src: string;
 }
