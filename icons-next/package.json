@@ -1,9 +1,9 @@
 {
     "name": "@sberbusiness/icons-next",
-    "version": "1.0.0-alpha.0",
-    "description": "Иконки интернет-банка СберБизнес",
+    "version": "1.0.0-alpha.1",
     "author": "СберБизнес",
-    "license": "Sber Public License at-nc-sa v.2",
+    "description": "Иконки интернет-банка СберБизнес",
+    "main": "./index.js",
     "keywords": [
         "icons",
         "sberbusiness-icons"
@@ -12,11 +12,13 @@
         "type": "git",
         "url": "git+https://github.com/SberBusiness/icons.git"
     },
+    "license": "Sber Public License at-nc-sa v.2",
     "bugs": {
         "url": "https://github.com/SberBusiness/icons/issues"
     },
     "homepage": "https://github.com/SberBusiness/icons#readme",
     "peerDependencies": {
         "react": ">=16.8.0"
-    }
+    },
+    "sideEffects": false
 }
