@@ -1,5 +1,5 @@
 import path from 'path';
-import {getModelSrc, getThemeProviderSrc} from './utils';
+import {getTypesSrc, getThemeProviderSrc} from './utils';
 import {generationPath} from '../../consts';
 import {IIconTransformedData, ITransformer} from '../types';
 import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
@@ -16,8 +16,9 @@ export class ReactGenerator {
         await this.transformer.transform();
         await this.generateComponents(this.transformer.getIconsData());
         await this.generateStyles(this.transformer.getStyles());
-        await this.generateModel();
+        await this.generateTypes();
         await this.generateThemeProvider();
+        await this.generateIndexFile(this.transformer.getIconsData());
     };
 
     /**
@@ -60,12 +61,12 @@ export class ReactGenerator {
     };
 
     /**
-     * Генерирует файл модели.
+     * Генерирует файл типов.
      */
-    private generateModel = async (): Promise<void> => {
+    private generateTypes = async (): Promise<void> => {
         try {
-            const filePath = path.resolve(generationPath, 'models.d.ts');
-            await writeFile(filePath, getModelSrc());
+            const filePath = path.resolve(generationPath, 'types.d.ts');
+            await writeFile(filePath, getTypesSrc());
             console.log('Успешно сформирован файл моделей');
         } catch (e) {
             console.error('Произошла ошибка при формировании файла модели.', e.message);
@@ -83,6 +84,29 @@ export class ReactGenerator {
             console.log('Успешно сформирован файл ThemeProvider');
         } catch (e) {
             console.error('Произошла ошибка при формировании файла провайдера.', e.message);
+            process.exit(1);
+        }
+    };
+
+    /**
+     * Генерирует index.ts
+     */
+    private generateIndexFile = async (iconsData: IIconTransformedData[]): Promise<void> => {
+        try {
+            const filePath = path.resolve(generationPath, 'index.ts');
+            let src = "export { IIconProps } from \"./types\";";
+
+            src += "\nexport { ThemeProvider, useTheme, EIconsTheme } from \"./ThemeProvider\";";
+
+            iconsData.map((iconData) => {
+                const {componentName} = iconData.tokenized;
+                src += `\nexport { default as ${componentName} } from "./${componentName}";`;
+            })
+
+            await writeFile(filePath, src);
+            console.log('Успешно сформирован index.ts');
+        } catch (e) {
+            console.error('Произошла ошибка при формировании index.ts.', e.message);
             process.exit(1);
         }
     };
