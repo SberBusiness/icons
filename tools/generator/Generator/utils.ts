@@ -1,9 +1,9 @@
 import {hash} from '../utils/hash';
 
 /**
- * Содержимое будущего файла model.ts.
+ * Содержимое будущего файла типов.
  */
-export const getModelSrc = () =>
+export const getTypesSrc = () =>
     "export interface IIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {}";
 
 export const getThemeProviderSrc = () =>
@@ -24,7 +24,7 @@ const initialContext: IThemeContext = {
 
 const ThemeContext = createContext<IThemeContext>(initialContext);
 
-interface IProps {
+interface IThemeProviderProps {
     theme: EIconsTheme;
     scopeRef?: RefObject<HTMLElement>;
 }
@@ -40,7 +40,7 @@ const themeClassnames = {
     [EIconsTheme.DARK]: "icons-dark${hash("dark")}",
 }
 
-export const ThemeProvider: React.FC<IProps> = ({ children, theme, scopeRef = { current: document.documentElement } }) => {
+export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children, theme, scopeRef = { current: document.documentElement } }) => {
     const [value, setValue] = useState<IThemeContext>({theme: EIconsTheme.LIGHT});
 
     useEffect(() => {

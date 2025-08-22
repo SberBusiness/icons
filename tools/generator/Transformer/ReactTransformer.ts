@@ -5,7 +5,7 @@ import {getPackageVersion} from './utils/getPackageVersion';
 import {IClassMap, IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
 import {hash} from '../utils/hash';
 import {deprecationMap} from '../../deprecationMap';
-import {EIconState, EIconTheme} from '../../enums';
+import {EIconState} from '../../enums';
 import {camelize} from '../../utils/stringUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
 import {IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme} from './types';
@@ -251,13 +251,15 @@ export class ReactTransformer implements ITransformer {
         }
 
         return `import React from "react";
-import {IIconProps} from "./models";
+import {IIconProps} from "./types";
 import {EIconsTheme, useTheme} from "./ThemeProvider";
 ${comment}
-export const ${componentName} = React.forwardRef<SVGSVGElement, IIconProps>((props, ref) => {
+const ${componentName} = React.forwardRef<SVGSVGElement, IIconProps>((props, ref) => {
     switch (useTheme()) {
         ${src}
     }
-});`;
+});
+
+export default ${componentName};`;
     };
 }
