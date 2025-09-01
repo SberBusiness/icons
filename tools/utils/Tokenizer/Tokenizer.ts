@@ -3,24 +3,51 @@ import {EIconAttributes} from './enums';
 import {capitalize} from '../stringUtils';
 import {ITokenizedIcon, ITokenizedIconName} from '../../types';
 
-/**
- * Собирает регулярное выражение имени иконки.
- */
-const generateTokensRegex = () => {
+/** Собирает регулярное выражение имени иконки. */
+const generateTokensRegexOld = (): RegExp => {
     const g1 = possibleTokens[EIconAttributes.category].join('|');
     const g2 = possibleTokens[EIconAttributes.state].join('|');
     const g3 = possibleTokens[EIconAttributes.size].join('|');
     const g4 = possibleTokens[EIconAttributes.theme].join('|');
 
     return new RegExp(
-        `^ic_(${g1})_([0-9a-zA-Z]+)_(${g2})_(${g3})_(${g4})$`
+        `^(?<type>ic)_(?<category>${g1})_(?<name>[0-9a-zA-Z]+)_(?<state>${g2})_(?<size>${g3})_(?<theme>${g4})$`
     );
 };
 
-export class Tokenizer {
-    static readonly tokensRegex = generateTokensRegex();
+/** Собирает регулярное выражение имени иконки. */
+const generateTokensRegexNew = (): RegExp => {
+    const g1 = possibleTokens[EIconAttributes.category].join('|');
+    const g2 = possibleTokens[EIconAttributes.style].join('|');
+    const g3 = possibleTokens[EIconAttributes.size].join('|');
 
-    isValid = (name: string): boolean => Tokenizer.tokensRegex.test(name);
+    return new RegExp(
+        `^(?<type>mc)_(?<category>${g1})_(?<name>[0-9a-zA-Z]+)_(?<style>${g2})_(?<size>${g3})$`
+    );
+};
+
+// /** Собирает регулярное выражение имени иконки. */
+// const generateTokensRegexes = (): RegExp[] => {
+//     const g1 = possibleTokens[EIconAttributes.category].join('|');
+//     const g2 = possibleTokens[EIconAttributes.state].join('|');
+//     const g3 = possibleTokens[EIconAttributes.size].join('|');
+//     const g4 = possibleTokens[EIconAttributes.theme].join('|');
+
+//     return [
+//         new RegExp(
+//             `^(?<type>ic)_(?<category>${g1})_(?<name>[0-9a-zA-Z]+)_(?<state>${g2})_(?<size>${g3})_(?<theme>${g4})$`
+//         ),
+//         new RegExp(
+//             `^(?<type>il)_(?<category>${g1})_(?<name>[0-9a-zA-Z]+)_(?<size>${g3})_(?<theme>${g4})$`
+//         ),
+//     ];
+// };
+
+export class Tokenizer {
+    static readonly tokensRegexOld = generateTokensRegexOld();
+    static readonly tokensRegexNew = generateTokensRegexNew();
+
+    isValid = (name: string): boolean => Tokenizer.tokensRegexOld.test(name) || Tokenizer.tokensRegexNew.test(name);
 
     /**
      * Токенизирует имя иконки в полноценный объект с описанием.
@@ -30,8 +57,14 @@ export class Tokenizer {
         const tokenizedIconName = this.mapIconTokens(match);
 
         const iconType = 'icon';
-        const componentName = `${capitalize(tokenizedIconName.name)}${capitalize(tokenizedIconName.category)}${capitalize(iconType)}${tokenizedIconName.size}`;
+        let componentName = "";
         const srcName = iconSrcName;
+
+        if (tokenizedIconName.type === 'ic') {
+            componentName = `${capitalize(tokenizedIconName.name)}${capitalize(tokenizedIconName.category)}${capitalize(iconType)}${tokenizedIconName.size}`;
+        } else {
+            componentName = `${capitalize(tokenizedIconName.name)}${capitalize(tokenizedIconName.style)}${capitalize(tokenizedIconName.category)}${capitalize(iconType)}${tokenizedIconName.size}`;
+        }
 
         return {
             ...tokenizedIconName,
@@ -44,7 +77,8 @@ export class Tokenizer {
      * Разбивает имя иконки на токены по регулярке.
      */
     private matchRegex = (iconSrcName: string): RegExpMatchArray => {
-        const match = iconSrcName.match(Tokenizer.tokensRegex);
+        const match = iconSrcName.match(Tokenizer.tokensRegexOld) || iconSrcName.match(Tokenizer.tokensRegexNew);
+
         if (!match) {
             throw new Error(`Не удалось токенизировать имя иконки ${iconSrcName}.`);
         }
@@ -55,10 +89,12 @@ export class Tokenizer {
      * Мапит токены в объект.
      */
     private mapIconTokens = (match: RegExpMatchArray): ITokenizedIconName => ({
-        [EIconAttributes.category]: match[1],
-        [EIconAttributes.name]: match[2],
-        [EIconAttributes.state]: match[3],
-        [EIconAttributes.size]: match[4],
-        [EIconAttributes.theme]: match[5],
+        [EIconAttributes.type]: match.groups.type,
+        [EIconAttributes.category]: match.groups.category,
+        [EIconAttributes.name]: match.groups.name,
+        [EIconAttributes.size]: match.groups.size,
+        [EIconAttributes.state]: match.groups.state,
+        [EIconAttributes.theme]: match.groups.theme,
+        [EIconAttributes.style]: match.groups.style,
     });
 }

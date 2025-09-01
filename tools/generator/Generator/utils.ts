@@ -1,10 +1,15 @@
+import { iconThemeToEnumMap } from '../Transformer/consts';
 import {hash} from '../utils/hash';
 
 /**
  * Содержимое будущего файла типов.
  */
 export const getTypesSrc = () =>
-    "export interface IIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {}";
+    "export interface ISingleColorIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {\n\
+    /** Индекс цветовой палитры для изменения заливки иконки. */\n\
+    paletteIndex: number;\n\
+}\n\
+export interface IMultiColorIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {}";
 
 export const getThemeProviderSrc = () =>
     `import React, { RefObject, createContext, useContext, useEffect, useState } from "react";
@@ -58,3 +63,19 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children, theme, 
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };`;
+
+export const getUtilsSrc = (paletteClasses) => `import {EIconsTheme} from "../ThemeProvider";
+
+const themeToClassNamePalettes = [
+${paletteClasses.map((palette) => {
+        let str = '    {\n';
+        for (const theme in palette) {
+            str += `        [EIconsTheme.${iconThemeToEnumMap[theme]}]: "${palette[theme]}",\n`
+        }
+        str += '    },\n';
+        return str;
+    }).join("")}];
+
+const getPathClassName = (paletteIndex: number, theme: EIconsTheme) => themeToClassNamePalettes[paletteIndex][theme];
+
+export default getPathClassName;`;

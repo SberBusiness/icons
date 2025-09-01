@@ -1,5 +1,5 @@
 import path from 'path';
-import {getTypesSrc, getThemeProviderSrc} from './utils';
+import {getTypesSrc, getThemeProviderSrc, getUtilsSrc} from './utils';
 import {generationPath} from '../../consts';
 import {IIconTransformedData, ITransformer} from '../types';
 import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
@@ -14,12 +14,27 @@ export class ReactGenerator {
 
     generate = async () => {
         await this.transformer.transform();
+        await this.generateUtilities();
         await this.generateComponents(this.transformer.getIconsData());
         await this.generateStyles(this.transformer.getStyles());
         await this.generateTypes();
         await this.generateThemeProvider();
         await this.generateIndexFile(this.transformer.getIconsData());
     };
+
+    private generateUtilities = async (): Promise<void> => {
+        try {
+            createFolderIfNotExists(generationPath);
+            const folderPath = path.resolve(generationPath, 'utils');
+            createFolderIfNotExists(folderPath);
+            const filePath = path.resolve(folderPath, 'getPathClassName.ts');
+            await writeFile(filePath, getUtilsSrc(this.transformer.getPaletteClasses()));
+            console.log('Успешно сформирован файл утилит');
+        } catch (e) {
+            console.error('Произошла ошибка при формировании файла утилит.', e.message);
+            process.exit(1);
+        }
+    }
 
     /**
      * Генерирует компоненты в папке назначения из подготовленных трансформером данных иконок.
@@ -28,7 +43,6 @@ export class ReactGenerator {
      */
     protected generateComponents = async (iconsData: IIconTransformedData[]): Promise<void> => {
         try {
-            createFolderIfNotExists(generationPath);
             const promises = await Promise.all(
                 iconsData.map(async (iconData) => {
                     const filePath = path.resolve(generationPath, iconData.tokenized.componentName + '.tsx');
@@ -67,9 +81,9 @@ export class ReactGenerator {
         try {
             const filePath = path.resolve(generationPath, 'types.d.ts');
             await writeFile(filePath, getTypesSrc());
-            console.log('Успешно сформирован файл моделей');
+            console.log('Успешно сформирован файл типов.');
         } catch (e) {
-            console.error('Произошла ошибка при формировании файла модели.', e.message);
+            console.error('Произошла ошибка при формировании файл типов.', e.message);
             process.exit(1);
         }
     };
@@ -94,7 +108,7 @@ export class ReactGenerator {
     private generateIndexFile = async (iconsData: IIconTransformedData[]): Promise<void> => {
         try {
             const filePath = path.resolve(generationPath, 'index.ts');
-            let src = "export { IIconProps } from \"./types\";";
+            let src = "export { ISingleColorIconProps, IMultiColorIconProps } from \"./types\";";
 
             src += "\nexport { ThemeProvider, useTheme, EIconsTheme } from \"./ThemeProvider\";";
 

@@ -6,20 +6,7 @@ import {matchAll} from '../utils/regexUtils';
 import {EIconState, EIconTheme} from '../../enums';
 import {getSvgDirectoryListing, readFile} from '../../utils/fsUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
-
-const INVALID_SIZE_NAMES_WHITELIST = {
-    // Deprecated
-    "ic_prd_gigaassistaint_default_32_dm_w": undefined,
-    "ic_prd_gigaassistaint_default_32_lm_w": undefined,
-    "ic_srv_repeatpayment_active_20_dm_w": undefined,
-    "ic_srv_repeatpayment_active_20_lm_w": undefined,
-    "ic_srv_repeatpayment_default_20_dm_w": undefined,
-    "ic_srv_repeatpayment_default_20_lm_w": undefined,
-    "ic_srv_repeatpayment_disabled_20_dm_w": undefined,
-    "ic_srv_repeatpayment_disabled_20_lm_w": undefined,
-    "ic_srv_repeatpayment_hover_20_dm_w": undefined,
-    "ic_srv_repeatpayment_hover_20_lm_w": undefined,
-};
+import ICON_FILL_PALETTES from './palettes';
 
 /**
  * Парсер получает в себя путь до директории, которую следует распарсить.
@@ -30,7 +17,7 @@ const INVALID_SIZE_NAMES_WHITELIST = {
 export class Parser implements IParser {
     private readonly tokenizer = new Tokenizer();
 
-    constructor(private readonly folders) {}
+    constructor(private readonly folders: string[]) {}
 
     /**
      * Собирает сырые данные иконок.
@@ -85,31 +72,49 @@ export class Parser implements IParser {
             const iconSrc = await readFile(path.resolve(folder, iconFileName));
             const iconName = path.basename(iconFileName, '.svg');
             const tokenizedIconName = this.tokenizer.tokenize(iconName);
-            const {componentName, state, size, theme} = tokenizedIconName;
+            const {type, componentName, state, size, theme} = tokenizedIconName;
 
             this.validateIconSize(iconSrc, iconName, size);
 
             const icon = (iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || {themes: {}});
 
-            if (!(theme in EIconTheme)) {
-                throw new Error(`Обнаружен неизвестный ключ темы ${theme} у иконки ${iconName}.`);
-            }
+            if (type === 'ic') {
+                if (!(theme in EIconTheme)) {
+                    throw new Error(`Обнаружен неизвестный ключ темы ${theme} у иконки ${iconName}.`);
+                }
 
-            const themeIdx = EIconTheme[theme];
+                const themeIdx = EIconTheme[theme];
 
-            if (!icon.themes[themeIdx]) {
-                icon.themes[themeIdx] = {states: {}};
-            }
+                if (!icon.themes[themeIdx]) {
+                    icon.themes[themeIdx] = {states: {}};
+                }
 
-            if (icon.themes[themeIdx].states[state]) {
-                throw new Error(`Дублирующееся состояние ${state} у иконки ${iconName}.`);
-            }
+                if (icon.themes[themeIdx].states[state]) {
+                    throw new Error(`Дублирующееся состояние ${state} у иконки ${iconName}.`);
+                }
 
-            icon.themes[themeIdx].states[state] = this.getFillProps(iconSrc);
+                icon.themes[themeIdx].states[state] = this.getFillProps(iconSrc);
 
-            if (!icon.themes[themeIdx].src || state === EIconState.default) {
-                icon.themes[themeIdx].src = iconSrc;
-                icon.tokenized = tokenizedIconName;
+                if (!icon.themes[themeIdx].src || state === EIconState.default) {
+                    icon.themes[themeIdx].src = iconSrc;
+                    icon.tokenized = tokenizedIconName;
+                }
+            } else {
+                ICON_FILL_PALETTES.map((ruleset) => {
+                    for (const theme in ruleset) {
+                        icon.themes[theme] = {states: {}};
+                        for (const state in ruleset[theme]) {
+                            icon.themes[theme].states[state] = this.getFillProps(iconSrc).map(
+                                () => ruleset[theme][state]
+                            );
+
+                            if (state === EIconState.default) {
+                                icon.themes[theme].src = iconSrc;
+                                icon.tokenized = tokenizedIconName;
+                            }
+                        }
+                    }
+                });
             }
         }
 
@@ -122,9 +127,10 @@ export class Parser implements IParser {
      * @param iconSrc исходный svg иконки.
      */
     private getFillProps = (iconSrc: string): {color: string; opacity?: string}[] =>
-        matchAll(iconSrc, /fill="(?!none)(#[0-9A-F]+)" fill-opacity="([01]\.[0-9]+)"/g).map((match) =>
-            ({color: normalizeFillColor(match[1]), opacity: normalizeFillOpacity(match[2])})
-        );
+        matchAll(iconSrc, /fill="(?!none)(#[0-9A-F]+)" fill-opacity="([01]\.[0-9]+)"/g).map((match) => ({
+            color: normalizeFillColor(match[1]),
+            opacity: normalizeFillOpacity(match[2]),
+        }));
 
     /**
      * Валидация размера иконки.
@@ -138,14 +144,14 @@ export class Parser implements IParser {
 
         if (results === null) {
             throw new Error(`Не удалось распарсить размер иконки ${iconName}.`);
-        } else if (iconName in INVALID_SIZE_NAMES_WHITELIST) {
-            return;
         }
 
         const [_, width, height] = results;
 
         if (Number(size) !== Number(width) || Number(size) !== Number(height)) {
-            throw new Error(`Размер иконки ${iconName} (${width}x${height}) отличается от заявленного (${size}x${size}).`);
+            throw new Error(
+                `Размер иконки ${iconName} (${width}x${height}) отличается от заявленного (${size}x${size}).`
+            );
         }
     };
 
