@@ -19,7 +19,7 @@ export const isPathExists = (source: string): boolean => fs.existsSync(source);
  */
 export function createFolderIfNotExists(folder: string): void {
     if (!fs.existsSync(folder)) {
-        fs.mkdirSync(folder, { recursive: true });
+        fs.mkdirSync(folder, {recursive: true});
     }
 }
 

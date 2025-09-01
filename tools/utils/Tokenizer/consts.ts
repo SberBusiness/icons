@@ -2,7 +2,6 @@ import {EIconAttributes} from './enums';
 
 export const possibleTokens = {
     [EIconAttributes.category]: [
-        // Icons
         'acc', // Accent
         'ani', // Animated
         'brd', // Brand
@@ -15,7 +14,8 @@ export const possibleTokens = {
         'srvx', // Service exclusions
         'sts', // Status
     ],
-    [EIconAttributes.state]: ['active', 'default', 'disabled', 'hover'],
     [EIconAttributes.size]: ['16', '20', '24', '32', '48', '64', '96', '128'],
+    [EIconAttributes.state]: ['active', 'default', 'disabled', 'hover'],
     [EIconAttributes.theme]: ['lm', 'dm'],
+    [EIconAttributes.style]: ['stroke', 'filled'],
 };

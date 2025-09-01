@@ -8,6 +8,7 @@ export interface IParser {
 export interface ITransformer {
     transform: () => Promise<void>;
     getIconsData: () => IIconTransformedData[];
+    getPaletteClasses: () => any;
     getStyles: () => string;
 }
 
@@ -56,6 +57,11 @@ export interface IIconTransformedData {
     tokenized: ITokenizedIcon;
     /** Содержимое готового React компонента иконки */
     src: string;
+}
+
+export interface IIconFill {
+    color: string;
+    opacity?: string;
 }
 
 /**
