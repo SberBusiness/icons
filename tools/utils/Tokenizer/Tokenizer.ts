@@ -22,7 +22,7 @@ const generateTokensRegexNew = (): RegExp => {
     const g3 = possibleTokens[EIconAttributes.size].join('|');
 
     return new RegExp(
-        `^(?<type>mc)_(?<category>${g1})_(?<name>[0-9a-zA-Z]+)_(?<style>${g2})_(?<size>${g3})$`
+        `^(?<type>sc)_(?<category>${g1})_(?<name>[0-9a-zA-Z]+)_(?<style>${g2})_(?<size>${g3})$`
     );
 };
 
