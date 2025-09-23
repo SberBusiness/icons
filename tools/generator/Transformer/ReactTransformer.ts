@@ -313,7 +313,7 @@ import {useTheme} from "./ThemeProvider";
 import getPathClassName from "./utils/getPathClassName";
 ${comment}
 const ${componentName} = React.forwardRef<SVGSVGElement, ISingleColorIconProps>(({paletteIndex, ...restProps}, ref) => {
-    const pathClassName = paletteIndex !== undefined ? getPathClassName(paletteIndex, useTheme()) : undefined;
+    const pathClassName = getPathClassName(paletteIndex, useTheme());
     return ${src};
 });
 
