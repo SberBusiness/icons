@@ -162,13 +162,13 @@ export class ReactTransformer implements ITransformer {
 
         let src: string;
 
-        if (tokenized.type === 'ic') {
+        if (tokenized.type === 'sc' || tokenized.type === 'mc') {
+            src = transformedThemes[0].src;
+        } /* else {
             src = transformedThemes
                 .map(({theme, src}) => `case EIconsTheme.${iconThemeToEnumMap[theme]}:\n            return ${src};`)
                 .join('\n        ');
-        } else {
-            src = transformedThemes[0].src;
-        }
+        } */
 
         const reactSrc = this.generateSvgComponentCode(src, tokenized);
 
@@ -252,19 +252,25 @@ export class ReactTransformer implements ITransformer {
      *  Добавляет aria-hidden="true".
      */
     private insertExtra = (src: string, {type, componentName}: ITokenizedIcon): string => {
-        return src.replace(
-            '><',
-            ` name="${componentName}" focusable="false" aria-hidden="true" ${type === 'ic' ? '{...props}' : '{...restProps}'} ref={ref}><`
-        );
+        const commonProps = `name="${componentName}" focusable="false" aria-hidden="true"`;
+
+        if (type === 'sc') {
+            return src.replace('><',` ${commonProps} {...restProps} ref={ref}><`);
+        } else {
+            return src.replace('><',` ${commonProps} {...props} ref={ref}><`);
+        }
     };
 
-    /**
-     * Подменяет fill и fill-opacity именем класса.
-     */
+    /** Подменяет fill и fill-opacity именем класса. */
     protected replaceColorsWithClassNames = (src: string, tokenized: ITokenizedIcon, classMap: IClassMap): string => {
         if (!classMap) {
             return src;
-        } else if (tokenized.type === 'ic') {
+        } else if (tokenized.type === 'sc') {
+            return src.replace(
+                /fill="(?!none)(#[0-9A-F]+)"(?: fill-opacity="(\.[0-9]+)")?/g,
+                () => 'className={pathClassName}'
+            );
+        } /* else if (tokenized.type === 'ic') {
             return src.replace(
                 /fill="(?!none)(#[0-9A-F]+)"(?: fill-opacity="(\.[0-9]+)")?/g,
                 (match, color, opacity) => {
@@ -272,41 +278,26 @@ export class ReactTransformer implements ITransformer {
                     return `className="${classMap[key]}"`;
                 }
             );
-        } else {
-            return src.replace(
-                /fill="(?!none)(#[0-9A-F]+)"(?: fill-opacity="(\.[0-9]+)")?/g,
-                () => 'className={pathClassName}'
-            );
-        }
+        } */
     };
 
-    /**
-     * Обворачивает svg в React компонент.
-     */
+    /** Обворачивает svg в React компонент. */
     private generateSvgComponentCode = (src: string, {type, componentName, srcName}: ITokenizedIcon): string => {
         let comment = '';
         if (srcName in deprecationMap) {
-            const replacementComponent =
-                deprecationMap[srcName] && this.tokenizer.tokenize(deprecationMap[srcName]).componentName;
-            comment = `
-/**
- * @deprecated${replacementComponent ? ` use ${replacementComponent}` : ''}
- */`;
+            let newComponentName = "";
+
+            if (deprecationMap[srcName]) {
+                const newTokenizedIconName = this.tokenizer.tokenizeIconName(deprecationMap[srcName]);
+                if (newTokenizedIconName === null) {
+                    throw Error(`Не удалось распарсить имя иконки ${srcName} в deprecationMap.`)
+                }
+                newComponentName = this.tokenizer.createComponentName(newTokenizedIconName);
+            }
+            comment = `\n** @deprecated${newComponentName ? ` use ${newComponentName}` : ''}*/`;
         }
 
-        if (type === 'ic') {
-            return `import React from "react";
-import {IMultiColorIconProps} from "./types";
-import {EIconsTheme, useTheme} from "./ThemeProvider";
-${comment}
-const ${componentName} = React.forwardRef<SVGSVGElement, IMultiColorIconProps>((props, ref) => {
-    switch (useTheme()) {
-        ${src}
-    }
-});
-
-export default ${componentName};`;
-        } else {
+        if (type === 'sc') {
             return `import React from "react";
 import {ISingleColorIconProps} from "./types";
 import {useTheme} from "./ThemeProvider";
@@ -316,8 +307,17 @@ const ${componentName} = React.forwardRef<SVGSVGElement, ISingleColorIconProps>(
     const pathClassName = getPathClassName(paletteIndex, useTheme());
     return ${src};
 });
-
 export default ${componentName};`;
+        } else if (type === 'mc') {
+            return `import React from "react";
+import {IMultiColorIconProps} from "./types";
+${comment}
+const ${componentName} = React.forwardRef<SVGSVGElement, IMultiColorIconProps>((props, ref) => {
+    return ${src};
+});
+export default ${componentName};`
+        } else {
+            return;
         }
-    };
+    }
 }

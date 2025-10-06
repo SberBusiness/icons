@@ -16,16 +16,13 @@ import ICON_FILL_PALETTES from './palettes';
  */
 export class Parser implements IParser {
     private readonly tokenizer = new Tokenizer();
+    private errors: string[] = [];
 
     constructor(private readonly folders: string[]) {}
 
-    /**
-     * Собирает сырые данные иконок.
-     */
+    /** Собирает сырые данные иконок. */
     getIconsRawData = async (): Promise<IIconRawData[]> => {
         try {
-            await this.validateIconsSources();
-
             let iconsRawData: IIconRawData[] = [];
 
             for (const folder of this.folders) {
@@ -36,70 +33,42 @@ export class Parser implements IParser {
             this.checkDefaultState(iconsRawData);
             this.checkColorCount(iconsRawData);
 
+            if (this.errors.length > 0) {
+                throw new Error(this.errors.join('\n'));
+            }
+
             return iconsRawData;
-        } catch (e) {
-            throw new Error(`Во время парсинга иконок произошел сбой. ${e.message}`);
+        } catch (error) {
+            throw new Error(`Во время парсинга иконок произошел сбой. ${error.message}`);
         }
     };
 
-    /**
-     * Проверяет svg иконки на правильность написания имён и выводит список
-     * некорректных названий при наличии.
-     */
-    private validateIconsSources = async (): Promise<void> => {
-        const folders: string[][] = await Promise.all(this.folders.map(getSvgDirectoryListing));
-
-        const invalidIconsNames = folders
-            .reduce((iconsPaths, folderPaths) => [...iconsPaths, ...folderPaths])
-            .map((iconFileName) => path.basename(iconFileName, '.svg'))
-            .filter((iconName) => !this.tokenizer.isValid(iconName));
-
-        if (invalidIconsNames.length) {
-            throw new Error(`Не удалось токенизировать имена файлов:\n${invalidIconsNames.join('\n')}`);
-        }
-    };
-
-    /**
-     * Собирает сырые данные иконок в папке категории.
-     *
-     * @param folder
-     */
+    /** Собирает сырые данные иконок в папке категории. */
     private getIconsRawDataInFolder = async (folder: string): Promise<IIconRawData[]> => {
         const iconsFileNames = await getSvgDirectoryListing(folder);
         const iconsRawDataMap: IIconsRawDataMap = {};
 
         for (const iconFileName of iconsFileNames) {
-            const iconSrc = await readFile(path.resolve(folder, iconFileName));
             const iconName = path.basename(iconFileName, '.svg');
-            const tokenizedIconName = this.tokenizer.tokenize(iconName);
-            const {type, componentName, state, size, theme} = tokenizedIconName;
+            const tokenizedIconName = this.tokenizer.tokenizeIconName(iconName);
 
-            this.validateIconSize(iconSrc, iconName, size);
+            if (tokenizedIconName === null) {
+                this.errors.push(`Не удалось распарсить имя файла иконки: ${iconName}.`);
+                continue;
+            }
+
+            const iconSrc = await readFile(path.resolve(folder, iconFileName));
+
+            if (this.isIconSizeValid(iconName, iconSrc, tokenizedIconName.size) === false) {
+                continue;
+            }
+
+            const tokenizedIcon = this.tokenizer.tokenizeIcon(iconName, tokenizedIconName);
+            const {type, /* state, theme, */ componentName} = tokenizedIcon;
 
             const icon = (iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || {themes: {}});
 
-            if (type === 'ic') {
-                if (!(theme in EIconTheme)) {
-                    throw new Error(`Обнаружен неизвестный ключ темы ${theme} у иконки ${iconName}.`);
-                }
-
-                const themeIdx = EIconTheme[theme];
-
-                if (!icon.themes[themeIdx]) {
-                    icon.themes[themeIdx] = {states: {}};
-                }
-
-                if (icon.themes[themeIdx].states[state]) {
-                    throw new Error(`Дублирующееся состояние ${state} у иконки ${iconName}.`);
-                }
-
-                icon.themes[themeIdx].states[state] = this.getFillProps(iconSrc);
-
-                if (!icon.themes[themeIdx].src || state === EIconState.default) {
-                    icon.themes[themeIdx].src = iconSrc;
-                    icon.tokenized = tokenizedIconName;
-                }
-            } else {
+            if (type === 'sc') {
                 ICON_FILL_PALETTES.map((ruleset) => {
                     for (const theme in ruleset) {
                         icon.themes[theme] = {states: {}};
@@ -110,12 +79,31 @@ export class Parser implements IParser {
 
                             if (state === EIconState.default) {
                                 icon.themes[theme].src = iconSrc;
-                                icon.tokenized = tokenizedIconName;
+                                icon.tokenized = tokenizedIcon;
                             }
                         }
                     }
                 });
-            }
+            } else if (type === 'mc') {
+                ['lm', 'dm'].map((theme) => {
+                    icon.themes[theme] = {states: {[EIconState.default]: this.getFillProps(iconSrc)}};
+                    icon.themes[theme].src = iconSrc;
+                    icon.tokenized = tokenizedIcon;
+                })
+            } /* else {
+                const themeIdx = EIconTheme[theme];
+
+                if (!icon.themes[themeIdx]) {
+                    icon.themes[themeIdx] = {states: {}};
+                }
+
+                icon.themes[themeIdx].states[state] = this.getFillProps(iconSrc);
+
+                if (!icon.themes[themeIdx].src || state === EIconState.default) {
+                    icon.themes[themeIdx].src = iconSrc;
+                    icon.tokenized = tokenizedIcon;
+                }
+            } */
         }
 
         return Object.values(iconsRawDataMap) as IIconRawData[];
@@ -133,29 +121,6 @@ export class Parser implements IParser {
         }));
 
     /**
-     * Валидация размера иконки.
-     *
-     * @param iconSrc Исходный svg иконки.
-     * @param iconName Имя иконки.
-     * @param size Заявленный размер иконки.
-     */
-    private validateIconSize = (iconSrc: string, iconName: string, size: string): void => {
-        const results = /width="(\d+)\.\d+" height="(\d+)\.\d+"/.exec(iconSrc);
-
-        if (results === null) {
-            throw new Error(`Не удалось распарсить размер иконки ${iconName}.`);
-        }
-
-        const [_, width, height] = results;
-
-        if (Number(size) !== Number(width) || Number(size) !== Number(height)) {
-            throw new Error(
-                `Размер иконки ${iconName} (${width}x${height}) отличается от заявленного (${size}x${size}).`
-            );
-        }
-    };
-
-    /**
      * Проверяет, что у каждой иконки есть default состояние, т.к.
      * не у каждой иконки могут быть другие состояния, но состояние default должно быть всегда.
      *
@@ -167,7 +132,7 @@ export class Parser implements IParser {
             .map((iconData) => iconData.tokenized.srcName);
 
         if (iconsWithoutDefault.length) {
-            throw new Error(`У некоторых иконок нет дефолтного состояния.\n${iconsWithoutDefault.join('\n')}`);
+            this.errors.push(`У некоторых иконок нет дефолтного состояния.\n${iconsWithoutDefault.join('\n')}`);
         }
     };
 
@@ -188,7 +153,32 @@ export class Parser implements IParser {
             .map((iconData) => iconData.tokenized.srcName);
 
         if (iconsWithDifferentColorCount.length) {
-            throw new Error(`У некоторых иконок не хватает путей.\n${iconsWithDifferentColorCount.join('\n')}`);
+            this.errors.push(`У некоторых иконок не хватает путей.\n${iconsWithDifferentColorCount.join('\n')}`);
         }
+    };
+
+    /**
+     * Валидация размера иконки.
+     *
+     * @param iconSrc Исходный svg иконки.
+     * @param iconName Имя иконки.
+     * @param size Заявленный размер иконки.
+     */
+    private isIconSizeValid = (iconName: string, iconSrc: string, size: string): boolean => {
+        const result = /width="(\d+)\.\d+" height="(\d+)\.\d+"/.exec(iconSrc);
+
+        if (result === null) {
+            this.errors.push(`Не удалось распарсить размер иконки ${iconName}.`);
+            return false;
+        }
+
+        const [_, width, height] = result;
+
+        if (size !== width || size !== height) {
+            this.errors.push(`Размер иконки ${iconName} (${width}x${height}) отличается от заявленного (${size}x${size}).`)
+            return false;
+        }
+
+        return true;
     };
 }

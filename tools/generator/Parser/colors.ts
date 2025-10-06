@@ -79,7 +79,7 @@ const ICON_COLOR_MAP: Record<EColorPaletteName, Record<TColorPaletteScale, IIcon
         100: {color: "#EEF3FC"},
     },
     [EColorPaletteName.NEUTRAL_ALPHA]: {
-        0: {color: "#FFFFFF"},
+        0: {color: "#FFFFFF", opacity: "1"},
         10: {color: "#FFFFFF", opacity: ".95"},
         20: {color: "#FFFFFF", opacity: ".85"},
         30: {color: "#FFFFFF", opacity: ".75"},
@@ -92,7 +92,7 @@ const ICON_COLOR_MAP: Record<EColorPaletteName, Record<TColorPaletteScale, IIcon
         100: {color: "#FFFFFF", opacity: ".05"},
     },
     [EColorPaletteName.DARK_NEUTRAL_ALPHA]: {
-        0: {color: "#1F1F22"},
+        0: {color: "#1F1F22", opacity: "1"},
         10: {color: "#1F1F22", opacity: ".95"},
         20: {color: "#1F1F22", opacity: ".85"},
         30: {color: "#1F1F22", opacity: ".75"},
