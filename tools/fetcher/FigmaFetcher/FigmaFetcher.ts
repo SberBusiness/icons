@@ -74,7 +74,7 @@ export class FigmaFetcher {
                 const url = figmaImagesUrlsMap[node_id];
                 const src = await this.figmaService.getIconSrc(url);
                 return {
-                    category: this.tokenizer.tokenize(name).category,
+                    category: this.tokenizer.tokenizeIcon(name).category,
                     fileName: `${name}.svg`,
                     src,
                 };

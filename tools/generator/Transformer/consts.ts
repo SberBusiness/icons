@@ -24,6 +24,16 @@ export const SVGOConfig: Config = {
         'cleanupIds',
         'cleanupNumericValues',
         'collapseGroups',
+        {
+            name: 'convertColors',
+            params: {
+                currentColor: false,
+                names2hex: true,
+                rgb2hex: true,
+                shorthex: false,
+                shortname: false,
+            },
+        },
         'convertPathData',
         'convertShapeToPath',
         'convertStyleToAttrs',
@@ -49,15 +59,5 @@ export const SVGOConfig: Config = {
         'removeXMLNS',
         'removeXMLProcInst',
         'sortAttrs',
-        {
-            name: 'convertColors',
-            params: {
-                currentColor: false,
-                names2hex: true,
-                rgb2hex: true,
-                shorthex: false,
-                shortname: false,
-            },
-        },
     ],
 };
