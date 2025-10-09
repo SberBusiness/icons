@@ -59,7 +59,7 @@ export class Parser implements IParser {
 
             const iconSrc = await readFile(path.resolve(folder, iconFileName));
 
-            if (this.isIconSizeValid(iconName, iconSrc, tokenizedIconName.size) === false) {
+            if (this.isIconSizeValid(iconName, iconSrc, Number(tokenizedIconName.size)) === false) {
                 continue;
             }
 
@@ -164,15 +164,18 @@ export class Parser implements IParser {
      * @param iconName Имя иконки.
      * @param size Заявленный размер иконки.
      */
-    private isIconSizeValid = (iconName: string, iconSrc: string, size: string): boolean => {
-        const result = /width="(\d+)\.\d+" height="(\d+)\.\d+"/.exec(iconSrc);
+    private isIconSizeValid = (iconName: string, iconSrc: string, size: number): boolean => {
+        const result = /width="(\d+\.\d+)" height="(\d+\.\d+)"/.exec(iconSrc);
 
         if (result === null) {
             this.errors.push(`Не удалось распарсить размер иконки ${iconName}.`);
             return false;
         }
 
-        const [_, width, height] = result;
+        const [_, widthProp, heightProp] = result;
+
+        const width = Number(widthProp);
+        const height = Number(heightProp);
 
         if (size !== width || size !== height) {
             this.errors.push(`Размер иконки ${iconName} (${width}x${height}) отличается от заявленного (${size}x${size}).`)
