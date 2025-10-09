@@ -13,6 +13,7 @@ const possibleTokens = {
         'srv', // Service
         'srvx', // Service exclusions
         'sts', // Status
+        'sys', // System
     ],
     [EIconAttributes.style]: ['stroke', 'filled', 'other'],
     // [EIconAttributes.state]: ['active', 'default', 'disabled', 'hover'],
