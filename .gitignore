@@ -1,5 +1,4 @@
-.env
-.idea
 node_modules
 generated
 public
+.env

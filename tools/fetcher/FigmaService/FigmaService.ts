@@ -1,76 +1,65 @@
-import axios from 'axios';
-import axiosRetry from 'axios-retry';
+// FigmaService.ts - отвечает только за взаимодействие с API Figma
+import axios, { AxiosInstance } from 'axios';
 import https from 'https';
-import {IFigmaComponentsResponse, IFigmaFileVersionsResponse, IFigmaImagesResponse} from './types';
-import {IFigmaComponent, IFigmaImagesMap, IFigmaService} from '../types';
-import {figmaToken, figmaIconsFileKey} from '../../consts';
+import { IFigmaComponentsResponse, IFigmaFileVersionsResponse, IFigmaImagesResponse } from './types';
+import { IFigmaComponent, IFigmaImagesMap } from '../types';
 
-axiosRetry(axios, {
-    retries: 3,
-    retryDelay: axiosRetry.exponentialDelay,
-});
+export class FigmaService {
+    private readonly api: AxiosInstance;
 
-const apiUrl = 'https://api.figma.com/';
-
-export class FigmaService implements IFigmaService {
-    private readonly api;
-
-    constructor() {
+    constructor(private readonly token: string, private readonly fileKey: string) {
         this.api = axios.create({
-            baseURL: apiUrl,
-            timeout: 15 * 1000,
-            headers: {'X-FIGMA-TOKEN': figmaToken},
-            httpsAgent: new https.Agent({
-                rejectUnauthorized: false,
-            }),
+            baseURL: 'https://api.figma.com/',
+            headers: { 'X-FIGMA-TOKEN': token },
+            httpsAgent: new https.Agent({ keepAlive: true }),
         });
     }
 
-    /**
-     * Получает дату обновления файла figma.
-     */
-    getFigmaFileUpdateDate = async (): Promise<string> => {
-        const res = await this.get<IFigmaFileVersionsResponse>(`/v1/files/${figmaIconsFileKey}/versions`);
-        return res.versions[0].created_at;
-    };
+    async getFileUpdateDate(): Promise<Date> {
+        const res = await this.request<IFigmaFileVersionsResponse>(`/v1/files/${this.fileKey}/versions`);
+        return new Date(res.versions[0].created_at);
+    }
 
-    /**
-     * Получает список компонентов из файла figma.
-     */
-    getFigmaComponents = async (): Promise<IFigmaComponent[]> => {
-        const res = await this.get<IFigmaComponentsResponse>(`/v1/files/${figmaIconsFileKey}/components`);
+    async getComponents(): Promise<IFigmaComponent[]> {
+        const res = await this.request<IFigmaComponentsResponse>(`/v1/files/${this.fileKey}/components`);
         if (res.error || res.status !== 200) {
-            throw new Error(`Ошибка в ответе от figma get component api, статус ${res.status}.`);
+            throw new Error(`Figma API error, status ${res.status}`);
         }
         return res.meta.components;
-    };
+    }
 
-    /**
-     * Получает список ссылок на иконки компонентов figma.
-     *
-     * @param ids Строка перечисленных через запятую id компонентов.
-     * @param format Формат картинки.
-     */
-    getFigmaImagesUrls = async (ids: string, format = 'svg'): Promise<IFigmaImagesMap> => {
-        const res = await this.get<IFigmaImagesResponse>(`/v1/images/${figmaIconsFileKey}?ids=${ids}&format=${format}`);
+    async getImagesUrls(ids: string[], format = 'svg'): Promise<IFigmaImagesMap> {
+        const idsParam = ids.join(',');
+        const res = await this.request<IFigmaImagesResponse>(
+            `/v1/images/${this.fileKey}?ids=${idsParam}&format=${format}`
+        );
         if (res.err) {
-            throw new Error(`Ошибка в ответе от figma get image api.`);
+            throw new Error('Figma images API error');
         }
         return res.images;
-    };
+    }
 
-    /**
-     * Получает контент иконки (svg, png, jpg, gif) по ссылке.
-     *
-     * @param url
-     */
-    getIconSrc = async (url: string): Promise<string> => this.get(url);
+    async downloadImage(url: string): Promise<string> {
+        return this.request(url, { responseType: 'text' });
+    }
 
-    private get = <T>(url: string): Promise<T> =>
-        this.api
-            .get(url)
-            .then((res) => res.data)
-            .catch((e) => {
-                throw new Error(`Ошибка запроса: ${e.message}`);
-            });
+    private async request<T>(url: string, config?: any): Promise<T> {
+        const retries = 3;
+        for (let i = 0; i < retries; i++) {
+            try {
+                const response = await this.api.get(url, config);
+                return response.data;
+            } catch (error) {
+                if (i < retries - 1) {
+                    await this.delay(1000 * (i + 1));
+                    continue;
+                }
+                throw new Error(`Request failed after ${retries} attempts: ${error.message}`);
+            }
+        }
+    }
+
+    private delay(ms: number): Promise<void> {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 }
