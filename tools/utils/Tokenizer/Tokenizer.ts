@@ -50,6 +50,6 @@ export class Tokenizer {
         [EIconAttributes.style]: match.groups.style,
         // [EIconAttributes.state]: match.groups.state,
         [EIconAttributes.size]: match.groups.size,
-        // [EIconAttributes.theme]: match.groups.theme,
+        [EIconAttributes.theme]: match.groups.theme,
     });
 }

@@ -53,7 +53,7 @@ export class Parser implements IParser {
             const tokenizedIconName = this.tokenizer.tokenizeIconName(iconName);
 
             if (tokenizedIconName === null) {
-                this.errors.push(`Не удалось распарсить имя файла иконки: ${iconName}.`);
+                this.errors.push(`Не удалось распарсить имя файла: ${iconName}.`);
                 continue;
             }
 
@@ -64,17 +64,17 @@ export class Parser implements IParser {
             }
 
             const tokenizedIcon = this.tokenizer.tokenizeIcon(iconName, tokenizedIconName);
-            const {type, /* state, theme, */ componentName} = tokenizedIcon;
+            const {type, /* state, */ theme, componentName} = tokenizedIcon;
 
             const icon = (iconsRawDataMap[componentName] = iconsRawDataMap[componentName] || {themes: {}});
 
             if (type === 'sc') {
-                ICON_FILL_PALETTES.map((ruleset) => {
-                    for (const theme in ruleset) {
+                ICON_FILL_PALETTES.map((palette) => {
+                    for (const theme in palette) {
                         icon.themes[theme] = {states: {}};
-                        for (const state in ruleset[theme]) {
+                        for (const state in palette[theme]) {
                             icon.themes[theme].states[state] = this.getFillProps(iconSrc).map(
-                                () => ruleset[theme][state]
+                                () => palette[theme][state]
                             );
 
                             if (state === EIconState.default) {
@@ -85,11 +85,17 @@ export class Parser implements IParser {
                     }
                 });
             } else if (type === 'mc') {
-                ['lm', 'dm'].map((theme) => {
-                    icon.themes[theme] = {states: {[EIconState.default]: this.getFillProps(iconSrc)}};
-                    icon.themes[theme].src = iconSrc;
-                    icon.tokenized = tokenizedIcon;
-                })
+                if (theme) {
+                    const themeIdx = EIconTheme[theme];
+                    icon.themes[themeIdx] = {states: {[EIconState.default]: this.getFillProps(iconSrc)}};
+                    icon.themes[themeIdx].src = iconSrc;
+                } else {
+                    ['lm', 'dm'].map((theme) => {
+                        icon.themes[theme] = {states: {[EIconState.default]: this.getFillProps(iconSrc)}};
+                        icon.themes[theme].src = iconSrc;
+                    });
+                }
+                icon.tokenized = tokenizedIcon;
             } /* else {
                 const themeIdx = EIconTheme[theme];
 

@@ -1,6 +1,11 @@
 import {optimize} from 'svgo';
 import {ITokenizedIcon} from 'types';
 import {iconThemeToEnumMap, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
+import {
+    generateSingleColorIconCode,
+    generateMultiColorIconWithThemeCode,
+    generateMultiColorIconWithoutThemeCode,
+} from './utils';
 import {getPackageVersion} from './utils/getPackageVersion';
 import {IClassMap, IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
 import {hash} from '../utils/hash';
@@ -158,23 +163,11 @@ export class ReactTransformer implements ITransformer {
      * @param iconData
      */
     private transformIcon = async ({tokenized, themes}: IIconTransitionData): Promise<IIconTransformedData> => {
-        const transformedThemes = await Promise.all(themes.map((theme) => this.transformSVG(theme, tokenized)));
-
-        let src: string;
-
-        if (tokenized.type === 'sc' || tokenized.type === 'mc') {
-            src = transformedThemes[0].src;
-        } /* else {
-            src = transformedThemes
-                .map(({theme, src}) => `case EIconsTheme.${iconThemeToEnumMap[theme]}:\n            return ${src};`)
-                .join('\n        ');
-        } */
-
-        const reactSrc = this.generateSvgComponentCode(src, tokenized);
+        const transformedSVGs = await Promise.all(themes.map((theme) => this.transformSVG(theme, tokenized)));
 
         return {
             tokenized,
-            src: reactSrc,
+            src: this.generateSvgComponentCode(tokenized, transformedSVGs),
         };
     };
 
@@ -187,11 +180,11 @@ export class ReactTransformer implements ITransformer {
     ): Promise<IIconTransformedSVG> => {
         const optimizedSrc = await this.optimizeSVG(src);
         const transformedSrc = [
-            this.replaceColorsWithClassNames,
             this.reactifyAttrs,
             this.reactifyInlineStyles,
             this.makeUniqueIds,
             this.insertExtra,
+            this.replaceColorsWithClassNames,
         ].reduce((acc, transformer) => transformer(acc, tokenized, classMap), optimizedSrc);
 
         return {
@@ -255,9 +248,9 @@ export class ReactTransformer implements ITransformer {
         const commonProps = `name="${componentName}" focusable="false" aria-hidden="true"`;
 
         if (type === 'sc') {
-            return src.replace('><',` ${commonProps} {...restProps} ref={ref}><`);
+            return src.replace('><', ` ${commonProps} {...restProps} ref={ref}><`);
         } else {
-            return src.replace('><',` ${commonProps} {...props} ref={ref}><`);
+            return src.replace('><', ` ${commonProps} {...props} ref={ref}><`);
         }
     };
 
@@ -266,13 +259,10 @@ export class ReactTransformer implements ITransformer {
         if (!classMap) {
             return src;
         } else if (tokenized.type === 'sc') {
+            return src.replace(/fill="(?!none)([^"]+)"(?: fillOpacity="[^"]+")?/g, () => 'className={pathClassName}');
+        } /* else {
             return src.replace(
-                /fill="(?!none)(#[0-9A-F]+)"(?: fill-opacity="(\.[0-9]+)")?/g,
-                () => 'className={pathClassName}'
-            );
-        } /* else if (tokenized.type === 'ic') {
-            return src.replace(
-                /fill="(?!none)(#[0-9A-F]+)"(?: fill-opacity="(\.[0-9]+)")?/g,
+                /fill="(?!none)([^"]+)"(?: fillOpacity="[^"]+")?/g,
                 (match, color, opacity) => {
                     const key = opacity ? `${color}${opacity}` : color;
                     return `className="${classMap[key]}"`;
@@ -282,42 +272,31 @@ export class ReactTransformer implements ITransformer {
     };
 
     /** Обворачивает svg в React компонент. */
-    private generateSvgComponentCode = (src: string, {type, componentName, srcName}: ITokenizedIcon): string => {
+    private generateSvgComponentCode = (
+        {type, componentName, theme, srcName}: ITokenizedIcon,
+        transformedSVGs: IIconTransformedSVG[]
+    ): string => {
         let comment = '';
+
         if (srcName in deprecationMap) {
-            let newComponentName = "";
+            let newComponentName = '';
 
             if (deprecationMap[srcName]) {
                 const newTokenizedIconName = this.tokenizer.tokenizeIconName(deprecationMap[srcName]);
                 if (newTokenizedIconName === null) {
-                    throw Error(`Не удалось распарсить имя иконки ${srcName} в deprecationMap.`)
+                    throw Error(`Не удалось распарсить имя иконки ${srcName} в deprecationMap.`);
                 }
                 newComponentName = this.tokenizer.createComponentName(newTokenizedIconName);
             }
-            comment = `\n** @deprecated${newComponentName ? ` use ${newComponentName}` : ''}*/`;
+            comment = `\n/** @deprecated${newComponentName ? ` use ${newComponentName}` : ''} */`;
         }
 
         if (type === 'sc') {
-            return `import React from "react";
-import {ISingleColorIconProps} from "./types";
-import {useTheme} from "./ThemeProvider";
-import getPathClassName from "./utils/getPathClassName";
-${comment}
-const ${componentName} = React.forwardRef<SVGSVGElement, ISingleColorIconProps>(({paletteIndex, ...restProps}, ref) => {
-    const pathClassName = getPathClassName(paletteIndex, useTheme());
-    return ${src};
-});
-export default ${componentName};`;
-        } else if (type === 'mc') {
-            return `import React from "react";
-import {IMultiColorIconProps} from "./types";
-${comment}
-const ${componentName} = React.forwardRef<SVGSVGElement, IMultiColorIconProps>((props, ref) => {
-    return ${src};
-});
-export default ${componentName};`
+            return generateSingleColorIconCode(componentName, transformedSVGs[0].src, comment);
+        } else if (theme === undefined) {
+            return generateMultiColorIconWithoutThemeCode(componentName, transformedSVGs[0].src, comment);
         } else {
-            return;
+            return generateMultiColorIconWithThemeCode(componentName, transformedSVGs, comment);
         }
-    }
+    };
 }

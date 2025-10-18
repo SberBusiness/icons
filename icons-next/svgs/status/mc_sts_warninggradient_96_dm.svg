@@ -1,0 +1,13 @@
+<svg width="96.000000" height="96.000000" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<radialGradient gradientTransform="translate(48 66) rotate(90) scale(51.3529 57.015)" cx="0.000000" cy="0.000000" r="1.000000" id="paint_radial_14987_17122_0" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#FD6508"/>
+			<stop offset="0.861478" stop-color="#373C49"/>
+		</radialGradient>
+	</defs>
+	<path id="Rectangle" d="M48 12C60.6 12 66.9 12 71.71 14.45C75.94 16.6 79.39 20.05 81.54 24.28C84 29.09 84 35.39 84 48C84 60.6 84 66.9 81.54 71.71C79.39 75.94 75.94 79.39 71.71 81.54C66.9 84 60.6 84 48 84C35.39 84 29.09 84 24.28 81.54C20.05 79.39 16.6 75.94 14.45 71.71C12 66.9 12 60.6 12 48C12 35.39 12 29.09 14.45 24.28C16.6 20.05 20.05 16.6 24.28 14.45C29.09 12 35.39 12 48 12Z" fill="url(#paint_radial_14987_17122_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
+	<path id="Vector" d="M50 51L50 36C50 34.88 49.12 34 48 34C46.87 34 46 34.88 46 36L46 51C46 52.12 46.87 53 48 53C49.12 53 50 52.12 50 51ZM48 58C46.89 58 46 58.89 46 60C46 61.1 46.89 62 48 62C49.1 62 50 61.1 50 60C50 58.89 49.1 58 48 58Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+</svg>

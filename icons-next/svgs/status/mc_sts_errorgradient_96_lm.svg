@@ -1,0 +1,13 @@
+<svg width="96.000000" height="96.000000" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<desc>
+			Created with Pixso.
+	</desc>
+	<defs>
+		<radialGradient gradientTransform="translate(48 72.8824) rotate(90) scale(36.5295 39.18)" cx="0.000000" cy="0.000000" r="1.000000" id="paint_radial_14987_17096_0" gradientUnits="userSpaceOnUse">
+			<stop stop-color="#E60037"/>
+			<stop offset="1.000000" stop-color="#D6DEED"/>
+		</radialGradient>
+	</defs>
+	<path id="Rectangle" d="M13.44 64.55L36.05 19.39C40.98 9.53 55.01 9.53 59.94 19.39L82.55 64.55C87.02 73.48 80.56 84 70.61 84L25.38 84C15.43 84 8.97 73.48 13.44 64.55Z" fill="url(#paint_radial_14987_17096_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
+	<path id="Union" d="M50 54L50 39C50 37.88 49.12 37 48 37C46.87 37 46 37.88 46 39L46 54C46 55.12 46.87 56 48 56C49.12 56 50 55.12 50 54ZM48 61C46.89 61 46 61.89 46 63C46 64.1 46.89 65 48 65C49.1 65 50 64.1 50 63C50 61.89 49.1 61 48 61Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+</svg>

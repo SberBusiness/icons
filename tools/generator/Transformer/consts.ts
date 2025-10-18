@@ -12,7 +12,8 @@ export const mapSelectors = {
     // :enabled не работает с ссылками, поэтому используем :not(:disabled)
     [EIconState.active]: (className: string) =>
         `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
-    [EIconState.disabled]: (className: string) => `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
+    [EIconState.disabled]: (className: string) =>
+        `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
 
 export const selectorsOrder: string[] = [EIconState.default, EIconState.hover, EIconState.active, EIconState.disabled];

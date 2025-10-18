@@ -108,13 +108,13 @@ export class ReactGenerator {
     private generateIndexFile = async (iconsData: IIconTransformedData[]): Promise<void> => {
         try {
             const filePath = path.resolve(generationPath, 'index.ts');
-            let src = "export { ISingleColorIconProps, IMultiColorIconProps } from \"./types\";";
+            let src = "export { ISingleColorIconProps, IMultiColorIconProps } from \"./types\";\n";
 
-            src += "\nexport { ThemeProvider, useTheme, EIconsTheme } from \"./ThemeProvider\";";
+            src += "export { ThemeProvider, useTheme, EIconsTheme } from \"./ThemeProvider\";\n";
 
             iconsData.map((iconData) => {
                 const {componentName} = iconData.tokenized;
-                src += `\nexport { default as ${componentName} } from "./${componentName}";`;
+                src += `export { default as ${componentName} } from "./${componentName}";\n`;
             })
 
             await writeFile(filePath, src);
