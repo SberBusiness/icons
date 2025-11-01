@@ -39,7 +39,7 @@ export class Parser implements IParser {
 
             return iconsRawData;
         } catch (error) {
-            throw new Error(`Во время парсинга иконок произошел сбой. ${error.message}`);
+            throw new Error(`Во время парсинга иконок произошел сбой:\n${error.message}`);
         }
     };
 
@@ -171,7 +171,7 @@ export class Parser implements IParser {
      * @param size Заявленный размер иконки.
      */
     private isIconSizeValid = (iconName: string, iconSrc: string, size: number): boolean => {
-        const result = /width="(\d+\.\d+)" height="(\d+\.\d+)"/.exec(iconSrc);
+        const result = /width="(\d+(?:\.\d+)?)" height="(\d+(?:\.\d+)?)"/.exec(iconSrc);
 
         if (result === null) {
             this.errors.push(`Не удалось распарсить размер иконки ${iconName}.`);

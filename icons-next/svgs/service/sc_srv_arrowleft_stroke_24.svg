@@ -1,13 +1,3 @@
-<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<desc>
-			Created with Pixso.
-	</desc>
-	<defs>
-		<clipPath id="clip14174_14492">
-			<rect id="24 Stroke/sc_srv_arrowleft_stroke_24" width="24.000000" height="24.000000" transform="matrix(1 0 0 -1 0 24)" fill="white" fill-opacity="0"/>
-		</clipPath>
-	</defs>
-	<g clip-path="url(#clip14174_14492)">
-		<path id="Union" d="M7.27 10.99L11.23 6.67C11.61 6.26 11.58 5.64 11.17 5.26C10.76 4.88 10.14 4.91 9.76 5.32L4.26 11.32C4.08 11.51 4 11.74 4 11.99C4 12.25 4.08 12.48 4.26 12.67L9.76 18.67C10.14 19.08 10.76 19.11 11.17 18.73C11.58 18.35 11.61 17.73 11.23 17.32L7.27 12.99L20 12.99C20.56 12.99 21 12.55 21 11.99C21 11.43 20.56 10.99 20 10.99L7.27 10.99Z" fill="#1F1F22" fill-opacity="1.000000" fill-rule="evenodd"/>
-	</g>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M7.27 10.99L11.23 6.67001C11.61 6.26001 11.58 5.64001 11.17 5.26001C10.76 4.88001 10.14 4.91001 9.76 5.32001L4.26 11.32C4.08 11.51 4 11.74 4 11.99C4 12.25 4.08 12.48 4.26 12.67L9.76 18.67C10.14 19.08 10.76 19.11 11.17 18.73C11.58 18.35 11.61 17.73 11.23 17.32L7.27 12.99H20C20.56 12.99 21 12.55 21 11.99C21 11.43 20.56 10.99 20 10.99H7.27Z" fill="#1F1F22"/>
 </svg>

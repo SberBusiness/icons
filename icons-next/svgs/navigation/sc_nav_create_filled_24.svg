@@ -1,7 +1,3 @@
-<svg width="24.000000" height="24.000000" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<desc>
-			Created with Pixso.
-	</desc>
-	<defs/>
-	<path id="Union" d="M2 11.99C2 6.48 6.48 2 12 2C17.51 2 22 6.48 22 11.99C22 17.51 17.51 22 12 22C6.48 22 2 17.51 2 11.99ZM12 6C12.55 6 13 6.44 13 7L13 11L17 11C17.55 11 18 11.44 18 12C18 12.55 17.55 13 17 13L13 13L13 17C13 17.55 12.55 18 12 18C11.44 18 11 17.55 11 17L11 13L7 13C6.44 13 6 12.55 6 12C6 11.44 6.44 11 7 11L11 11L11 7C11 6.44 11.44 6 12 6Z" fill="#1F1F22" fill-opacity="1.000000" fill-rule="evenodd"/>
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M2 11.99C2 6.48 6.48 2 12 2C17.51 2 22 6.48 22 11.99C22 17.51 17.51 22 12 22C6.48 22 2 17.51 2 11.99ZM12 6C12.55 6 13 6.44 13 7V11H17C17.55 11 18 11.44 18 12C18 12.55 17.55 13 17 13H13V17C13 17.55 12.55 18 12 18C11.44 18 11 17.55 11 17V13H7C6.44 13 6 12.55 6 12C6 11.44 6.44 11 7 11H11V7C11 6.44 11.44 6 12 6Z" fill="#1F1F22"/>
 </svg>

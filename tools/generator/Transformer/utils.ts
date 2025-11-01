@@ -16,7 +16,7 @@ export default ${componentName};`;
 
 export const generateMultiColorIconWithThemeCode = (
     componentName: string,
-    [defaultSVG, ...otherSVGs]: IIconTransformedSVG[],
+    svgs: IIconTransformedSVG[],
     comment: string
 ) =>
     `import React from "react";
@@ -26,11 +26,8 @@ ${comment}
 const ${componentName} = React.forwardRef<SVGSVGElement, IMultiColorIconProps>((props, ref) => {
     const theme = useTheme();
     switch (theme) {
-        case EIconsTheme.${iconThemeToEnumMap[defaultSVG.theme]}:
-            break;
-        ${otherSVGs.map((otherSVG) => `case EIconsTheme.${iconThemeToEnumMap[otherSVG.theme]}:\n            return ${otherSVG.src}`)}
+${svgs.map((svg) => `        case EIconsTheme.${iconThemeToEnumMap[svg.theme]}:\n            return ${svg.src};`).join('\n')}
     }
-    return ${defaultSVG.src}
 });
 
 export default ${componentName};`;

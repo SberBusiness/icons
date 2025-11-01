@@ -1,12 +1,12 @@
 {
     "name": "@sberbusiness/icons-next",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "author": "СберБизнес",
     "description": "Иконки интернет-банка СберБизнес",
     "main": "./index.js",
     "keywords": [
-        "icons",
-        "sberbusiness-icons"
+        "react",
+        "icons"
     ],
     "repository": {
         "type": "git",
