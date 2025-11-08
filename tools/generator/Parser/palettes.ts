@@ -122,6 +122,21 @@ const ICON_FILL_PALETTES = [
             [EIconState.disabled]: ICON_COLOR_MAP[EColorPaletteName.NEUTRAL_ALPHA][90],
         },
     },
+    // 8
+    {
+        [EIconTheme.lm]: {
+            [EIconState.default]: ICON_COLOR_MAP[EColorPaletteName.WARNING][70],
+            [EIconState.hover]: ICON_COLOR_MAP[EColorPaletteName.WARNING][70],
+            [EIconState.active]: ICON_COLOR_MAP[EColorPaletteName.WARNING][70],
+            [EIconState.disabled]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][90],
+        },
+        [EIconTheme.dm]: {
+            [EIconState.default]: ICON_COLOR_MAP[EColorPaletteName.WARNING][70],
+            [EIconState.hover]: ICON_COLOR_MAP[EColorPaletteName.WARNING][70],
+            [EIconState.active]: ICON_COLOR_MAP[EColorPaletteName.WARNING][70],
+            [EIconState.disabled]: ICON_COLOR_MAP[EColorPaletteName.NEUTRAL_ALPHA][90],
+        },
+    },
 ];
 
 export default ICON_FILL_PALETTES;
