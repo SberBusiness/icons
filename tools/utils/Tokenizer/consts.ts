@@ -1,20 +1,8 @@
+import { EIconCategory } from '../../enums';
 import {EIconAttributes} from './enums';
 
 const possibleTokens = {
-    [EIconAttributes.category]: [
-        'acc', // Accent
-        'ani', // Animated
-        'brd', // Brand
-        'ill', // Illustrative
-        'mrk', // Marketing
-        'nav', // Navigation
-        'prd', // Product
-        'prdx', // Product exclusions
-        'srv', // Service
-        'srvx', // Service exclusions
-        'sts', // Status
-        'sys', // System
-    ],
+    [EIconAttributes.category]: Object.keys(EIconCategory),
     [EIconAttributes.style]: ['stroke', 'filled', 'other'],
     // [EIconAttributes.state]: ['active', 'default', 'disabled', 'hover'],
     [EIconAttributes.size]: ['16', '20', '24', '32', '48', '64', '84', '96', '128'],

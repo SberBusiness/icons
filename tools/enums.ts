@@ -3,6 +3,7 @@ export enum EIconCategory {
     ani = 'animated', // Animated
     brd = 'brand', // Brand
     ill = 'illustrative', // Illustrative
+    mkr = 'marker', // Marker
     mrk = 'marketing', // Marketing
     nav = 'navigation', // Navigation
     prd = 'product', // Product
@@ -10,6 +11,7 @@ export enum EIconCategory {
     srv = 'service', // Service
     srvx = 'service', // Service exclusions
     sts = 'status', // Status
+    sys = 'system', // System
 }
 
 export enum EIconState {
