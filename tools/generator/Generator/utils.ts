@@ -7,7 +7,7 @@ import {hash} from '../utils/hash';
 export const getTypesSrc = () =>
     "export interface ISingleColorIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {\n\
     /** Индекс цветовой палитры для изменения заливки иконки. */\n\
-    paletteIndex: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;\n\
+    paletteIndex: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;\n\
 }\n\
 export interface IMultiColorIconProps extends Omit<React.SVGAttributes<SVGSVGElement>, \"children\"> {}";
 

@@ -1,6 +1,6 @@
 {
     "name": "@sberbusiness/icons-next",
-    "version": "1.4.0",
+    "version": "1.5.0",
     "author": "СберБизнес",
     "description": "Иконки интернет-банка СберБизнес",
     "main": "./index.js",
@@ -20,5 +20,7 @@
     "peerDependencies": {
         "react": ">=16.8.0"
     },
-    "sideEffects": false
+    "sideEffects": [
+        "./styles/icons.css"
+    ]
 }
