@@ -1,18 +1,11 @@
-<svg width="128.000000" height="128.000000" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<desc>
-			Created with Pixso.
-	</desc>
-	<defs>
-		<radialGradient gradientTransform="translate(64 85) rotate(90) scale(59.9117 66.5175)" cx="0.000000" cy="0.000000" r="1.000000" id="paint_radial_15000_15389_0" gradientUnits="userSpaceOnUse">
-			<stop stop-color="#50BEB8"/>
-			<stop offset="0.861478" stop-color="#D6DEED"/>
-		</radialGradient>
-		<radialGradient gradientTransform="translate(64 93.0294) rotate(90) scale(42.6177 45.71)" cx="0.000000" cy="0.000000" r="1.000000" id="paint_radial_15000_15391_0" gradientUnits="userSpaceOnUse">
-			<stop stop-color="#E60037"/>
-			<stop offset="1.000000" stop-color="#373C49"/>
-		</radialGradient>
-	</defs>
-	<path id="Union" d="M76.4 58.39L62.41 72.29C61.94 72.76 61.47 73 61 73C60.53 73 60.05 72.76 59.58 72.29L51.59 64.35C50.8 63.56 50.8 62.33 51.59 61.54C52.38 60.76 53.62 60.76 54.42 61.54L61 68.08L73.57 55.58C74.37 54.8 75.61 54.8 76.4 55.58C77.19 56.37 77.19 57.61 76.4 58.39Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
-	<path id="Rectangle" d="M23.68 83.31L50.06 30.62C55.81 19.12 72.18 19.12 77.93 30.62L104.32 83.31C109.53 93.72 101.99 106 90.37 106L37.62 106C26.01 106 18.46 93.72 23.68 83.31Z" fill="url(#paint_radial_15000_15391_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
-	<path id="Union" d="M66 74L66 56C66 54.88 65.12 54 64 54C62.87 54 62 54.88 62 56L62 74C62 75.12 62.87 76 64 76C65.12 76 66 75.12 66 74ZM64 80C62.89 80 62 80.89 62 82C62 83.1 62.89 84 64 84C65.1 84 66 83.1 66 82C66 80.89 65.1 80 64 80Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M76.4001 58.39L62.4101 72.29C61.9401 72.76 61.4701 73 61.0001 73C60.5301 73 60.0501 72.76 59.5801 72.29L51.5901 64.35C50.8001 63.56 50.8001 62.33 51.5901 61.54C52.3801 60.76 53.6201 60.76 54.4201 61.54L61.0001 68.08L73.5701 55.58C74.3701 54.8 75.6101 54.8 76.4001 55.58C77.1901 56.37 77.1901 57.61 76.4001 58.39Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M23.6801 83.31L50.0601 30.62C55.8101 19.12 72.1801 19.12 77.9301 30.62L104.32 83.31C109.53 93.72 101.99 106 90.3701 106H37.6201C26.0101 106 18.4601 93.72 23.6801 83.31Z" fill="url(#paint0_radial_35_324)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M66 74V56C66 54.88 65.12 54 64 54C62.87 54 62 54.88 62 56V74C62 75.12 62.87 76 64 76C65.12 76 66 75.12 66 74ZM64 80C62.89 80 62 80.89 62 82C62 83.1 62.89 84 64 84C65.1 84 66 83.1 66 82C66 80.89 65.1 80 64 80Z" fill="white"/>
+<defs>
+<radialGradient id="paint0_radial_35_324" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(64.0001 93.0294) rotate(90) scale(42.6177 45.71)">
+<stop stop-color="#E60037"/>
+<stop offset="1" stop-color="#373C49"/>
+</radialGradient>
+</defs>
 </svg>

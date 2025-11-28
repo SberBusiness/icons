@@ -1,27 +1,19 @@
-<svg width="96.000000" height="96.000000" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<desc>
-			Created with Pixso.
-	</desc>
-	<defs>
-		<clipPath id="clip13960_8597">
-			<rect id="96/mc_sys_notfound_96_lm" width="96.000000" height="96.000000" fill="white" fill-opacity="0"/>
-		</clipPath>
-		<linearGradient x1="56.724155" y1="95.423050" x2="29.121265" y2="22.222218" id="paint_linear_14987_15483_0" gradientUnits="userSpaceOnUse">
-			<stop stop-color="#EEF3FC"/>
-			<stop offset="0.369065" stop-color="#EEF3FC" stop-opacity="0.556863"/>
-			<stop offset="1.000000" stop-color="#EEF3FC" stop-opacity="0.000000"/>
-		</linearGradient>
-		<linearGradient x1="89.464287" y1="50.999992" x2="42.107220" y2="62.217873" id="paint_linear_14987_15483_1" gradientUnits="userSpaceOnUse">
-			<stop stop-color="#EEF3FC"/>
-			<stop offset="0.543155" stop-color="#EEF3FC" stop-opacity="0.000000"/>
-			<stop offset="0.991170" stop-color="#EEF3FC" stop-opacity="0.000000"/>
-		</linearGradient>
-	</defs>
-	<g clip-path="url(#clip13960_8597)">
-		<path id="Union" d="M16.25 70.97L32.24 15.22C33.15 12.03 36.47 10.18 39.66 11.09L60.83 17.1C64.01 18 65.86 21.32 64.94 24.5L48.96 80.26C48.04 83.44 44.72 85.29 41.53 84.38L20.37 78.38C17.18 77.47 15.34 74.16 16.25 70.97Z" fill="#D6DEED" fill-opacity="1.000000" fill-rule="evenodd"/>
-		<path id="Union" d="M32 16L68 16C72.41 16 76 19.58 76 24L76 78C76 82.41 72.41 86 68 86L32 86C27.58 86 24 82.41 24 78L24 24C24 19.58 27.58 16 32 16Z" fill="#8291B3" fill-opacity="1.000000" fill-rule="evenodd"/>
-		<path id="Union" d="M32 16L68 16C72.41 16 76 19.58 76 24L76 78C76 82.41 72.41 86 68 86L32 86C27.58 86 24 82.41 24 78L24 24C24 19.58 27.58 16 32 16Z" fill="url(#paint_linear_14987_15483_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
-		<path id="Union" d="M32 16L68 16C72.41 16 76 19.58 76 24L76 78C76 82.41 72.41 86 68 86L32 86C27.58 86 24 82.41 24 78L24 24C24 19.58 27.58 16 32 16Z" fill="url(#paint_linear_14987_15483_1)" fill-opacity="1.000000" fill-rule="evenodd"/>
-		<path id="Union" d="M34 61.49C34 55.69 38.69 51 44.49 51C50.29 51 54.99 55.69 54.99 61.49C54.99 64.11 54.03 66.5 52.45 68.33L57.55 73.43C58.14 74.02 58.14 74.96 57.55 75.55C56.96 76.14 56.02 76.14 55.43 75.55L50.19 70.31C48.55 71.37 46.59 71.99 44.49 71.99C38.69 71.99 34 67.29 34 61.49ZM36.99 61.49C36.99 57.35 40.35 53.99 44.49 53.99C48.63 53.99 51.99 57.35 51.99 61.49C51.99 65.63 48.63 68.99 44.49 68.99C40.35 68.99 36.99 65.63 36.99 61.49Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
-	</g>
+<svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16.25 70.97L32.24 15.22C33.15 12.03 36.47 10.18 39.66 11.09L60.83 17.1C64.01 18 65.86 21.32 64.94 24.5L48.96 80.26C48.04 83.44 44.72 85.29 41.53 84.38L20.37 78.38C17.18 77.47 15.34 74.16 16.25 70.97Z" fill="#D6DEED"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32 16H68C72.41 16 76 19.58 76 24V78C76 82.41 72.41 86 68 86H32C27.58 86 24 82.41 24 78V24C24 19.58 27.58 16 32 16Z" fill="#8291B3"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32 16H68C72.41 16 76 19.58 76 24V78C76 82.41 72.41 86 68 86H32C27.58 86 24 82.41 24 78V24C24 19.58 27.58 16 32 16Z" fill="url(#paint0_linear_40_270)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M32 16H68C72.41 16 76 19.58 76 24V78C76 82.41 72.41 86 68 86H32C27.58 86 24 82.41 24 78V24C24 19.58 27.58 16 32 16Z" fill="url(#paint1_linear_40_270)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M34 61.49C34 55.69 38.69 51 44.49 51C50.29 51 54.99 55.69 54.99 61.49C54.99 64.11 54.03 66.5 52.45 68.33L57.55 73.43C58.14 74.02 58.14 74.96 57.55 75.55C56.96 76.14 56.02 76.14 55.43 75.55L50.19 70.31C48.55 71.37 46.59 71.99 44.49 71.99C38.69 71.99 34 67.29 34 61.49ZM36.99 61.49C36.99 57.35 40.35 53.99 44.49 53.99C48.63 53.99 51.99 57.35 51.99 61.49C51.99 65.63 48.63 68.99 44.49 68.99C40.35 68.99 36.99 65.63 36.99 61.49Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear_40_270" x1="56.7242" y1="95.423" x2="29.1213" y2="22.2222" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EEF3FC"/>
+<stop offset="0.369065" stop-color="#EEF3FC" stop-opacity="0.556863"/>
+<stop offset="1" stop-color="#EEF3FC" stop-opacity="0"/>
+</linearGradient>
+<linearGradient id="paint1_linear_40_270" x1="89.4643" y1="51" x2="42.1072" y2="62.2179" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EEF3FC"/>
+<stop offset="0.543155" stop-color="#EEF3FC" stop-opacity="0"/>
+<stop offset="0.99117" stop-color="#EEF3FC" stop-opacity="0"/>
+</linearGradient>
+</defs>
 </svg>

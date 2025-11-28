@@ -1,13 +1,10 @@
-<svg width="128.000000" height="128.000000" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<desc>
-			Created with Pixso.
-	</desc>
-	<defs>
-		<radialGradient gradientTransform="translate(64 85) rotate(90) scale(59.9117 66.5175)" cx="0.000000" cy="0.000000" r="1.000000" id="paint_radial_15000_15325_0" gradientUnits="userSpaceOnUse">
-			<stop stop-color="#8291B3"/>
-			<stop offset="0.861478" stop-color="#D6DEED"/>
-		</radialGradient>
-	</defs>
-	<path id="Union" d="M64 22C80.37 22 88.55 22 94.53 25.75C97.65 27.71 100.28 30.34 102.24 33.46C106 39.44 106 47.62 106 64C106 80.37 106 88.55 102.24 94.53C100.28 97.65 97.65 100.28 94.53 102.24C88.55 106 80.37 106 64 106C47.62 106 39.44 106 33.46 102.24C30.34 100.28 27.71 97.65 25.75 94.53C22 88.55 22 80.37 22 64C22 47.62 22 39.44 25.75 33.46C27.71 30.34 30.34 27.71 33.46 25.75C39.44 22 47.62 22 64 22Z" fill="url(#paint_radial_15000_15325_0)" fill-opacity="1.000000" fill-rule="evenodd"/>
-	<path id="Union" d="M65.99 52.99L65.99 67.92L75.6 74.32C76.53 74.95 76.77 76.17 76.15 77.1C75.53 78.03 74.31 78.27 73.38 77.65L62.89 70.65C62.29 70.26 62 69.7 62 68.99L62 52.99C62 51.87 62.87 51 63.99 51C65.11 51 65.99 51.87 65.99 52.99Z" fill="#FFFFFF" fill-opacity="1.000000" fill-rule="evenodd"/>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M64 22C80.37 22 88.55 22 94.53 25.75C97.65 27.71 100.28 30.34 102.24 33.46C106 39.44 106 47.62 106 64C106 80.37 106 88.55 102.24 94.53C100.28 97.65 97.65 100.28 94.53 102.24C88.55 106 80.37 106 64 106C47.62 106 39.44 106 33.46 102.24C30.34 100.28 27.71 97.65 25.75 94.53C22 88.55 22 80.37 22 64C22 47.62 22 39.44 25.75 33.46C27.71 30.34 30.34 27.71 33.46 25.75C39.44 22 47.62 22 64 22Z" fill="url(#paint0_radial_35_319)"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M65.99 52.99V67.92L75.6 74.32C76.53 74.95 76.77 76.17 76.15 77.1C75.53 78.03 74.31 78.27 73.38 77.65L62.89 70.65C62.29 70.26 62 69.7 62 68.99V52.99C62 51.87 62.87 51 63.99 51C65.11 51 65.99 51.87 65.99 52.99Z" fill="white"/>
+<defs>
+<radialGradient id="paint0_radial_35_319" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(64 85) rotate(90) scale(59.9117 66.5175)">
+<stop stop-color="#8291B3"/>
+<stop offset="0.861478" stop-color="#D6DEED"/>
+</radialGradient>
+</defs>
 </svg>
