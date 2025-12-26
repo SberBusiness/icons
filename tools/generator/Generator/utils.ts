@@ -30,6 +30,7 @@ const initialContext: IThemeContext = {
 const ThemeContext = createContext<IThemeContext>(initialContext);
 
 interface IThemeProviderProps {
+    children?: React.ReactNode;
     theme: EIconsTheme;
     scopeRef?: RefObject<HTMLElement>;
 }
