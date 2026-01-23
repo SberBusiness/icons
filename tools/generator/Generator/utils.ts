@@ -37,6 +37,7 @@ const initialContext: IThemeContext = {
 const ThemeContext = createContext<IThemeContext>(initialContext);
 
 interface IProps {
+    children?: React.ReactNode;
     theme: EIconsTheme;
     scopeRef?: RefObject<HTMLElement>;
 }
