@@ -288,7 +288,7 @@ export class ReactTransformer implements ITransformer {
                 }
                 newComponentName = this.tokenizer.createComponentName(newTokenizedIconName);
             }
-            comment = `\n/** @deprecated${newComponentName ? ` use ${newComponentName}` : ''} */`;
+            comment = `\n/** @deprecated${newComponentName ? ` use ${newComponentName} instead.` : ''} */`;
         }
 
         if (type === 'sc') {

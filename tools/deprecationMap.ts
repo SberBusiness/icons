@@ -11,4 +11,10 @@ export const deprecationMap = {
     sc_srv_refresh_stroke_20: 'sc_srv_arrowclockwise_stroke_20',
     sc_srv_refresh_stroke_24: 'sc_srv_arrowclockwise_stroke_24',
     sc_srv_refresh_stroke_32: 'sc_srv_arrowclockwise_stroke_32',
+    sc_srv_promstlist_stroke_20: 'sc_srv_promptslist_stroke_20',
+    sc_srv_promstlist_stroke_24: 'sc_srv_promptslist_stroke_24',
+    sc_srv_promstlist_stroke_32: 'sc_srv_promptslist_stroke_32',
+    sc_srv_feedbackbank_stroke_20: 'sc_srv_bankfeedback_stroke_20',
+    sc_srv_feedbackbank_stroke_24: 'sc_srv_bankfeedback_stroke_24',
+    sc_srv_feedbackbank_stroke_32: 'sc_srv_bankfeedback_stroke_32',
 };
