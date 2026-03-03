@@ -138,7 +138,7 @@ const ICON_FILL_PALETTES = [
         },
     },
     // 9
-        {
+    {
         [EIconTheme.lm]: {
             [EIconState.default]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][0],
             [EIconState.hover]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][0],
@@ -164,6 +164,21 @@ const ICON_FILL_PALETTES = [
             [EIconState.default]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][0],
             [EIconState.hover]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][0],
             [EIconState.active]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][0],
+            [EIconState.disabled]: ICON_COLOR_MAP[EColorPaletteName.NEUTRAL_ALPHA][90],
+        },
+    },
+    // 11
+    {
+        [EIconTheme.lm]: {
+            [EIconState.default]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][60],
+            [EIconState.hover]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][0],
+            [EIconState.active]: ICON_COLOR_MAP[EColorPaletteName.BRAND][40],
+            [EIconState.disabled]: ICON_COLOR_MAP[EColorPaletteName.DARK_NEUTRAL_ALPHA][90],
+        },
+        [EIconTheme.dm]: {
+            [EIconState.default]: ICON_COLOR_MAP[EColorPaletteName.NEUTRAL_ALPHA][70],
+            [EIconState.hover]: ICON_COLOR_MAP[EColorPaletteName.NEUTRAL_ALPHA][0],
+            [EIconState.active]: ICON_COLOR_MAP[EColorPaletteName.BRAND][60],
             [EIconState.disabled]: ICON_COLOR_MAP[EColorPaletteName.NEUTRAL_ALPHA][90],
         },
     },
