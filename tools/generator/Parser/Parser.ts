@@ -53,7 +53,7 @@ export class Parser implements IParser {
             const tokenizedIconName = this.tokenizer.tokenizeIconName(iconName);
 
             if (tokenizedIconName === null) {
-                this.errors.push(`Не удалось распарсить имя файла: ${iconName}.`);
+                this.errors.push(`Не удалось распарсить имя файла: "${iconName}".`);
                 continue;
             }
 

@@ -3,6 +3,7 @@ export enum EIconCategory {
     ani = 'animated', // Animated
     brd = 'brand', // Brand
     ill = 'illustrative', // Illustrative
+    map = 'map', // Map
     mkr = 'marker', // Marker
     mrk = 'marketing', // Marketing
     nav = 'navigation', // Navigation
