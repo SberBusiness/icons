@@ -1,0 +1,19 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_d_1281_1828)">
+<path d="M16 3C22.0751 3 27 7.92487 27 14C27 18.7407 24 22.7775 19.7957 24.3236C19.6292 24.3849 19.4788 24.4848 19.3626 24.6189L16.7557 27.6278C16.357 28.088 15.643 28.088 15.2442 27.6279L12.6364 24.6188C12.5202 24.4847 12.3699 24.3849 12.2034 24.3236C7.99958 22.7773 5 18.7404 5 14C5 7.92487 9.92487 3 16 3Z" fill="#21A19A"/>
+</g>
+<path d="M16 10C18.2091 10 20 11.7909 20 14C20 16.2091 18.2091 18 16 18C13.7909 18 12 16.2091 12 14C12 11.7909 13.7909 10 16 10Z" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M16 3C22.0751 3 27 7.92487 27 14C27 18.7406 24 22.7771 19.7959 24.3232C19.6293 24.3845 19.4785 24.485 19.3623 24.6191L16.7559 27.6279L16.6777 27.709C16.2965 28.0614 15.7035 28.0613 15.3223 27.709L15.2441 27.6279L12.6367 24.6191C12.5205 24.4851 12.3696 24.3845 12.2031 24.3232C7.99948 22.7768 5 18.7402 5 14C5 7.92487 9.92487 3 16 3ZM16 5C11.0294 5 7 9.02944 7 14C7 17.8743 9.45036 21.1796 12.8936 22.4463C13.3524 22.6151 13.7934 22.9002 14.1475 23.3086L15.999 25.4453L17.8506 23.3096L17.9873 23.1621C18.3154 22.8311 18.7035 22.5941 19.1055 22.4463L19.4258 22.3223C22.7003 20.9733 25 17.7534 25 14C25 9.02944 20.9706 5 16 5Z" fill="white"/>
+<defs>
+<filter id="filter0_d_1281_1828" x="2" y="1" width="28" height="30.973" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1.5"/>
+<feComposite in2="hardAlpha" operator="out"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.121569 0 0 0 0 0.121569 0 0 0 0 0.133333 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1281_1828"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1281_1828" result="shape"/>
+</filter>
+</defs>
+</svg>

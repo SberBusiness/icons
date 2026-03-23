@@ -5,6 +5,8 @@
 export const deprecationMap = {
     sc_prd_currencyexchange_stroke_20: 'sc_prd_exchangecurrency_stroke_20',
     sc_prd_currencyexchange_stroke_32: 'sc_prd_exchangecurrency_stroke_32',
+    sc_prd_riskofblocking_stroke_20: '',
+    sc_prd_riskofblocking_stroke_32: '',
     mc_mrk_nodocuments_84: '',
     mc_sys_notfound_84: '',
     mc_sys_servicesetup_84: '',
