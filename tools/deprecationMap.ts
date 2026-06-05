@@ -21,4 +21,8 @@ export const deprecationMap = {
     sc_srv_feedbackbank_stroke_32: 'sc_srv_bankfeedback_stroke_32',
     sc_prd_sbeprime_stroke_20: 'sc_prd_sberbusinessprime_stroke_20',
     sc_prd_sbeprime_stroke_32: 'sc_prd_sberbusinessprime_stroke_32',
+    sc_prd_governmentcontracts_stroke_20: 'sc_srv_state_stroke_20',
+    sc_prd_governmentcontracts_stroke_32: 'sc_srv_state_stroke_32',
+    sc_srv_statoscope_stroke_20: 'sc_srv_stethoscope_stroke_20',
+    sc_srv_statoscope_stroke_32: 'sc_srv_stethoscope_stroke_32',
 };

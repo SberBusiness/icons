@@ -9,9 +9,8 @@ export const iconThemeToEnumMap = {
 export const mapSelectors = {
     [EIconState.default]: (className: string) => `.${className}`,
     [EIconState.hover]: (className: string) => `.hoverable:hover .${className}`,
-    // :enabled не работает с ссылками, поэтому используем :not(:disabled)
     [EIconState.active]: (className: string) =>
-        `.hoverable:not(:disabled):active .${className}, .hoverable.active .${className}`,
+        `.hoverable:active .${className}, .hoverable.active .${className}`,
     [EIconState.disabled]: (className: string) =>
         `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
