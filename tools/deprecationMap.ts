@@ -25,4 +25,10 @@ export const deprecationMap = {
     sc_prd_governmentcontracts_stroke_32: 'sc_srv_state_stroke_32',
     sc_srv_statoscope_stroke_20: 'sc_srv_stethoscope_stroke_20',
     sc_srv_statoscope_stroke_32: 'sc_srv_stethoscope_stroke_32',
+    sc_prd_contractamendments_stroke_20: 'sc_srv_documentedit_stroke_20',
+    sc_prd_contractamendments_stroke_32: 'sc_srv_documentedit_stroke_32',
+    sc_prd_contractexamination_stroke_20: 'sc_srv_documentexpertise_stroke_20',
+    sc_prd_contractexamination_stroke_32: 'sc_srv_documentexpertise_stroke_32',
+    sc_prd_legaldossieredit_stroke_20: 'sc_srv_documentedit_stroke_20',
+    sc_prd_legaldossieredit_stroke_32: 'sc_srv_documentedit_stroke_32',
 };
