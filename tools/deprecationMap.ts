@@ -33,4 +33,7 @@ export const deprecationMap = {
     sc_prd_legaldossieredit_stroke_32: 'sc_srv_documentedit_stroke_32',
     sc_prd_guarantee_stroke_20: 'sc_prd_insurance_stroke_20',
     sc_prd_guarantee_stroke_32: 'sc_prd_insurance_stroke_32',
+    sc_srv_link_stroke_16: 'sc_srv_externallink_stroke_16',
+    sc_srv_link_stroke_20: 'sc_srv_externallink_stroke_20',
+    sc_srv_link_stroke_24: 'sc_srv_externallink_stroke_24',
 };
