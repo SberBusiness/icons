@@ -1,6 +1,6 @@
 {
     "name": "@sberbusiness/icons-next",
-    "version": "1.35.0",
+    "version": "1.36.0",
     "author": "СберБизнес",
     "description": "Иконки интернет-банка СберБизнес",
     "main": "./index.js",
