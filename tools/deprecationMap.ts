@@ -36,4 +36,6 @@ export const deprecationMap = {
     sc_srv_link_stroke_16: 'sc_srv_externallink_stroke_16',
     sc_srv_link_stroke_20: 'sc_srv_externallink_stroke_20',
     sc_srv_link_stroke_24: 'sc_srv_externallink_stroke_24',
+    mc_sys_accountblocked_96_lm: '',
+    mc_sys_accountblocked_128_lm: '',
 };
