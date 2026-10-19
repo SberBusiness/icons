@@ -45,4 +45,4 @@ copy(
     createCallback('Успешно скопирован файл утилит.')
 );
 
-copy(path.join(root, './README.md'), publicationPath, {}, createCallback('Успешно скопирован файл README.'));
+copy(path.join(targetPath, './README.md'), publicationPath, {flatten: true}, createCallback('Успешно скопирован файл README.'));

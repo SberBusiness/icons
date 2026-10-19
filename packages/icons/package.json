@@ -10,12 +10,13 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/SberBusiness/icons.git"
+        "url": "git+https://github.com/SberBusiness/icons.git",
+        "directory": "packages/icons"
     },
     "bugs": {
         "url": "https://github.com/SberBusiness/icons/issues"
     },
-    "homepage": "https://github.com/SberBusiness/icons#readme",
+    "homepage": "https://github.com/SberBusiness/icons/tree/master/packages/icons#readme",
     "peerDependencies": {
         "react": ">=16.9.56"
     }

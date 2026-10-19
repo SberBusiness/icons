@@ -10,13 +10,14 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/SberBusiness/icons.git"
+        "url": "git+https://github.com/SberBusiness/icons.git",
+        "directory": "packages/icons-next"
     },
     "license": "Sber Public License at-nc-sa v.2",
     "bugs": {
         "url": "https://github.com/SberBusiness/icons/issues"
     },
-    "homepage": "https://github.com/SberBusiness/icons#readme",
+    "homepage": "https://github.com/SberBusiness/icons/tree/master/packages/icons-next#readme",
     "peerDependencies": {
         "react": ">=16.8.0"
     },

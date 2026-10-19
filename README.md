@@ -1,9 +1,22 @@
 # Иконки интернет-банка СберБизнес
 
-Это набор React компонентов SVG иконок, разработанных и используемых в приложении СберБизнес.
+Наборы React компонентов SVG иконок и иллюстраций, разработанных и используемых в приложении СберБизнес.
 
-# Установка
+# Пакеты
 
-Пакет `@sberbusiness/icons` опубликован в [npm](https://www.npmjs.com/package/@sberbusiness/icons).
+| Пакет | Папка | Сборка |
+|---|---|---|
+| [`@sberbusiness/icons-next`](https://www.npmjs.com/package/@sberbusiness/icons-next) | [`packages/icons-next`](packages/icons-next) | `tools` |
+| [`@sberbusiness/icons`](https://www.npmjs.com/package/@sberbusiness/icons) | [`packages/icons`](packages/icons) | `tools-legacy` |
+| [`@sberbusiness/illustrations`](https://www.npmjs.com/package/@sberbusiness/illustrations) | [`packages/illustrations`](packages/illustrations) | `tools-legacy` |
 
-После установки пакета остается только подключить стили из `@sberbusiness/icons/css/icons.css`.
+Установка и использование описаны в README каждого пакета.
+
+# Сборка
+
+```sh
+npm ci
+npm run build:icons-next      # или build:icons, build:illustrations
+```
+
+Собранный пакет появляется в папке `public`. Выпуск пакетов выполняется в GitHub Actions workflow Publish Icons Next, Publish Icons и Publish Illustrations.
