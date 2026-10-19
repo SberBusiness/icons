@@ -5,13 +5,14 @@ on:
   workflow_dispatch:
     inputs:
       package:
-        description: Пакет
+        description: Package
         required: true
         type: choice
+        default: icons-next
         options:
-          - icons-next
           - icons
           - illustrations
+          - icons-next
 
 jobs:
   build:
