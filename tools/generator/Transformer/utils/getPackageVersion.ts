@@ -1,4 +1,4 @@
 export const getPackageVersion = () => {
-    const {version} = require('../../../../icons-next/package');
+    const {version} = require('../../../../packages/icons-next/package');
     return version;
 };

@@ -9,7 +9,7 @@
         "clean": "ts-node ./tools/tasks/clean.ts",
         "generate:icons": "cross-env TARGET=icons ts-node ./tools/generator/generateReact",
         "generate:svg:icons": "cross-env TARGET=icons ts-node ./tools/generator/generateSVG",
-        "ts-dts": "tsc -p ./tsconfig.generated.json",
+        "ts-dts": "tsc -p ./packages/icons-next/tsconfig.generated.json",
         "copy:icons": "cross-env TARGET=icons ts-node ./tools/tasks/copy.ts",
         "copy:illustrations": "cross-env TARGET=illustrations ts-node ./tools/tasks/copy.ts",
         "build:icons": "npm run clean && npm run generate:icons && npm run ts-dts && npm run copy:icons",
