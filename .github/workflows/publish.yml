@@ -1,7 +1,17 @@
-name: Publish Icons
+name: Publish
+run-name: Publish ${{ inputs.package }}
 
 on:
   workflow_dispatch:
+    inputs:
+      package:
+        description: Пакет
+        required: true
+        type: choice
+        options:
+          - icons-next
+          - icons
+          - illustrations
 
 jobs:
   publish:
@@ -14,15 +24,16 @@ jobs:
         with:
           node-version: 16.14.0
 
-      - name: Publish icons
+      - name: Publish ${{ inputs.package }}
         run: |
           npm ci
           npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm run publish:icons
+          npm run "publish:${PACKAGE}"
         env:
+          PACKAGE: ${{ inputs.package }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - uses: actions/upload-artifact@v4
         with:
-          name: public
+          name: ${{ inputs.package }}
           path: public/

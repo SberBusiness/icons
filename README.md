@@ -19,4 +19,4 @@ npm ci
 npm run build:icons-next      # или build:icons, build:illustrations
 ```
 
-Собранный пакет появляется в папке `public`. Выпуск пакетов выполняется в GitHub Actions workflow Publish Icons Next, Publish Icons и Publish Illustrations.
+Собранный пакет появляется в папке `public`. Пакеты собираются и выпускаются в GitHub Actions workflow Build и Publish, пакет выбирается при запуске.
