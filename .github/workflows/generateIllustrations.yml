@@ -2,7 +2,12 @@ name: Generate Illustrations
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
+    paths:
+      - 'packages/illustrations/**'
+      - 'tools-legacy/**'
+      - 'package.json'
+      - 'package-lock.json'
 
   workflow_dispatch:
 

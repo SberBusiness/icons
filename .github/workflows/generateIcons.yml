@@ -2,7 +2,12 @@ name: Generate Icons
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
+    paths:
+      - 'packages/icons/**'
+      - 'tools-legacy/**'
+      - 'package.json'
+      - 'package-lock.json'
 
   workflow_dispatch:
 

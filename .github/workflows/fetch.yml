@@ -1,4 +1,4 @@
-name: Fetch
+name: Fetch Icons Next
 
 on:
 #  schedule:
@@ -20,12 +20,13 @@ jobs:
       - name: Fetch from Figma
         run: |
           npm ci
-          npm run fetch
+          npm run fetch:icons-next
         env:
           FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
           FIGMA_ICONS_FILE_KEY: ${{ secrets.FIGMA_ICONS_FILE_KEY }}
 
       - name: Create Pull Request
+        id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
           branch: fetch

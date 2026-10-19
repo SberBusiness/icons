@@ -14,7 +14,7 @@ jobs:
         with:
           node-version: 16.14.0
 
-      - name: Publish icons
+      - name: Publish illustrations
         run: |
           npm ci
           npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
