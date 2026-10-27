@@ -1,11 +1,11 @@
 <svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M56.49 55H71.49C88.89 55 103 69.1 103 86.5C103 103.89 88.89 118 71.49 118H56.49C39.1 118 24.99 103.89 24.99 86.5C24.99 69.1 39.1 55 56.49 55Z" fill="#21A19A"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill="#D6DEED"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill="url(#paint0_linear_11_478)"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill="url(#paint1_radial_11_478)"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill="url(#paint2_linear_11_478)"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M64.57 91.23L79.53 73.28C80.25 72.41 80.14 71.18 79.27 70.46C78.41 69.74 77.18 69.85 76.46 70.71L62.86 87.03L56.41 80.58C55.62 79.79 54.37 79.79 53.58 80.58C52.79 81.37 52.79 82.62 53.58 83.41L61.54 91.37C61.58 91.41 61.61 91.44 61.65 91.48C62.06 91.85 62.57 92.02 63.07 92C63.59 91.98 64.09 91.76 64.47 91.34C64.51 91.31 64.54 91.27 64.57 91.23Z" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M55.5 16H72.5C73.32 16 74 16.67 74 17.5C74 18.32 73.32 19 72.5 19H55.5C54.67 19 54 18.32 54 17.5C54 16.67 54.67 16 55.5 16Z" fill="white" fill-opacity="0.65"/>
+<path d="M56.49 55H71.49C88.89 55 103 69.1 103 86.5C103 103.89 88.89 118 71.49 118H56.49C39.1 118 24.99 103.89 24.99 86.5C24.99 69.1 39.1 55 56.49 55Z" fill-rule="evenodd" clip-rule="evenodd" fill="#21A19A"/>
+<path d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill-rule="evenodd" clip-rule="evenodd" fill="#D6DEED"/>
+<path d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill-rule="evenodd" clip-rule="evenodd" fill="url(#paint0_linear_11_478)"/>
+<path d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill-rule="evenodd" clip-rule="evenodd" fill="url(#paint1_radial_11_478)"/>
+<path d="M43 10H85C89.41 10 93 13.58 93 18V110C93 114.41 89.41 118 85 118H43C38.58 118 35 114.41 35 110V18C35 13.58 38.58 10 43 10Z" fill-rule="evenodd" clip-rule="evenodd" fill="url(#paint2_linear_11_478)"/>
+<path d="M64.57 91.23L79.53 73.28C80.25 72.41 80.14 71.18 79.27 70.46C78.41 69.74 77.18 69.85 76.46 70.71L62.86 87.03L56.41 80.58C55.62 79.79 54.37 79.79 53.58 80.58C52.79 81.37 52.79 82.62 53.58 83.41L61.54 91.37C61.58 91.41 61.61 91.44 61.65 91.48C62.06 91.85 62.57 92.02 63.07 92C63.59 91.98 64.09 91.76 64.47 91.34C64.51 91.31 64.54 91.27 64.57 91.23Z" fill-rule="evenodd" clip-rule="evenodd" fill="white"/>
+<path d="M55.5 16H72.5C73.32 16 74 16.67 74 17.5C74 18.32 73.32 19 72.5 19H55.5C54.67 19 54 18.32 54 17.5C54 16.67 54.67 16 55.5 16Z" fill-rule="evenodd" clip-rule="evenodd" fill="white" fill-opacity="0.65"/>
 <defs>
 <linearGradient id="paint0_linear_11_478" x1="64" y1="56" x2="64" y2="124.097" gradientUnits="userSpaceOnUse">
 <stop stop-color="#CFD8E8"/>

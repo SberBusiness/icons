@@ -6,7 +6,7 @@
 </mask>
 <g mask="url(#mask0_202_938)">
 <path d="M2 13.2288L9.01995 17.1183L30 5V9.8774L9.00539 22L2 18.1062V13.2288Z" fill="white" fill-opacity="0.438265"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M2 5H29.9375L9.03125 17.0938L2 13.2812V5Z" fill="url(#paint1_linear_202_938)"/>
+<path d="M2 5H29.9375L9.03125 17.0938L2 13.2812V5Z" fill-rule="evenodd" clip-rule="evenodd" fill="url(#paint1_linear_202_938)"/>
 <circle opacity="0.5" cx="7.5" cy="11.5" r="2.5" fill="white"/>
 <rect x="17" y="18" width="10" height="5" rx="2.5" fill="white"/>
 </g>
