@@ -14,9 +14,22 @@ on:
           - illustrations
           - icons-next
 
+concurrency:
+  group: publish-${{ inputs.package }}
+
+env:
+  PACKAGE: ${{ inputs.package }}
+
 jobs:
   publish:
+    environment: npm
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      tag: ${{ steps.check.outputs.tag }}
+      notes: ${{ steps.check.outputs.notes }}
+      prerelease: ${{ steps.check.outputs.prerelease }}
 
     steps:
       - uses: actions/checkout@v4
@@ -24,17 +37,95 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 16.14.0
+          registry-url: https://registry.npmjs.org
 
-      - name: Publish ${{ inputs.package }}
+      - name: Check version, tag and release notes
+        id: check
+        run: |
+          TAG=$(node -p "const { name, version } = require('./packages/${PACKAGE}/package.json'); name + '@' + version")
+          VERSION=${TAG##*@}
+          NOTES="docs/release-notes/${PACKAGE}/${VERSION%%.*}.X.X/${VERSION}.md"
+          case "${VERSION}" in
+            *-*) PRERELEASE=true DIST_TAG=next ;;
+            *) PRERELEASE=false DIST_TAG=latest ;;
+          esac
+          if [ ! -f "${NOTES}" ]; then
+            echo "::error file=${NOTES}::Release notes not found for ${TAG}"
+            exit 1
+          fi
+          if [ -n "$(npm view "${TAG}" version 2> /dev/null)" ]; then
+            if [ "$(npm view "${TAG}" gitHead)" != "${GITHUB_SHA}" ]; then
+              echo "::error::${TAG} is already published from another commit"
+              exit 1
+            fi
+            echo "::notice::${TAG} is already published"
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          fi
+          TAGGED=$(git ls-remote origin "refs/tags/${TAG}" "refs/tags/${TAG}^{}" | tail -n 1 | cut -f 1)
+          if [ -n "${TAGGED}" ]; then
+            if [ "${TAGGED}" != "${GITHUB_SHA}" ]; then
+              echo "::error::Tag ${TAG} already exists on another commit"
+              exit 1
+            fi
+            echo "::notice::Tag ${TAG} already exists"
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "notes=${NOTES}" >> "$GITHUB_OUTPUT"
+          echo "prerelease=${PRERELEASE}" >> "$GITHUB_OUTPUT"
+          echo "dist-tag=${DIST_TAG}" >> "$GITHUB_OUTPUT"
+
+      - if: steps.check.outputs.published != 'true'
         run: |
           npm ci
-          npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
-          npm run "publish:${PACKAGE}"
-        env:
-          PACKAGE: ${{ inputs.package }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          npm run "build:${PACKAGE}"
 
-      - uses: actions/upload-artifact@v4
+      - if: steps.check.outputs.published != 'true'
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.package }}
           path: public/
+          overwrite: true
+
+      - name: Publish ${{ inputs.package }}
+        if: steps.check.outputs.published != 'true'
+        run: npm publish --access public --tag "${DIST_TAG}" ./public
+        env:
+          DIST_TAG: ${{ steps.check.outputs.dist-tag }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      TAG: ${{ needs.publish.outputs.tag }}
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: docs/release-notes/${{ inputs.package }}
+
+      - name: Tag ${{ inputs.package }}
+        run: |
+          if [ -n "$(git ls-remote origin "refs/tags/${TAG}")" ]; then
+            echo "::notice::Tag ${TAG} already exists"
+            exit 0
+          fi
+          git -c user.name="github-actions[bot]" -c user.email="41898333+github-actions[bot]@users.noreply.github.com" \
+            tag -a "${TAG}" -m "${TAG%@*} ${TAG##*@}"
+          git push origin "${TAG}"
+
+      - name: Release ${{ inputs.package }}
+        run: |
+          if gh release view "${TAG}" > /dev/null 2>&1; then
+            echo "::notice::Release ${TAG} already exists"
+            exit 0
+          fi
+          gh release create "${TAG}" --verify-tag --title "${TAG}" --notes-file "${NOTES}" \
+            --prerelease="${PRERELEASE}" --latest="${LATEST}"
+        env:
+          NOTES: ${{ needs.publish.outputs.notes }}
+          PRERELEASE: ${{ needs.publish.outputs.prerelease }}
+          LATEST: ${{ inputs.package == 'icons-next' && needs.publish.outputs.prerelease != 'true' }}
+          GH_TOKEN: ${{ github.token }}
