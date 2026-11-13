@@ -36,5 +36,7 @@ export const deprecationMap = {
     sc_srv_link_stroke_16: 'sc_srv_externallink_stroke_16',
     mc_sys_accountblocked_96_lm: '',
     mc_sys_accountblocked_128_lm: '',
-    sc_mkr_accountcurrencycny_stroke_32: 'sc_mkr_accountcurrencyyuan_stroke_32'
+    sc_mkr_accountcurrencycny_stroke_32: 'sc_mkr_accountcurrencyyuan_stroke_32',
+    sc_prd_bringafriend_stroke_20: 'sc_prd_referralprogramm_stroke_20',
+    sc_prd_bringafriend_stroke_32: 'sc_prd_referralprogramm_stroke_32',
 };
