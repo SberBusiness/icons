@@ -42,8 +42,8 @@ export const useTheme = () => {
 };
 
 const themeClassnames = {
-    [EIconsTheme.LIGHT]: "icons-light${hash("light")}",
-    [EIconsTheme.DARK]: "icons-dark${hash("dark")}",
+    [EIconsTheme.LIGHT]: "icons-light-${hash("light")}",
+    [EIconsTheme.DARK]: "icons-dark-${hash("dark")}",
 }
 
 export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children, theme, scopeRef = { current: document.documentElement } }) => {
@@ -64,6 +64,26 @@ export const ThemeProvider: React.FC<IThemeProviderProps> = ({ children, theme, 
 
     return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 };`;
+
+/**
+ * Содержимое файла хука, возвращающего уникальный для каждого экземпляра иконки идентификатор.
+ * В React 18+ используется React.useId (стабилен при SSR), в более ранних версиях — счётчик.
+ * Внимание: счётчик не совпадает на сервере и клиенте, поэтому в React < 18 при SSR возможен hydration mismatch по id.
+ */
+export const getUseUniqueIdSrc = () => `import React from "react";
+
+const useReactId: (() => string) | undefined = (React as any)["useId"];
+
+const invalidIdCharsRegExp = /[^a-zA-Z0-9_-]/g;
+
+let counter = 0;
+
+/** Возвращает идентификатор, уникальный для каждого экземпляра компонента. Содержит только [a-zA-Z0-9_-]. */
+const useUniqueId: () => string = useReactId
+    ? () => useReactId().replace(invalidIdCharsRegExp, "")
+    : () => React.useState(() => String(++counter))[0];
+
+export default useUniqueId;`;
 
 export const getUtilsSrc = (paletteClasses) => `import {EIconsTheme} from "../ThemeProvider";
 

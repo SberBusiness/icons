@@ -1,5 +1,5 @@
 import path from 'path';
-import {getTypesSrc, getThemeProviderSrc, getUtilsSrc} from './utils';
+import {getTypesSrc, getThemeProviderSrc, getUtilsSrc, getUseUniqueIdSrc} from './utils';
 import {generationPath} from '../../consts';
 import {IIconTransformedData, ITransformer} from '../types';
 import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
@@ -7,7 +7,7 @@ import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
 /**
  * Генератор получает в себя инстанс трансформера, от которого в дальнейшем получает
  * готовые к генерации коллекцию иконок и стили. Генератору остается только сохранить
- * данные в соответствующие файлы и проконтроллировать ошибки.
+ * данные в соответствующие файлы и проконтролировать ошибки.
  */
 export class ReactGenerator {
     constructor(protected readonly transformer: ITransformer) {}
@@ -27,8 +27,13 @@ export class ReactGenerator {
             createFolderIfNotExists(generationPath);
             const folderPath = path.resolve(generationPath, 'utils');
             createFolderIfNotExists(folderPath);
-            const filePath = path.resolve(folderPath, 'getPathClassName.ts');
-            await writeFile(filePath, getUtilsSrc(this.transformer.getPaletteClasses()));
+            await Promise.all([
+                writeFile(
+                    path.resolve(folderPath, 'getPathClassName.ts'),
+                    getUtilsSrc(this.transformer.getPaletteClasses())
+                ),
+                writeFile(path.resolve(folderPath, 'useUniqueId.ts'), getUseUniqueIdSrc()),
+            ]);
             console.log('Успешно сформирован файл утилит');
         } catch (e) {
             console.error('Произошла ошибка при формировании файла утилит.', e.message);
