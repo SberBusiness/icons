@@ -90,7 +90,7 @@ export class Parser implements IParser {
                     icon.themes[themeIdx] = {states: {[EIconState.default]: this.getFillProps(iconSrc)}};
                     icon.themes[themeIdx].src = iconSrc;
                 } else {
-                    ['lm', 'dm'].map((theme) => {
+                    [EIconTheme.lm, EIconTheme.dm].forEach((theme) => {
                         icon.themes[theme] = {states: {[EIconState.default]: this.getFillProps(iconSrc)}};
                         icon.themes[theme].src = iconSrc;
                     });

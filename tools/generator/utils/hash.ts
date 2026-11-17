@@ -1,9 +1,19 @@
 import crc32 from 'crc-32';
 
+const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+
 /**
- * Основная функция для хеширования имени класса.
- * Подчеркивание необходимо, т.к. в CSS имя не может начинаться с цифры.
+ * Хеширует строку (CRC32) для имён классов и идентификаторов.
+ * Результат состоит только из букв a-z, т.к. в CSS они не могут начинаться с цифры.
  */
 export const hash = (data: string): string => {
-    return '_' + (crc32.str(data) >>> 0).toString(36);
+    let n = crc32.str(data) >>> 0;
+    let result = '';
+
+    do {
+        result = ALPHABET[n % 26] + result;
+        n = Math.floor(n / 26);
+    } while (n > 0);
+
+    return result;
 };

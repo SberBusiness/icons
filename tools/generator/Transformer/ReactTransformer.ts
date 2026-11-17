@@ -1,6 +1,6 @@
-import {optimize} from 'svgo';
+import {Config, optimize} from 'svgo';
 import {ITokenizedIcon} from 'types';
-import {iconThemeToEnumMap, mapSelectors, selectorsOrder, SVGOConfig} from './consts';
+import {mapSelectors, selectorsOrder, SVGOConfig, UNIQUE_ID_MARKER} from './consts';
 import {
     generateSingleColorIconCode,
     generateMultiColorIconWithThemeCode,
@@ -17,6 +17,30 @@ import {IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme} from
 import ICON_FILL_PALETTES from '../Parser/palettes';
 
 const version = getPackageVersion();
+// Версия библиотеки в id исключает коллизии между копиями пакета разных версий на одной странице.
+const versionHash = hash(version);
+
+const makeClassName = (strForHash: string): string => hash(strForHash + '|' + version);
+
+// Префикс id: имя и размер иконки, хеш версии библиотеки.
+// Разделитель между именем и размером исключает совпадения вида a1 + 2 и a + 12.
+const getIdPrefix = ({name, size}: ITokenizedIcon): string => `${versionHash}-${name}-${size}-`;
+
+const hasIdRegExp = /\sid="/;
+
+// Следующие регулярки с флагом g (хранят lastIndex): использовать только в replace/matchAll, не в test/exec.
+// Пробел перед id исключает совпадения с атрибутами вида data-test-id.
+const idAttrRegExp = /(?<=\s)id="([^"]+)"/g;
+// href, xlink:href, xlinkHref
+const hrefAttrRegExp = /(?<=\s)((?:xlink:?)?href)="#([^"]+)"/gi;
+// Одна кавычка вокруг ссылки: ' или её сущности (&quot;, &apos;, &#39;, &#x27;; SVGO сериализует двойные как &quot;).
+const urlQuotePattern = String.raw`(?:&(?:quot|apos|#39|#x27);|')`;
+// Начало ссылки: url(#, url('#, url(&quot;#.
+const urlOpenPattern = String.raw`url\(\s*${urlQuotePattern}?#`;
+// Только атрибуты со ссылками url(#...): имя="...url(#id)...", чтобы не перебирать цвета вида fill="#FFFFFF".
+const urlAttrRegExp = new RegExp(String.raw`\b([a-zA-Z:-]+)="([^"]*${urlOpenPattern}[^"]*)"`, 'g');
+// Группа с id ленивая, чтобы закрывающая кавычка (в т.ч. &quot;) не попала в id.
+const urlRefRegExp = new RegExp(String.raw`${urlOpenPattern}([^)]+?)${urlQuotePattern}?\s*\)`, 'g');
 
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
@@ -24,16 +48,16 @@ const version = getPackageVersion();
  */
 export class ReactTransformer implements ITransformer {
     private readonly tokenizer = new Tokenizer();
-    private iconsTransformedData: IIconTransformedData[];
+    protected iconsTransformedData: IIconTransformedData[];
     private classNames: IClassNames = {};
     private palettesClasses = [];
 
-    constructor(private readonly parser: IParser) {}
+    constructor(protected readonly parser: IParser) {}
 
     transform = async (): Promise<void> => {
         const iconsRawData = await this.parser.getIconsRawData();
         const transitionData = this.collectClassNames(iconsRawData);
-        this.iconsTransformedData = await Promise.all(transitionData.map(this.transformIcon));
+        this.iconsTransformedData = transitionData.map(this.transformIcon);
     };
 
     getIconsData = () => this.iconsTransformedData;
@@ -83,7 +107,7 @@ export class ReactTransformer implements ITransformer {
                     return str + state + props.color + opacity;
                 }, '');
 
-                const className = hash(strForHash + '|' + version);
+                const className = makeClassName(strForHash);
 
                 themeMap[theme] = className;
 
@@ -125,7 +149,7 @@ export class ReactTransformer implements ITransformer {
                             return str + state + props.color + opacity;
                         }, '');
 
-                        const className = hash(strForHash + '|' + version);
+                        const className = makeClassName(strForHash);
 
                         if (!this.classNames[className]) {
                             this.classNames[className] = iconStates.map((state) => ({
@@ -159,11 +183,11 @@ export class ReactTransformer implements ITransformer {
 
     /**
      * Трансформирует содержимое svg иконки от исходного состояния до готового к генерации.
-     *
-     * @param iconData
      */
-    private transformIcon = async ({tokenized, themes}: IIconTransitionData): Promise<IIconTransformedData> => {
-        const transformedSVGs = await Promise.all(themes.map((theme) => this.transformSVG(theme, tokenized)));
+    private transformIcon = ({tokenized, themes}: IIconTransitionData): IIconTransformedData => {
+        // Для иконок без темы в компонент попадает только первая тема, остальные трансформировать незачем.
+        const neededThemes = tokenized.type === 'sc' || tokenized.theme === undefined ? themes.slice(0, 1) : themes;
+        const transformedSVGs = neededThemes.map((theme) => this.transformSVG(theme, tokenized));
 
         return {
             tokenized,
@@ -174,31 +198,25 @@ export class ReactTransformer implements ITransformer {
     /**
      * Трансформирует svg к React компоненту.
      */
-    protected transformSVG = async (
+    protected transformSVG = (
         {classMap, src, theme}: IIconTransitionDataTheme,
         tokenized: ITokenizedIcon
-    ): Promise<IIconTransformedSVG> => {
-        const optimizedSrc = await this.optimizeSVG(src);
-        const transformedSrc = [
-            this.reactifyAttrs,
-            this.reactifyInlineStyles,
-            this.makeUniqueIds,
-            this.insertExtra,
-            this.replaceColorsWithClassNames,
-        ].reduce((acc, transformer) => transformer(acc, tokenized, classMap), optimizedSrc);
+    ): IIconTransformedSVG => {
+        const reactifiedSrc = this.reactifyInlineStyles(this.reactifyAttrs(this.optimizeSVG(src)));
+        const withIdsSrc = this.makeInstanceUniqueIds(reactifiedSrc, tokenized);
+        const transformedSrc = this.replaceColorsWithClassNames(
+            this.insertExtra(withIdsSrc, tokenized),
+            tokenized,
+            classMap
+        );
 
-        return {
-            theme,
-            src: transformedSrc,
-        };
+        return {theme, src: transformedSrc};
     };
 
     /**
      * Оптимизирует и минифицирует svg библиотекой SVGO.
      */
-    protected optimizeSVG = async (src: string): Promise<string> => {
-        return optimize(src, SVGOConfig).data;
-    };
+    protected optimizeSVG = (src: string, config: Config = SVGOConfig): string => optimize(src, config).data;
 
     /**
      * Преобразует атрибуты к react-нотации.
@@ -219,25 +237,52 @@ export class ReactTransformer implements ITransformer {
         );
 
     /**
-     * Приводит id к уникальным значениям.
+     * Переименовывает id и ссылки на них вида url(#id) и href="#id" в атрибутах.
+     * Ссылки внутри инлайн стилей не обрабатываются (SVGO выносит стили в атрибуты через convertStyleToAttrs).
+     *
+     * @param prefix Префикс, добавляемый к каждому id.
+     * @param dynamic Префикс содержит JS выражение: значения атрибутов выводятся как шаблонные строки `{`...`}`.
      */
-    protected makeUniqueIds = (src: string, {name, size}: ITokenizedIcon): string => {
-        const matches = src.match(/id="(.*?)"/g);
-
-        if (Array.isArray(matches)) {
-            return matches
-                .map((match) => match.split('=').pop().replace(/"/g, ''))
-                .reduce(
-                    (src, id) =>
-                        src
-                            .replace(new RegExp(`id="${id}"`, 'gim'), `id="${id}_${name}${size}"`)
-                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name}${size})`),
-                    src
-                );
-        } else {
+    private replaceIds = (src: string, prefix: string, dynamic: boolean): string => {
+        // Большинство иконок без id: не запускаем regex-проходы зря.
+        if (!hasIdRegExp.test(src)) {
             return src;
         }
+
+        const makeId = (id: string) => `${prefix}${id}`;
+        const makeAttr = (attr: string, value: string) => (dynamic ? `${attr}={\`${value}\`}` : `${attr}="${value}"`);
+        const ids = new Set<string>();
+        const withIds = src.replace(idAttrRegExp, (_, id) => {
+            ids.add(id);
+            return makeAttr('id', makeId(id));
+        });
+
+        return withIds
+            .replace(hrefAttrRegExp, (match, attr, id) => (ids.has(id) ? makeAttr(attr, `#${makeId(id)}`) : match))
+            .replace(urlAttrRegExp, (match, attr, value) => {
+                const newValue = value.replace(urlRefRegExp, (ref, id) => (ids.has(id) ? `url(#${makeId(id)})` : ref));
+
+                return newValue === value ? match : makeAttr(attr, newValue);
+            });
     };
+
+    /**
+     * Приводит id к значениям, уникальным в пределах набора иконок (для статичных svg).
+     */
+    protected makeUniqueIds = (src: string, tokenized: ITokenizedIcon): string =>
+        this.replaceIds(src, getIdPrefix(tokenized), false);
+
+    /**
+     * Приводит id к значениям, уникальным для каждого экземпляра компонента.
+     * Добавляет к id значение хука useUniqueId, иначе при нескольких одинаковых иконках на странице
+     * url(#id) ссылается на элемент первой из них
+     * (и, если она скрыта через display: none, градиенты/маски/фильтры остальных не отрисовываются).
+     * Имя, размер иконки и хеш версии библиотеки сохраняются в id: значение хука не уникально между разными
+     * React-корнями и копиями пакета, а так коллизия возможна только между одинаковыми иконками одной версии
+     * и ни на что не влияет.
+     */
+    protected makeInstanceUniqueIds = (src: string, tokenized: ITokenizedIcon): string =>
+        this.replaceIds(src, `${getIdPrefix(tokenized)}${UNIQUE_ID_MARKER}-`, true);
 
     /**
      *  Добавляет data-test-id и название компонента.
@@ -269,6 +314,8 @@ export class ReactTransformer implements ITransformer {
                 }
             );
         } */
+
+        return src;
     };
 
     /** Обворачивает svg в React компонент. */
@@ -291,12 +338,15 @@ export class ReactTransformer implements ITransformer {
             comment = `\n/** @deprecated${newComponentName ? ` use ${newComponentName} instead.` : ''} */`;
         }
 
+        // Есть id, зависящие от значения хука useUniqueId (см. makeInstanceUniqueIds).
+        const withUniqueId = transformedSVGs.some(({src}) => src.includes(UNIQUE_ID_MARKER));
+
         if (type === 'sc') {
-            return generateSingleColorIconCode(componentName, transformedSVGs[0].src, comment);
+            return generateSingleColorIconCode(componentName, transformedSVGs[0].src, comment, withUniqueId);
         } else if (theme === undefined) {
-            return generateMultiColorIconWithoutThemeCode(componentName, transformedSVGs[0].src, comment);
+            return generateMultiColorIconWithoutThemeCode(componentName, transformedSVGs[0].src, comment, withUniqueId);
         } else {
-            return generateMultiColorIconWithThemeCode(componentName, transformedSVGs, comment);
+            return generateMultiColorIconWithThemeCode(componentName, transformedSVGs, comment, withUniqueId);
         }
     };
 }

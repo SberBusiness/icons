@@ -15,6 +15,12 @@ export const mapSelectors = {
         `.hoverable:disabled .${className}, .hoverable.disabled .${className}`,
 };
 
+/** Имя переменной в сгенерированном компоненте, хранящей уникальный для экземпляра идентификатор. */
+export const UNIQUE_ID_VAR = 'uniqueId';
+
+/** Подстановка переменной уникального идентификатора внутри шаблонной строки в сгенерированном компоненте. */
+export const UNIQUE_ID_MARKER = `\${${UNIQUE_ID_VAR}}`;
+
 export const selectorsOrder: string[] = [EIconState.default, EIconState.hover, EIconState.active, EIconState.disabled];
 
 export const SVGOConfig: Config = {
