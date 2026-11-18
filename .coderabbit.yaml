@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+reviews:
+  high_level_summary: false
+  review_info: false
+  changed_files_summary: false
+  sequence_diagrams: false
+  estimate_code_review_effort: false
+  assess_linked_issues: false
+  related_issues: false
+  related_prs: false
+  suggested_labels: false
+  suggested_reviewers: false
+  enable_prompt_for_ai_agents: false
+
+  path_filters:
+    - "!packages/*/svgs/**"
+    - "!package-lock.json"
+
+  path_instructions:
+    - path: "tools/**"
+      instructions: >-
+        Icon generator for packages/icons-next. Output packages must stay byte-compatible
+        with what is published on npm: pay attention to changes in component naming,
+        hashes and export order.
+    - path: "tools-legacy/**"
+      instructions: >-
+        Legacy generator for packages/icons and packages/illustrations (amd/es5 output).
+        Change it only when necessary; do not suggest refactoring or syntax modernization.
+    - path: "packages/*/package.json"
+      instructions: >-
+        Check that the version bump is intentional: releases go through the Publish
+        workflow from master, which takes the version from this file.
+    - path: ".github/workflows/**"
+      instructions: >-
+        Publishing to npm happens only through the Publish workflow from master.
+        Check permissions, secret usage and action versions.
+    - path: "docs/release-notes/**"
+      instructions: >-
+        Release notes are written in English, grouped by category (Marketing, Product,
+        Service, ...) with Added/Deprecated/etc. sections listing component names.
+
+  auto_approvals:
+    enabled: true
+
+  tools:
+    eslint:
+      enabled: false
