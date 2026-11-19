@@ -59,11 +59,6 @@ export interface IIconTransformedData {
     src: string;
 }
 
-export interface IIconFill {
-    color: string;
-    opacity?: string;
-}
-
 /**
  * Интерфейс css классов. В качестве ключей выступает имя css класса.
  */

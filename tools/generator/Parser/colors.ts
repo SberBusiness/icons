@@ -1,4 +1,4 @@
-import { IIconFill } from "generator/types";
+import {IFillProps} from 'generator/types';
 
 export enum EColorPaletteName {
     BRAND,
@@ -12,7 +12,7 @@ export enum EColorPaletteName {
 
 type TColorPaletteScale = 0 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90 | 100;
 
-const ICON_COLOR_MAP: Record<EColorPaletteName, Record<TColorPaletteScale, IIconFill>> = {
+const ICON_COLOR_MAP: Record<EColorPaletteName, Record<TColorPaletteScale, IFillProps>> = {
     [EColorPaletteName.BRAND]: {
         0: {color: "#1F3336"},
         10: {color: "#0B3A3C"},
