@@ -1,4 +1,4 @@
-import {Config, optimize} from 'svgo';
+import {optimize} from 'svgo';
 import {ITokenizedIcon} from 'types';
 import {mapSelectors, selectorsOrder, SVGOConfig, UNIQUE_ID_MARKER} from './consts';
 import {
@@ -7,6 +7,7 @@ import {
     generateMultiColorIconWithoutThemeCode,
 } from './utils';
 import {getPackageVersion} from './utils/getPackageVersion';
+import {replaceIds} from './utils/replaceIds';
 import {IClassMap, IClassNames, IIconRawData, IIconTransformedData, IParser, ITransformer} from '../types';
 import {hash} from '../utils/hash';
 import {deprecationMap} from '../../deprecationMap';
@@ -17,30 +18,9 @@ import {IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme} from
 import ICON_FILL_PALETTES from '../Parser/palettes';
 
 const version = getPackageVersion();
-// Версия библиотеки в id исключает коллизии между копиями пакета разных версий на одной странице.
 const versionHash = hash(version);
 
 const makeClassName = (strForHash: string): string => hash(strForHash + '|' + version);
-
-// Префикс id: имя и размер иконки, хеш версии библиотеки.
-// Разделитель между именем и размером исключает совпадения вида a1 + 2 и a + 12.
-const getIdPrefix = ({name, size}: ITokenizedIcon): string => `${versionHash}-${name}-${size}-`;
-
-const hasIdRegExp = /\sid="/;
-
-// Следующие регулярки с флагом g (хранят lastIndex): использовать только в replace/matchAll, не в test/exec.
-// Пробел перед id исключает совпадения с атрибутами вида data-test-id.
-const idAttrRegExp = /(?<=\s)id="([^"]+)"/g;
-// href, xlink:href, xlinkHref
-const hrefAttrRegExp = /(?<=\s)((?:xlink:?)?href)="#([^"]+)"/gi;
-// Одна кавычка вокруг ссылки: ' или её сущности (&quot;, &apos;, &#39;, &#x27;; SVGO сериализует двойные как &quot;).
-const urlQuotePattern = String.raw`(?:&(?:quot|apos|#39|#x27);|')`;
-// Начало ссылки: url(#, url('#, url(&quot;#.
-const urlOpenPattern = String.raw`url\(\s*${urlQuotePattern}?#`;
-// Только атрибуты со ссылками url(#...): имя="...url(#id)...", чтобы не перебирать цвета вида fill="#FFFFFF".
-const urlAttrRegExp = new RegExp(String.raw`\b([a-zA-Z:-]+)="([^"]*${urlOpenPattern}[^"]*)"`, 'g');
-// Группа с id ленивая, чтобы закрывающая кавычка (в т.ч. &quot;) не попала в id.
-const urlRefRegExp = new RegExp(String.raw`${urlOpenPattern}([^)]+?)${urlQuotePattern}?\s*\)`, 'g');
 
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
@@ -48,11 +28,11 @@ const urlRefRegExp = new RegExp(String.raw`${urlOpenPattern}([^)]+?)${urlQuotePa
  */
 export class ReactTransformer implements ITransformer {
     private readonly tokenizer = new Tokenizer();
-    protected iconsTransformedData: IIconTransformedData[];
+    private iconsTransformedData: IIconTransformedData[];
     private classNames: IClassNames = {};
     private palettesClasses = [];
 
-    constructor(protected readonly parser: IParser) {}
+    constructor(private readonly parser: IParser) {}
 
     transform = async (): Promise<void> => {
         const iconsRawData = await this.parser.getIconsRawData();
@@ -198,7 +178,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Трансформирует svg к React компоненту.
      */
-    protected transformSVG = (
+    private transformSVG = (
         {classMap, src, theme}: IIconTransitionDataTheme,
         tokenized: ITokenizedIcon
     ): IIconTransformedSVG => {
@@ -216,7 +196,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Оптимизирует и минифицирует svg библиотекой SVGO.
      */
-    protected optimizeSVG = (src: string, config: Config = SVGOConfig): string => optimize(src, config).data;
+    private optimizeSVG = (src: string): string => optimize(src, SVGOConfig).data;
 
     /**
      * Преобразует атрибуты к react-нотации.
@@ -237,52 +217,16 @@ export class ReactTransformer implements ITransformer {
         );
 
     /**
-     * Переименовывает id и ссылки на них вида url(#id) и href="#id" в атрибутах.
-     * Ссылки внутри инлайн стилей не обрабатываются (SVGO выносит стили в атрибуты через convertStyleToAttrs).
-     *
-     * @param prefix Префикс, добавляемый к каждому id.
-     * @param dynamic Префикс содержит JS выражение: значения атрибутов выводятся как шаблонные строки `{`...`}`.
-     */
-    private replaceIds = (src: string, prefix: string, dynamic: boolean): string => {
-        // Большинство иконок без id: не запускаем regex-проходы зря.
-        if (!hasIdRegExp.test(src)) {
-            return src;
-        }
-
-        const makeId = (id: string) => `${prefix}${id}`;
-        const makeAttr = (attr: string, value: string) => (dynamic ? `${attr}={\`${value}\`}` : `${attr}="${value}"`);
-        const ids = new Set<string>();
-        const withIds = src.replace(idAttrRegExp, (_, id) => {
-            ids.add(id);
-            return makeAttr('id', makeId(id));
-        });
-
-        return withIds
-            .replace(hrefAttrRegExp, (match, attr, id) => (ids.has(id) ? makeAttr(attr, `#${makeId(id)}`) : match))
-            .replace(urlAttrRegExp, (match, attr, value) => {
-                const newValue = value.replace(urlRefRegExp, (ref, id) => (ids.has(id) ? `url(#${makeId(id)})` : ref));
-
-                return newValue === value ? match : makeAttr(attr, newValue);
-            });
-    };
-
-    /**
-     * Приводит id к значениям, уникальным в пределах набора иконок (для статичных svg).
-     */
-    protected makeUniqueIds = (src: string, tokenized: ITokenizedIcon): string =>
-        this.replaceIds(src, getIdPrefix(tokenized), false);
-
-    /**
      * Приводит id к значениям, уникальным для каждого экземпляра компонента.
      * Добавляет к id значение хука useUniqueId, иначе при нескольких одинаковых иконках на странице
      * url(#id) ссылается на элемент первой из них
      * (и, если она скрыта через display: none, градиенты/маски/фильтры остальных не отрисовываются).
-     * Имя, размер иконки и хеш версии библиотеки сохраняются в id: значение хука не уникально между разными
-     * React-корнями и копиями пакета, а так коллизия возможна только между одинаковыми иконками одной версии
-     * и ни на что не влияет.
+     * Имя, размер иконки и хеш версии библиотеки сохраняются в id (разделитель между именем и размером исключает
+     * совпадения вида a1 + 2 и a + 12): значение хука не уникально между разными React-корнями и копиями пакета,
+     * а так коллизия возможна только между одинаковыми иконками одной версии и ни на что не влияет.
      */
-    protected makeInstanceUniqueIds = (src: string, tokenized: ITokenizedIcon): string =>
-        this.replaceIds(src, `${getIdPrefix(tokenized)}${UNIQUE_ID_MARKER}-`, true);
+    private makeInstanceUniqueIds = (src: string, {name, size}: ITokenizedIcon): string =>
+        replaceIds(src, `${versionHash}-${name}-${size}-${UNIQUE_ID_MARKER}-`);
 
     /**
      *  Добавляет data-test-id и название компонента.
@@ -300,7 +244,7 @@ export class ReactTransformer implements ITransformer {
     };
 
     /** Подменяет fill и fill-opacity именем класса. */
-    protected replaceColorsWithClassNames = (src: string, tokenized: ITokenizedIcon, classMap: IClassMap): string => {
+    private replaceColorsWithClassNames = (src: string, tokenized: ITokenizedIcon, classMap: IClassMap): string => {
         if (!classMap) {
             return src;
         } else if (tokenized.type === 'sc') {

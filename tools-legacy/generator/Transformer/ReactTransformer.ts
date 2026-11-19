@@ -10,6 +10,14 @@ import {camelize} from '../../utils/stringUtils';
 import {Tokenizer} from '../../utils/Tokenizer/Tokenizer';
 import {IIconTransformedSVG, IIconTransitionData, IIconTransitionDataTheme} from './types';
 
+const version = getPackageVersion();
+
+// Регулярки с флагом g (хранят lastIndex): использовать только в replace, не в test/exec.
+// Lookbehind исключает атрибуты вида dataId (после reactifyAttrs), [^"]+ отсекает пустой id.
+const idAttrRegExp = /(?<![\w-])id="([^"]+)"/g;
+// Ссылка целиком до разделителя (кавычки, скобки и т.п.: url(#id), href="#id", 'url(#id)' в стилях).
+const idRefRegExp = /(?<!\w)#([^\s"'`()<>;,&{}]+)/g;
+
 /**
  * Трансформер получает в себя инстанс парсера, от которого в дальнейшем получает
  * сырую коллекцию иконок, трансформирует её в react компоненты, попутно собирая коллекцию стилей.
@@ -24,7 +32,7 @@ export class ReactTransformer implements ITransformer {
     transform = async (): Promise<void> => {
         const iconsRawData = await this.parser.getIconsRawData();
         const transitionData = this.collectClassNames(iconsRawData);
-        this.iconsTransformedData = await Promise.all(transitionData.map(this.transformIcon));
+        this.iconsTransformedData = transitionData.map(this.transformIcon);
     };
 
     getIconsData = () => this.iconsTransformedData;
@@ -81,9 +89,6 @@ export class ReactTransformer implements ITransformer {
                     const paths = states[EIconState.default].length;
                     for (let i = 0; i < paths; ++i) {
                         const strForHash = iconStates.reduce((str, state) => str + state + states[state][i], '');
-
-                        const version = getPackageVersion();
-
                         const className = hash(strForHash + '|' + version);
                         if (!this.classNames[className]) {
                             this.classNames[className] = iconStates.map((state) => ({
@@ -116,8 +121,8 @@ export class ReactTransformer implements ITransformer {
      *
      * @param iconData
      */
-    private transformIcon = async ({tokenized, themes}: IIconTransitionData): Promise<IIconTransformedData> => {
-        const transformedThemes = await Promise.all(themes.map((theme) => this.transformSVG(theme, tokenized)));
+    private transformIcon = ({tokenized, themes}: IIconTransitionData): IIconTransformedData => {
+        const transformedThemes = themes.map((theme) => this.transformSVG(theme, tokenized));
 
         let src: string;
 
@@ -143,11 +148,11 @@ export class ReactTransformer implements ITransformer {
     /**
      * Трансформирует svg к React компоненту.
      */
-    protected transformSVG = async (
+    private transformSVG = (
         {classMap, src, themeName}: IIconTransitionDataTheme,
         tokenized: ITokenizedIcon
-    ): Promise<IIconTransformedSVG> => {
-        const optimizedSrc = await this.optimizeSVG(src);
+    ): IIconTransformedSVG => {
+        const optimizedSrc = this.optimizeSVG(src);
         const transformedSrc = [
             this.reactifyAttrs,
             this.reactifyInlineStyles,
@@ -166,9 +171,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Оптимизирует и минифицирует svg библиотекой SVGO.
      */
-    protected optimizeSVG = async (src: string): Promise<string> => {
-        return optimize(src, SVGOConfig).data;
-    };
+    private optimizeSVG = (src: string): string => optimize(src, SVGOConfig).data;
 
     /**
      * Преобразует атрибуты к react-нотации.
@@ -191,22 +194,21 @@ export class ReactTransformer implements ITransformer {
     /**
      * Приводит id к уникальным значениям.
      */
-    protected makeUniqueIds = (src: string, {name, size}: ITokenizedIcon): string => {
-        const matches = src.match(/id="(.*?)"/g);
+    private makeUniqueIds = (src: string, {name, size}: ITokenizedIcon): string => {
+        const suffix = `_${name}${size}`;
+        const ids = new Set<string>();
+        // Id собираются в том же проходе, что и переименовываются.
+        const withIds = src.replace(idAttrRegExp, (_, id: string) => {
+            ids.add(id);
+            return `id="${id}${suffix}"`;
+        });
 
-        if (Array.isArray(matches)) {
-            return matches
-                .map((match) => match.split('=').pop().replace(/"/g, ''))
-                .reduce(
-                    (src, id) =>
-                        src
-                            .replace(new RegExp(`id="${id}"`, 'gim'), `id="${id}_${name}${size}"`)
-                            .replace(new RegExp(`(?:^|\\W)#${id}(?:$|\\W)`, 'g'), `(#${id}_${name}${size})`),
-                    src
-                );
-        } else {
+        if (!ids.size) {
             return src;
         }
+
+        // Ссылка сверяется с собранными id: #a не заденет #a.b или #a-b, а цвета вида #FFFFFF не совпадут с id.
+        return withIds.replace(idRefRegExp, (ref, id: string) => (ids.has(id) ? `${ref}${suffix}` : ref));
     };
 
     /**
@@ -231,7 +233,7 @@ export class ReactTransformer implements ITransformer {
     /**
      * Подменяет hex цвета именами классов.
      */
-    protected replaceColorsWithClassNames = (src: string, {category}: ITokenizedIcon, classMap: IClassMap): string =>
+    private replaceColorsWithClassNames = (src: string, {category}: ITokenizedIcon, classMap: IClassMap): string =>
         classMap
             ? src.replace(
                   /fill="(#[A-F0-9]{6})"/g,

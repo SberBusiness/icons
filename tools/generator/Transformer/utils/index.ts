@@ -1,5 +1,5 @@
-import {IIconTransformedSVG} from './types';
-import {iconThemeToEnumMap, UNIQUE_ID_VAR} from './consts';
+import {IIconTransformedSVG} from '../types';
+import {iconThemeToEnumMap, UNIQUE_ID_VAR} from '../consts';
 
 const getUniqueIdImport = (withUniqueId: boolean) =>
     withUniqueId ? '\nimport useUniqueId from "./utils/useUniqueId";' : '';

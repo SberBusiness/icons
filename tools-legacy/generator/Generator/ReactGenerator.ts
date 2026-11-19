@@ -10,7 +10,7 @@ import {createFolderIfNotExists, writeFile} from '../../utils/fsUtils';
  * данные в соответствующие файлы и проконтроллировать ошибки.
  */
 export class ReactGenerator {
-    constructor(protected readonly transformer: ITransformer) {}
+    constructor(private readonly transformer: ITransformer) {}
 
     generateIcons = async () => {
         await this.transformer.transform();
@@ -32,7 +32,7 @@ export class ReactGenerator {
      *
      * @param iconsData
      */
-    protected generateComponents = async (iconsData: IIconTransformedData[]): Promise<void> => {
+    private generateComponents = async (iconsData: IIconTransformedData[]): Promise<void> => {
         try {
             createFolderIfNotExists(generationPath);
             const promises = await Promise.all(
@@ -53,7 +53,7 @@ export class ReactGenerator {
      *
      * @param styles Строка с CSS стилями.
      */
-    protected generateStyles = async (styles: string): Promise<void> => {
+    private generateStyles = async (styles: string): Promise<void> => {
         try {
             const cssFolder = path.resolve(generationPath, 'css');
             const filePath = path.resolve(cssFolder, 'icons.css');
